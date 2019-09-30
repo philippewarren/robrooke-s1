@@ -1,4 +1,6 @@
-const double CLICS_PAR_CM;
+#include <LibRobus.h>
+
+const double CLICS_PAR_CM = 3200/(2.54*3*PI);
 
 double clicsEnCm(long nbClics);
 
