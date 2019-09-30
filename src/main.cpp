@@ -1,9 +1,9 @@
 /*
-Projet: Le nom du script
-Equipe: Votre numero d'equipe
-Auteurs: Les membres auteurs du script
+Projet: Défi du parcours
+Equipe: P-28
+Auteurs: Philippe Warren, Keven Gagnon, William Bruneau, Pénélope Montminy, Camille Durivage-Guertin, Gabriel Doré, Philippe Gadeyne, Antoine Duguay 
 Description: Breve description du script
-Date: Derniere date de modification
+Date: 29-septembre-2019//
 */
 
 /* ****************************************************************************
