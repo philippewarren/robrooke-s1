@@ -15,6 +15,8 @@ Inclure les librairies de functions que vous voulez utiliser
 #include <pw_ligne_droite.h>
 #include <EEPROM.h>
 //#include <kg_encodeur.h>
+#include <kg_rotation.h>
+//#include <kg_encodeur.h>
 //#include <kg_rotation.h>
 
 /* ****************************************************************************
@@ -38,10 +40,8 @@ Fonctions d'initialisation (setup)
 
 void setup(){
   BoardInit();
- // rotation::initRot();
-  Serial.println("Ceci est le test setup");
-  if (EEPROM.read(0)=='A') Bob = 'A';
-  if (EEPROM.read(0)=='B') Bob = 'B';
+  determinerRobot();
+  initRot();
 }
 
 /* ****************************************************************************
@@ -60,6 +60,7 @@ void loop()
    if (ROBUS_IsBumper(2))
   {
     Serial.println("Ceci est le test isBumper(2)");
+    DemiTour();
     
   }
 

@@ -13,7 +13,6 @@ Inclure les librairies de functions que vous voulez utiliser
 #include <LibRobus.h> // Essentielle pour utiliser RobUS
 #include <Arduino.h>
 
-
 namespace rotation
 {
 /* ****************************************************************************

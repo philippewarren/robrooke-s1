@@ -1,7 +1,13 @@
 #include <LibRobus.h>
 #include <EEPROM.h>
+#include <fonctions_generales.h>
 
-const double CLICS_PAR_CM = 3200/(2.54*3*PI);
+char Robot = 'I';
+
+void determinerRobot()
+{
+    Robot = EEPROM.read(0);
+}
 
 double clicsEnCm(long nbClics)
 {

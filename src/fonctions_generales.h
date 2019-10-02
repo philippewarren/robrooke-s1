@@ -3,6 +3,8 @@
 
 const double CLICS_PAR_CM = 3200/(2.54*3*PI);
 
+void determinerRobot();
+
 double clicsEnCm(long nbClics);
 
 long long cmEnClics(float nbCm);

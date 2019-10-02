@@ -101,7 +101,7 @@ void avancerDroit(float distanceEnCm)
 
 	arreterDeuxMoteurs();
 
-  while (!ROBUS_IsBumper(0)) ;
+  //while (!ROBUS_IsBumper(0)) ;
   int nombre=i;
   i=0;
   Serial.println("Début des vitesses");
@@ -117,7 +117,7 @@ void avancerDroit(float distanceEnCm)
     Serial.println();
   }
 
-  while (!ROBUS_IsBumper(1)) ;
+ // while (!ROBUS_IsBumper(1)) ;
   i=0;
   Serial.println("Début des erreur");
   for (i=0; i<nombre; i++)
