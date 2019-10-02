@@ -23,8 +23,6 @@ Variables globales et defines
 // -> defines...
 // L'ensemble des fonctions y ont acces
 
-enum RobUS {A,B,I};
-RobUS BOB = I;
 char Bob = 'I';
 
 /* ****************************************************************************
@@ -42,9 +40,8 @@ void setup(){
   BoardInit();
  // rotation::initRot();
   Serial.println("Ceci est le test setup");
- // EEPROM.update(0,'A');
-  if (EEPROM.read(0)=='A') {BOB = A; Bob = 'A';}
-  if (EEPROM.read(0)=='B') {BOB = B; Bob = 'B';}
+  if (EEPROM.read(0)=='A') Bob = 'A';
+  if (EEPROM.read(0)=='B') Bob = 'B';
 }
 
 /* ****************************************************************************
@@ -52,10 +49,8 @@ Fonctions de boucle infini (loop())
 **************************************************************************** */
 // -> Se fait appeler perpetuellement suite au "setup"
 
-void loop() {
-
-  Serial.print(BOB);
-  Serial.print(Bob);
+void loop()
+{
   if (ROBUS_IsBumper(3))
   {
     Serial.println("Ceci est le test isBumper(3)");
