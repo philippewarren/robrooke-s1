@@ -173,10 +173,10 @@ Fonctions d'initialisation (setup)
 // -> Se fait appeler seulement un fois
 // -> Generalement on y initilise les varibbles globales
 
-void setup(){
+/*void setup(){
   BoardInit();
   initRot();
-}
+}*/
 
 
 /* ****************************************************************************
@@ -184,7 +184,7 @@ Fonctions de boucle infini (loop())
 **************************************************************************** */
 // -> Se fait appeler perpetuellement suite au "setup"
 
-void loop() {
+/*void loop() {
   if(ROBUS_IsBumper(3))
   {
   DemiTour();
@@ -201,4 +201,4 @@ void loop() {
     Rot452Roue(1,1);
     delay(1000);
   }
-}
+}*/

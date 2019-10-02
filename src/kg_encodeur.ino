@@ -119,11 +119,11 @@ Fonctions d'initialisation (setup)
 // -> Se fait appeler seulement un fois
 // -> Generalement on y initilise les varibbles globales
 
-void setup(){
+/*void setup(){
   BoardInit();
   rotation::initRot;
   rotation::DemiTour;
-}
+}*/
 
 
 /* ****************************************************************************
@@ -131,5 +131,5 @@ Fonctions de boucle infini (loop())
 **************************************************************************** */
 // -> Se fait appeler perpetuellement suite au "setup"
 
-void loop() {
-}
+//void loop() {
+//}
