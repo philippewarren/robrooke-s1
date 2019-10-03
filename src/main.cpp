@@ -22,21 +22,21 @@ Variables globales et defines
 
 //float sequence[50];
 
-// CECI EST LE DEV PUSH DANS MASTER blabla
-
 const int DELAIS_POST_OPERATION = 300;
 
+
+const int NBR_SEQ = 11;
 char Robot = 'I';
 const double CLICS_PAR_CM = 3200/(2.54*3*PI);
 const uint8_t gauche = 0;
 const uint8_t droite = 1;
 
 const float diaRoue = 7.6;                           //diametre de la roue en cm
-const float largeurEss = Robot=='A' ? 18.2 : 18.1;   //distance entre les roues en cm
+float largeurEss;   //distance entre les roues en cm
 const float largeurParc = 45;                        //largeur du parcours en cm
 const float TAN_22_5 = 0.414213562;                  //le tan de 22.5 (utile pour la rotation)
-const float DIST_90 = (largeurParc-largeurEss)/2;    //la distance que Bob doit avancer pour un virage de 90 degres
-const float DIST_45 = DIST_90*TAN_22_5;              //la distance que Bob doit avancer pour un virage de 45 degres
+float DIST_90;    //la distance que Bob doit avancer pour un virage de 90 degres
+float DIST_45;              //la distance que Bob doit avancer pour un virage de 45 degres
 
 const float VITESSE_PREPOST_ROTATION = 0.2;          //la vitesse avant et apres les rotations
 
@@ -50,7 +50,10 @@ Vos propres fonctions sont creees ici
 **************************************************************************** */
 void determinerRobot()
 {
-    Robot = EEPROM.read(0);
+  Robot = EEPROM.read(0);
+  largeurEss = Robot=='A' ? 18.2 : 18.1;
+  DIST_90 = (largeurParc-largeurEss)/2;    //la distance que Bob doit avancer pour un virage de 90 degres
+  DIST_45 = DIST_90*TAN_22_5;              //la distance que Bob doit avancer pour un virage de 45 degres
 }
 
 double clicsEnCm(long nbClics)
@@ -237,16 +240,16 @@ void avancer(float distanceEnCm)
 
 void avancerVitesseFixe(float distanceEnCm, float vitesseBase = 0.3)
 {
-  float deltaBob = Robot=='A' ? -0.025 : -0.050;
+  float deltaBob = Robot=='A' ? 0.010 : -0.000;
   float delta = (distanceEnCm)>0 ? deltaBob : -deltaBob;
   static float vitesseG = distanceEnCm>0 ? vitesseBase : -vitesseBase;
-  static float vitesseD = vitesseG - delta;
+  static float vitesseD = vitesseG + (distanceEnCm>0 ? delta : -delta);
 
   long clicsG = 0;
   long clicsD = 0;
 
-  const float FACTEUR_P = 5E-2;  //4E-2; 7E-2
-  const float FACTEUR_I = 5E-4;  //5E-5; 5E-4
+  const float FACTEUR_P = Robot=='A' ? 5E-2 : 5E-2;  //4E-2; 7E-2; 5E-2
+  const float FACTEUR_I = Robot=='A' ? 5E-4 : 5E-4;  //5E-5; 5E-4
  // const float FACTEUR_D = 1.8E-5;   //1.7E-5; 1.8E-4
   const int TEMPS = 50;          //temps en microsecondes
 
@@ -261,7 +264,7 @@ void avancerVitesseFixe(float distanceEnCm, float vitesseBase = 0.3)
   vitesseD=0.5*vitesseDPre;*/
 
   int i=0;
-  int nb=100;
+  int nb=200;
   int vitesseDebugG[nb];
   int vitesseDebugD[nb];
   int erreurDebug[nb];
@@ -319,10 +322,10 @@ void avancerVitesseFixe(float distanceEnCm, float vitesseBase = 0.3)
 
 	arreterDeuxMoteurs();
 
-  //while (!ROBUS_IsBumper(0)) ;
+  /*while (!ROBUS_IsBumper(0)) ;
   int nombre=i;
   i=0;
-  /*Serial.println("Début des vitesses");
+  Serial.println("Début des vitesses");
   for (i=0; i<nombre; i++)
   {
    // Serial.println(erreurDebug[i]);
@@ -335,7 +338,7 @@ void avancerVitesseFixe(float distanceEnCm, float vitesseBase = 0.3)
     Serial.println();
   }
 
- // while (!ROBUS_IsBumper(1)) ;
+  while (!ROBUS_IsBumper(1)) ;
   i=0;
   Serial.println("Début des erreur");
   for (i=0; i<nombre; i++)
@@ -379,7 +382,6 @@ int readResetKeepGauche()
 ///rotation 180
 void DemiTour()
 {
-
   const float vitesseRotation = 0.25;
 
   float correction = 1;
@@ -403,7 +405,7 @@ void DemiTour()
   //  Serial.println(pulseD);
   }
   arreterDeuxMoteurs();
-  delay(1/2 * DELAIS_POST_OPERATION);
+  delay(DELAIS_POST_OPERATION);
 }
 
 void rot(int Nbr45 = 1, bool direction = 1)
@@ -471,7 +473,7 @@ int determinerAngle(float angle)
 void lancerSequence(float sequence[])
 {
   int etape;
-  int taille = 11; //sequence.getLenght();//sizeof(*sequence)/sizeof(float);
+  int taille = NBR_SEQ; //sequence.getLenght();//sizeof(*sequence)/sizeof(float);
   Serial.println(taille);
   bool rotation = false;
   for (etape=0; etape<taille; etape++)
@@ -588,9 +590,8 @@ void loop()
 
    if (ROBUS_IsBumper(2))
   {
-    const int NBR_SEQ = 11;
     Serial.println("Ceci est le test isBumper(2)");
-    float sequence[]=
+    float sequence[NBR_SEQ]=
     {
       100,-90,
       45,90,
@@ -622,7 +623,7 @@ void loop()
    if (ROBUS_IsBumper(0))
   {
     Serial.println("Ceci est le test isBumper(1)");
-    DemiTour();
+    avancerVitesseFixe(400);
     
   }
 
