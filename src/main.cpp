@@ -22,6 +22,8 @@ Variables globales et defines
 
 //float sequence[50];
 
+// FAUT PAS QUE TU LE VOIS
+
 const int DELAIS_POST_OPERATION = 300;
 
 char Robot = 'I';
@@ -574,7 +576,7 @@ void setup(){
   determinerRobot();
   initRot();
   Serial.println(largeurEss);
-  
+
 }
 
 /* ****************************************************************************
