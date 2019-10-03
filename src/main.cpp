@@ -25,21 +25,20 @@ Variables globales et defines
 const int DELAIS_POST_OPERATION = 300;
 
 char Robot = 'I';
-char Bob = 'I';
 const double CLICS_PAR_CM = 3200/(2.54*3*PI);
 const uint8_t gauche = 0;
 const uint8_t droite = 1;
 
-const float diaRoue = 7.6;
-const float largeurEss = Robot=='A' ? 18.2 : 18.1;
-const float largeurParc = 45;
-const float TAN_22_5 = 0.414213562;
-const float DIST_90 = (largeurParc-largeurEss)/2;
-const float DIST_45 = DIST_90*TAN_22_5;
+const float diaRoue = 7.6;                           //diametre de la roue en cm
+const float largeurEss = Robot=='A' ? 18.2 : 18.1;   //distance entre les roues en cm
+const float largeurParc = 45;                        //largeur du parcours en cm
+const float TAN_22_5 = 0.414213562;                  //le tan de 22.5 (utile pour la rotation)
+const float DIST_90 = (largeurParc-largeurEss)/2;    //la distance que Bob doit avancer pour un virage de 90 degres
+const float DIST_45 = DIST_90*TAN_22_5;              //la distance que Bob doit avancer pour un virage de 45 degres
 
-const float VITESSE_PREPOST_ROTATION = 0.2;
+const float VITESSE_PREPOST_ROTATION = 0.2;          //la vitesse avant et apres les rotations
 
-long pulse180 = 0;
+long pulse180 = 0;                                   
 
 long pulseD = 0;
 long pulseG = 0;
@@ -97,7 +96,7 @@ void arreterDeuxMoteurs()
 
 void avancer(float distanceEnCm)
 {
-  float deltaBob = Bob=='A' ? -0.025 : -0.025;
+  float deltaBob = Robot=='A' ? -0.025 : -0.025;
   float delta = distanceEnCm>0 ? deltaBob : -deltaBob;
   static float vitesseG = distanceEnCm>0 ? 0.4 : -0.4;
   static float vitesseD = vitesseG - delta;
@@ -234,9 +233,9 @@ void avancer(float distanceEnCm)
   return;
 }
 
-void avancerVitesseFixe(float distanceEnCm, float vitesseBase = 0.4)
+void avancerVitesseFixe(float distanceEnCm, float vitesseBase = 0.3)
 {
-  float deltaBob = Bob=='A' ? -0.025 : -0.050;
+  float deltaBob = Robot=='A' ? -0.025 : -0.050;
   float delta = (distanceEnCm)>0 ? deltaBob : -deltaBob;
   static float vitesseG = distanceEnCm>0 ? vitesseBase : -vitesseBase;
   static float vitesseD = vitesseG - delta;
@@ -408,7 +407,7 @@ void DemiTour()
 void rot(int Nbr45 = 1, bool direction = 1)
 {
 
-  const float vitesseRotation = 0.5;
+  const float vitesseRotation = 0.4;
 
   resetDeuxEncodeurs();
   int roue = gauche;
