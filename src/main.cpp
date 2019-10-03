@@ -60,6 +60,11 @@ void avancerSimple()
   MOTOR_SetSpeed(0,vitesseD);
 }
 
+void mesurerDistance()
+{
+  
+}
+
 
 //-------------------------------------------------------------
 
@@ -575,8 +580,6 @@ void setup(){
   BoardInit();
   determinerRobot();
   initRot();
-  Serial.println(largeurEss);
-
 }
 
 /* ****************************************************************************
@@ -586,65 +589,71 @@ Fonctions de boucle infini (loop())
 
 void loop()
 {
-  if (ROBUS_IsBumper(3))
-  {
-    /*Serial.println("Ceci est le test isBumper(3)");
-    Serial.println("Début avancer");
-    avancerVitesseFixe(20);
-    Serial.println("Fin avancer, début rotation");
-    Rot(1,1);
-    Serial.println("Fin rotation, début avancer");
-    avancerVitesseFixe(50);
-    Serial.println("Fin avancer, début rotation");
-    DemiTour();
-    avancerVitesseFixe(100);
-    Rot(2);
-    Serial.println("Fin rotation");*/
-    rot180(0);
-    delay(2000);
-    rot180(1);
-  }
-
-   if (ROBUS_IsBumper(2))
-  {
-    const int NBR_SEQ = 11;
-    Serial.println("Ceci est le test isBumper(2)");
-    float sequence[]=
-    {
-      100,-90,
-      45,90,
-      65,45,
-      150,-90,
-      26,45,
-      125
-    };
-    lancerSequence(sequence);
-    /*avancerVitesseFixe(100);
-    rot90(0);
-    avancerVitesseFixe(45);
-    rot90(1);
-    avancerVitesseFixe(65);
-    rot45(1);
-    avancerVitesseFixe(150);
-    rot90(0);
-    avancerVitesseFixe(26);
-    rot45(1);
-    avancerVitesseFixe(100);
-    DemiTour();*/
-  }
-
-   if (ROBUS_IsBumper(1))
-  {
-    Serial.println("Ceci est le test isBumper(0");
-  }
-
-   if (ROBUS_IsBumper(0))
-  {
-    Serial.println("Ceci est le test isBumper(1)");
-    DemiTour();
-    
-  }
-
-  // SOFT_TIMER_Update(); // A decommenter pour utiliser des compteurs logiciels
-  delay(10);// Delais pour décharger le CPU
+  delay(10);
 }
+
+
+// void loop()
+// {
+//   if (ROBUS_IsBumper(3))
+//   {
+//     /*Serial.println("Ceci est le test isBumper(3)");
+//     Serial.println("Début avancer");
+//     avancerVitesseFixe(20);
+//     Serial.println("Fin avancer, début rotation");
+//     Rot(1,1);
+//     Serial.println("Fin rotation, début avancer");
+//     avancerVitesseFixe(50);
+//     Serial.println("Fin avancer, début rotation");
+//     DemiTour();
+//     avancerVitesseFixe(100);
+//     Rot(2);
+//     Serial.println("Fin rotation");*/
+//     rot180(0);
+//     delay(2000);
+//     rot180(1);
+//   }
+
+//    if (ROBUS_IsBumper(2))
+//   {
+//     const int NBR_SEQ = 11;
+//     Serial.println("Ceci est le test isBumper(2)");
+//     float sequence[]=
+//     {
+//       100,-90,
+//       45,90,
+//       65,45,
+//       150,-90,
+//       26,45,
+//       125
+//     };
+//     lancerSequence(sequence);
+//     /*avancerVitesseFixe(100);
+//     rot90(0);
+//     avancerVitesseFixe(45);
+//     rot90(1);
+//     avancerVitesseFixe(65);
+//     rot45(1);
+//     avancerVitesseFixe(150);
+//     rot90(0);
+//     avancerVitesseFixe(26);
+//     rot45(1);
+//     avancerVitesseFixe(100);
+//     DemiTour();*/
+//   }
+
+//    if (ROBUS_IsBumper(1))
+//   {
+//     Serial.println("Ceci est le test isBumper(0");
+//   }
+
+//    if (ROBUS_IsBumper(0))
+//   {
+//     Serial.println("Ceci est le test isBumper(1)");
+//     DemiTour();
+    
+//   }
+
+//   // SOFT_TIMER_Update(); // A decommenter pour utiliser des compteurs logiciels
+//   delay(10);// Delais pour décharger le CPU
+// }
