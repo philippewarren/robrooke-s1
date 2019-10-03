@@ -22,7 +22,7 @@ Variables globales et defines
 
 //float sequence[50];
 
-// CECI EST LE DEV PUSH DANS MASTER
+// CECI EST LE DEV PUSH DANS MASTER blabla
 
 const int DELAIS_POST_OPERATION = 300;
 
