@@ -588,14 +588,14 @@ void loop()
   {
     const int NBR_SEQ = 11;
     Serial.println("Ceci est le test isBumper(2)");
-    float sequence[NBR_SEQ]=
+    float sequence[]=
     {
       100,-90,
       45,90,
       65,45,
       150,-90,
       26,45,
-      120
+      125
     };
     lancerSequence(sequence);
     /*avancerVitesseFixe(100);
