@@ -379,11 +379,14 @@ int readResetKeepGauche()
 void DemiTour()
 {
 
-  const float vitesseRotation = 0.3;
+  const float vitesseRotation = 0.25;
 
   float correction = 1;
   pulseD = 0;
   pulseG = 0;
+
+  delay(300);
+
   resetDeuxEncodeurs();
   MOTOR_SetSpeed(droite,vitesseRotation);
   MOTOR_SetSpeed(gauche,-vitesseRotation);
