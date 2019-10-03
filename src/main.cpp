@@ -22,6 +22,8 @@ Variables globales et defines
 
 //float sequence[50];
 
+// CECI EST LE DEV PUSH DANS MASTER
+
 const int DELAIS_POST_OPERATION = 300;
 
 char Robot = 'I';
