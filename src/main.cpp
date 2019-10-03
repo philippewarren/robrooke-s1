@@ -25,16 +25,16 @@ const double CLICS_PAR_CM = 3200/(2.54*3*PI);
 const uint8_t gauche = 0;
 const uint8_t droite = 1;
 
-const float diaRoue = 7.6;
-const float largeurEss = 18.2;
-const float largeurParc = 45;
-const float TAN_22_5 = 0.414213562;
-const float DIST_90 = (largeurParc-largeurEss)/2;
-const float DIST_45 = DIST_90*TAN_22_5;
+const float diaRoue = 7.6;                           //diametre de la roue en cm
+const float largeurEss = 18.2;                       //distance entre les roues en cm
+const float largeurParc = 45;                        //largeur du parcours en cm
+const float TAN_22_5 = 0.414213562;                  //le tan de 22.5 (utile pour la rotation)
+const float DIST_90 = (largeurParc-largeurEss)/2;    //la distance que Bob doit avancer pour un virage de 90 degres
+const float DIST_45 = DIST_90*TAN_22_5;              //la distance que Bob doit avancer pour un virage de 45 degres
 
-const float VITESSE_PREPOST_ROTATION = 0.2;
+const float VITESSE_PREPOST_ROTATION = 0.2;          //la vitesse avant et apres les rotations
 
-long pulse180 = 0;
+long pulse180 = 0;                                   
 
 long pulseD = 0;
 long pulseG = 0;
