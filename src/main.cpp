@@ -48,6 +48,22 @@ long pulseG = 0;
 /* ****************************************************************************
 Vos propres fonctions sont creees ici
 **************************************************************************** */
+
+// Fonction Will
+
+void avancerSimple()
+{
+  float vitesseDecalage = 0.016;
+  float vitesseG = 0.3;
+  float vitesseD = 0.3 + vitesseDecalage;
+  MOTOR_SetSpeed(0,vitesseG);
+  MOTOR_SetSpeed(0,vitesseD);
+}
+
+
+//-------------------------------------------------------------
+
+
 void determinerRobot()
 {
   Robot = EEPROM.read(0);
@@ -98,6 +114,8 @@ void arreterDeuxMoteurs()
   changerVitesseDeuxMoteurs(0,0);
   return;
 }
+
+
 
 void avancer(float distanceEnCm)
 {
@@ -560,6 +578,7 @@ void setup(){
   determinerRobot();
   initRot();
   Serial.println(largeurEss);
+  
 }
 
 /* ****************************************************************************
