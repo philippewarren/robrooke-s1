@@ -19,7 +19,7 @@ Variables globales et defines
 **************************************************************************** */
 // -> defines...
 // L'ensemble des fonctions y ont acces
-char Robot = 'I'//
+char Robot = 'I';//
 char Bob = 'I';
 const double CLICS_PAR_CM = 3200/(2.54*3*PI);
 const uint8_t gauche = 0;
