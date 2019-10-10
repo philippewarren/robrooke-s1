@@ -91,7 +91,19 @@ void loop()
 
     if (ROBUS_IsBumper(3))
     {
-        demiTour();
+      demiTour();
+    }
+
+    if (ROBUS_IsBumper(2))
+    {
+      MOTOR_setSpeed(0,0.5);
+      MOTOR_setSpeed(1,0.5);
+      while (true)
+      {
+        Serial.println(ROBUS_ReadIR(0));
+
+        if (ROBUS_IsBumper(3)) break;
+      }
     }
 
 
