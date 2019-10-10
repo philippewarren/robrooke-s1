@@ -12,6 +12,7 @@ Inclure les librairies de functions que vous voulez utiliser
 
 #include <LibRobus.h>   // Essentielle pour utiliser RobUS
 #include <Arduino.h>    // Essentielle pour certaines commandes Arduino
+#include "mouvement.h"
 //#include <EEPROM.h>
 
 /* ****************************************************************************
@@ -28,7 +29,7 @@ Vos propres fonctions sont creees ici
 
 void demiTour()
 {
-  const int DT = 5;
+  const int DT = 5; //delta time?
   const float PULSE = 133.333;//nombre de pulse par cm
   const float EspaceRoue = 18.75;//distance entre chaque roue en cm
   const float DISTANCE = 3.141592654 * EspaceRoue*PULSE/2;//distance en pulsation pour un demi tour
@@ -105,7 +106,8 @@ void loop()
         if (ROBUS_IsBumper(3)) break;
       }
     }
-
+  if(estClicEtRelache(3))
+    Serial.println("Clicked !!");
 
 
   // SOFT_TIMER_Update(); // A decommenter pour utiliser des compteurs logiciels
