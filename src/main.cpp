@@ -22,6 +22,9 @@ Variables globales et defines
 // L'ensemble des fonctions y ont acces
 
 //float array[1000][1000];
+  unsigned int donnees[3000];
+  int index = 0;
+  bool statut = false;
 
 /* ****************************************************************************
 Vos propres fonctions sont creees ici
@@ -79,6 +82,8 @@ Fonctions d'initialisation (setup)
 
 void setup(){
   BoardInit();
+  Serial.println("Debut");
+
   //robotInit();
 }
 
@@ -90,24 +95,53 @@ Fonctions de boucle infini (loop())
 void loop()
 {
 
-    if (ROBUS_IsBumper(3))
-    {
-      demiTour();
-    }
 
-    if (ROBUS_IsBumper(2))
+    // if (ROBUS_IsBumper(3))
+    // {
+    //   demiTour();
+    // }
+
+    // if (ROBUS_IsBumper(2))
+    // {
+    //   MOTOR_SetSpeed(0,0.5);
+    //   MOTOR_SetSpeed(1,0.5);
+    //   while (true)
+    //   {
+    //     Serial.println(ROBUS_ReadIR(0));
+
+    //     if (ROBUS_IsBumper(3)) break;
+    //   }
+    // }
+    if(estClicEtRelache(3))
     {
-      MOTOR_SetSpeed(0,0.5);
-      MOTOR_SetSpeed(1,0.5);
-      while (true)
+      statut = true;
+
+    }
+    if(statut)
+    {
+      MOTOR_SetSpeed(0,0.25);
+      MOTOR_SetSpeed(1,-0.25);
+      donnees[index] = ROBUS_ReadIR(0);
+      index++;
+    }
+    if(ENCODER_Read(0) > 17000)
+    {
+      MOTOR_SetSpeed(0,0);
+      MOTOR_SetSpeed(1,0);
+      Serial.println("Termine");
+      Serial.println(index);
+      for (int i = 0; i < index; i++)
       {
-        Serial.println(ROBUS_ReadIR(0));
-
-        if (ROBUS_IsBumper(3)) break;
+        Serial.println(donnees[i]);
       }
+      while(true)
+      {
+        delay(10);
+      }
+      
+      
     }
-  if(estClicEtRelache(3))
-    Serial.println("Clicked !!");
+  
 
 
   // SOFT_TIMER_Update(); // A decommenter pour utiliser des compteurs logiciels
