@@ -22,7 +22,8 @@ Variables globales et defines
 // L'ensemble des fonctions y ont acces
 
 //float array[1000][1000];
-  unsigned int donnees[3000];
+  unsigned int donnees[1500];
+  unsigned int donneesMoyenneMobile[1500];
   int index = 0;
   bool statut = false;
 
@@ -70,6 +71,18 @@ void demiTour()
   delay(500);//temps de repos pour discipation du champ magnétique des encodeurs
   ENCODER_Reset(0);
   ENCODER_Reset(1);
+
+}
+
+void faireMoyenneMobile(int nbrItems)
+{
+  donneesMoyenneMobile[0] = donnees[0];
+  for (int i = 1; i < nbrItems - 1; i++)
+  {
+    donneesMoyenneMobile[i] = (donnees[i-1] + donnees[i+1])/2.0;
+  }
+  donnees[nbrItems - 1] = donnees[nbrItems - 1];
+  
 
 }
 
@@ -124,15 +137,16 @@ void loop()
       donnees[index] = ROBUS_ReadIR(0);
       index++;
     }
-    if(ENCODER_Read(0) > 17000)
+    if(ENCODER_Read(0) > 8500)
     {
       MOTOR_SetSpeed(0,0);
       MOTOR_SetSpeed(1,0);
       Serial.println("Termine");
       Serial.println(index);
+      faireMoyenneMobile(index);
       for (int i = 0; i < index; i++)
       {
-        Serial.println(donnees[i]);
+        Serial.println(donneesMoyenneMobile[i]);
       }
       while(true)
       {
