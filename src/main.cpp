@@ -90,8 +90,8 @@ Fonctions d'initialisation (setup)
 // -> Se fait appeler seulement un fois
 // -> Generalement on y initilise les varibbles globales
 
-void setup(){
-  BoardInit();
+void setup()
+{
   initialiserBob();
   Serial.println("Debut");
 }
