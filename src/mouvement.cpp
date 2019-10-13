@@ -1,17 +1,37 @@
 #include "mouvement.h"
 
-bool estClicEtRelache(uint8_t bumper)
+
+
+void resetDeuxEncodeurs()
 {
-    const int NBR_BUMPER = 4;
-    bool resultat = false;
-    static bool listeBumperEtat[NBR_BUMPER] = {false, false, false, false};
-    if(ROBUS_IsBumper(bumper))
-        listeBumperEtat[bumper] = true;
-    else
-        if(listeBumperEtat[bumper])
-        {
-            resultat = true;
-            listeBumperEtat[bumper] = false;
-        }
-    return resultat;
+  ENCODER_Reset(0);
+  ENCODER_Reset(1);
+  return;
+}
+
+void changerVitesseMoteur(uint8_t moteur, float nouvelleVitesse)
+{
+  /*int32_t ancienneVitesseEnClics = ENCODER_Read(moteur);
+  if ((ancienneVitesseEnClics<0 && nouvelleVitesse>0) || (ancienneVitesseEnClics>0 && nouvelleVitesse<0) || ancienneVitesseEnClics==0)
+  {
+    MOTOR_SetSpeed(moteur, 0);
+    delay(25);
+    MOTOR_SetSpeed(moteur, nouvelleVitesse);
+  }
+  else*/ MOTOR_SetSpeed(moteur, nouvelleVitesse);
+  return;
+}
+
+void changerVitesseDeuxMoteurs(float vitesseG, float vitesseD = 200)
+{   
+    if (vitesseD==200) vitesseD=vitesseG;
+    changerVitesseMoteur(0,vitesseG);
+    changerVitesseMoteur(1,vitesseD);
+    return;
+}
+
+void arreterDeuxMoteurs()
+{
+  changerVitesseDeuxMoteurs(0);
+  return;
 }

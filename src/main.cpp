@@ -10,10 +10,7 @@ Date: 29-septembre-2019//
 Inclure les librairies de functions que vous voulez utiliser
 **************************************************************************** */
 
-#include <LibRobus.h>   // Essentielle pour utiliser RobUS
-#include <Arduino.h>    // Essentielle pour certaines commandes Arduino
-#include "mouvement.h"
-//#include <EEPROM.h>
+#include "init_robot.h"
 
 /* ****************************************************************************
 Variables globales et defines
@@ -95,9 +92,8 @@ Fonctions d'initialisation (setup)
 
 void setup(){
   BoardInit();
+  initialiserBob();
   Serial.println("Debut");
-
-  //robotInit();
 }
 
 /* ****************************************************************************
@@ -125,7 +121,7 @@ void loop()
     //     if (ROBUS_IsBumper(3)) break;
     //   }
     // }
-    if(estClicEtRelache(3))
+    if(loopEstCliqueEtRelache(3))
     {
       statut = true;
 
