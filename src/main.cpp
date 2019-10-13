@@ -11,6 +11,7 @@ Inclure les librairies de functions que vous voulez utiliser
 **************************************************************************** */
 
 #include "init_robot.h"
+#include <LibRobus.h>
 
 /* ****************************************************************************
 Variables globales et defines
@@ -148,8 +149,6 @@ void loop()
       {
         delay(10);
       }
-      
-      
     }
   
 

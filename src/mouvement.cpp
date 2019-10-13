@@ -1,7 +1,5 @@
 #include "mouvement.h"
 
-
-
 void resetDeuxEncodeurs()
 {
   ENCODER_Reset(0);

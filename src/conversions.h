@@ -9,10 +9,10 @@ extern const float diaRoue;
 extern float largeurEss;
 
 //Convertit un nombre de clics d'encodeur en distance (en cm)
-double clicsEnCm(long nbClics);
+double clicsEnCm(long);
 
 //Convertit une distance (en cm) en nombre de clics d'encodeur
-long long cmEnClics(float nbCm);
+long long cmEnClics(float);
 
 
 #endif
