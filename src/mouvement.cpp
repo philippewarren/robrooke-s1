@@ -9,14 +9,17 @@ void resetDeuxEncodeurs()
 
 void changerVitesseMoteur(uint8_t moteur, float nouvelleVitesse)
 {
-  /*int32_t ancienneVitesseEnClics = ENCODER_Read(moteur);
-  if ((ancienneVitesseEnClics<0 && nouvelleVitesse>0) || (ancienneVitesseEnClics>0 && nouvelleVitesse<0) || ancienneVitesseEnClics==0)
+  static float derniereVitesse[] = {0,0};
+
+  if ((derniereVitesse[moteur]*nouvelleVitesse)<0)
   {
     MOTOR_SetSpeed(moteur, 0);
-    delay(25);
-    MOTOR_SetSpeed(moteur, nouvelleVitesse);
+    delay(50);
   }
-  else*/ MOTOR_SetSpeed(moteur, nouvelleVitesse);
+
+  MOTOR_SetSpeed(moteur, nouvelleVitesse);
+  derniereVitesse[moteur] = nouvelleVitesse;
+  
   return;
 }
 
