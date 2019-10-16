@@ -148,7 +148,7 @@ void loop()
         delay(10);
       }
     }
-
+    changerVitesseDeuxMoteurs(-1);
   // SOFT_TIMER_Update(); // A decommenter pour utiliser des compteurs logiciels
   delay(10);// Delais pour décharger le CPU
 }
