@@ -93,6 +93,8 @@ Fonctions d'initialisation (setup)
 void setup()
 {
   initialiserBob();
+ // pinMode(36, OUTPUT);
+  //digitalWrite(36, HIGH);
 }
 
 /* ****************************************************************************
@@ -102,53 +104,9 @@ Fonctions de boucle infini (loop())
 
 void loop()
 {
+  if (arretUrgence) loopUrgence();
+  else loopNormal();
 
-
-    // if (ROBUS_IsBumper(3))
-    // {
-    //   demiTour();
-    // }
-
-    // if (ROBUS_IsBumper(2))
-    // {
-    //   MOTOR_SetSpeed(0,0.5);
-    //   MOTOR_SetSpeed(1,0.5);
-    //   while (true)
-    //   {
-    //     Serial.println(ROBUS_ReadIR(0));
-
-    //     if (ROBUS_IsBumper(3)) break;
-    //   }
-    // }
-    if(loopEstCliqueEtRelache(3))
-    {
-      statut = true;
-
-    }
-    if(statut)
-    {
-      MOTOR_SetSpeed(0,0.25);
-      MOTOR_SetSpeed(1,-0.25);
-      donnees[index] = ROBUS_ReadIR(0);
-      index++;
-    }
-    if(ENCODER_Read(0) > 8500)
-    {
-      MOTOR_SetSpeed(0,0);
-      MOTOR_SetSpeed(1,0);
-      Serial.println("Termine");
-      Serial.println(index);
-      faireMoyenneMobile(index);
-      for (int i = 0; i < index; i++)
-      {
-        Serial.println(donneesMoyenneMobile[i]);
-      }
-      while(true)
-      {
-        delay(10);
-      }
-    }
-    changerVitesseDeuxMoteurs(-1);
-  // SOFT_TIMER_Update(); // A decommenter pour utiliser des compteurs logiciels
-  delay(10);// Delais pour décharger le CPU
+  
+  delay(10);
 }
