@@ -12,5 +12,8 @@ float lireDistanceIR(uint8_t capteur, uint8_t amplitude = 3)
     distance = entreeAnalogiqueEnTension(calculerMediane(lectures, nombreDeLectures));
     distance = tensionEnDistance(distance);
 
+    if (distance<10) distance = 0;
+    if (distance>80) distance = 100;
+
     return distance;
 }
