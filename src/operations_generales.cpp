@@ -25,7 +25,7 @@ float calculerMediane(int tableau[], int NB_ELEMENTS)
     float mediane;
 
     classerTableauCroissant(tableau, NB_ELEMENTS);
-    position = (NB_ELEMENTS+1)/2;
+    position = ((NB_ELEMENTS-1)/2);
     mediane = tableau[position];
 
     return mediane;
