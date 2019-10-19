@@ -14,5 +14,11 @@ double clicsEnCm(long);
 //Convertit une distance (en cm) en nombre de clics d'encodeur
 long long cmEnClics(float);
 
+//Convertit une entree analogique (0 à 1023) en tension (0.0 à 5.0 V)
+float entreeAnalogiqueEnTension(uint16_t entreeAnalogique);
+
+//Convertit une mesure de tension provenant d'un capteur infrarouge en distance en cm
+float tensionEnDistance(float tension);
+
 
 #endif
