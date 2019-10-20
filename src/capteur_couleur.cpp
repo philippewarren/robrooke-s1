@@ -41,6 +41,8 @@ void lireCapteurCouleur(uint8_t numero, uint16_t tableau[4])
 
 int evaluerCouleur(uint16_t tableau[4], const uint16_t couleursPossibles[] = TOUTES_COULEURS)
 {
+    rgbEnHsl(tableau);
+
     int couleur;
     //Rouge?
     if ((tableau[0]>=330 || tableau[0]<30) && (tableau[1]>15) && (tableau[2]>25 && tableau[2]<75))

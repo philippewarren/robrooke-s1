@@ -3,6 +3,8 @@
 
 #include <Adafruit_TCS34725.h>
 
+#include "conversions.h"
+
 //#define TCS34725_ADDRESS (0x29)
 
 #define ROUGE 0
@@ -23,5 +25,7 @@ void initialiserCapteurCouleur();
 //Lit les valeurs du capteur couleur et retourne les valeurs dans le tableau dans cet ordre: {rouge, vert, bleu, sansCouleur}
 void lireCapteurCouleur(uint8_t numero, uint16_t tableau[4]);
 
+//Transforme une couleur rgb dans un tableau en nom de couleur
+int evaluerCouleur(uint16_t tableau[4], const uint16_t couleursPossibles[] = TOUTES_COULEURS)
 
 #endif
