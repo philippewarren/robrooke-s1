@@ -3,6 +3,8 @@
 
 #include <Adafruit_TCS34725.h>
 
+#define TCS34725_ADDRESS (0x29)
+
 #define ROUGE 0
 #define JAUNE 60
 #define VERT 120

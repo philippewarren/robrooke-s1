@@ -8,7 +8,15 @@ const uint16_t COULEURS_LETTRES[] = {ROUGE, VERT, BLEU};
 
 void initialiserCapteurCouleur()
 {
-    CapteurCouleur.begin();
+    if (CapteurCouleur.begin())
+    {
+        Serial.println("Found sensor");
+    }
+    else
+    {
+        Serial.println("No TCS34725 found ... check your connections");
+        while (1); // halt!
+    }
 
     return;
 }
@@ -20,7 +28,10 @@ void lireCapteurCouleur(uint8_t numero, uint16_t tableau[4])
     uint16_t bleu;
     uint16_t sansCouleur;
 
+    // CapteurCouleur.setInterrupt(false);      // turn on LED
     CapteurCouleur.getRawData(&rouge, &vert, &bleu, &sansCouleur);
+    // CapteurCouleur.setInterrupt(true);      // turn off LED
+    
     tableau[0] = rouge;
     tableau[1] = vert;
     tableau[2] = bleu;
