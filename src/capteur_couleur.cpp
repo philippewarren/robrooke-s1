@@ -31,9 +31,9 @@ void lireCapteurCouleur(uint8_t numeroDeCapteur, uint16_t tableauVide[4])
     CapteurCouleur.getRawData(&rouge, &vert, &bleu, &sansCouleur);
     // CapteurCouleur.setInterrupt(true);      // turn off LED
     
-    tableauVide[0] = rouge;
-    tableauVide[1] = vert;
-    tableauVide[2] = bleu;
+    tableauVide[0] = (uint16_t)(256*(float)rouge/sansCouleur);
+    tableauVide[1] = (uint16_t)(256*(float)vert/sansCouleur);
+    tableauVide[2] = (uint16_t)(256*(float)bleu/sansCouleur);
     tableauVide[3] = sansCouleur;
 
     return;

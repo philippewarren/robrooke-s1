@@ -30,9 +30,9 @@ float tensionEnDistance(float tension)
 
 void rgbEnHsl(uint16_t tableauRGB[4])
 {
-  float rouge = 256*tableauRGB[0]/tableauRGB[4];
-  float vert = 256*tableauRGB[1]/tableauRGB[4];
-  float bleu = 256*tableauRGB[2]/tableauRGB[4];
+  float rouge = tableauRGB[0]/255;
+  float vert = tableauRGB[1]/255;
+  float bleu = tableauRGB[2]/255;
 
   float Cmax = max(rouge, max(vert, bleu));
   float Cmin = min(rouge, min(vert, bleu));
