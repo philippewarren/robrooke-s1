@@ -42,30 +42,31 @@ void lireCapteurCouleur(uint8_t numeroDeCapteur, uint16_t tableauVide[4])
 int evaluerCouleur(uint16_t tableauRGB[4], const uint16_t couleursPossibles[] = TOUTES_COULEURS)
 {
     rgbEnHsl(tableauRGB);
+    const int SEUIL_GRIS = 0;
 
     int couleur;
     //Rouge?
-    if ((tableauRGB[0]>=330 || tableauRGB[0]<30) && (tableauRGB[1]>15) && (tableauRGB[2]>25 && tableauRGB[2]<75))
+    if ((tableauRGB[0]>=330 || tableauRGB[0]<30) && (tableauRGB[1]>SEUIL_GRIS) && (tableauRGB[2]>25 && tableauRGB[2]<75))
     couleur = ROUGE;
     
     //Jaune?
-    if ((tableauRGB[0]>=30 || tableauRGB[0]<90) && (tableauRGB[1]>15) && (tableauRGB[2]>25 && tableauRGB[2]<75))
+    if ((tableauRGB[0]>=30 || tableauRGB[0]<90) && (tableauRGB[1]>SEUIL_GRIS) && (tableauRGB[2]>25 && tableauRGB[2]<75))
     couleur = JAUNE;
 
     //Vert?
-    if ((tableauRGB[0]>=90 || tableauRGB[0]<150) && (tableauRGB[1]>15) && (tableauRGB[2]>25 && tableauRGB[2]<75))
+    if ((tableauRGB[0]>=90 || tableauRGB[0]<150) && (tableauRGB[1]>SEUIL_GRIS) && (tableauRGB[2]>25 && tableauRGB[2]<75))
     couleur = VERT;
 
     //Turquoise?
-    if ((tableauRGB[0]>=150 || tableauRGB[0]<210) && (tableauRGB[1]>15) && (tableauRGB[2]>25 && tableauRGB[2]<75))
+    if ((tableauRGB[0]>=150 || tableauRGB[0]<210) && (tableauRGB[1]>SEUIL_GRIS) && (tableauRGB[2]>25 && tableauRGB[2]<75))
     couleur = TURQUOISE;
 
     //Bleu?
-    if ((tableauRGB[0]>=210 || tableauRGB[0]<270) && (tableauRGB[1]>15) && (tableauRGB[2]>25 && tableauRGB[2]<75))
+    if ((tableauRGB[0]>=210 || tableauRGB[0]<270) && (tableauRGB[1]>SEUIL_GRIS) && (tableauRGB[2]>25 && tableauRGB[2]<75))
     couleur = BLEU;
 
     //Mauve?
-    if ((tableauRGB[0]>=270 || tableauRGB[0]<330) && (tableauRGB[1]>15) && (tableauRGB[2]>25 && tableauRGB[2]<75))
+    if ((tableauRGB[0]>=270 || tableauRGB[0]<330) && (tableauRGB[1]>SEUIL_GRIS) && (tableauRGB[2]>25 && tableauRGB[2]<75))
     couleur = MAUVE;
 
     //Blanc?
@@ -77,7 +78,7 @@ int evaluerCouleur(uint16_t tableauRGB[4], const uint16_t couleursPossibles[] = 
     couleur = NOIR;
 
     //Gris?
-    if (/*tableauRGB[1]<=15 &&*/ (tableauRGB[2]>=15 || tableauRGB[2]<90))
+    if (/*tableauRGB[1]<=SEUIL_GRIS &&*/ (tableauRGB[2]>=15 || tableauRGB[2]<90))
     //couleur = GRIS;
 
     return couleur;
