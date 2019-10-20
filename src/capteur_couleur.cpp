@@ -16,7 +16,8 @@ void initialiserCapteurCouleur()
     {
         Serial.println("No TCS34725 found ... check your connections");
     }
-
+    // CapteurCouleur.setInterrupt(true);      // turn off LED
+    
     return;
 }
 

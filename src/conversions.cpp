@@ -18,13 +18,16 @@ long long cmEnClics(float nbCm)
 
 float entreeAnalogiqueEnTension(uint16_t entreeAnalogique)
 {
-  return (float)((tensionArduino/entreeAnalogiqueMax)*(entreeAnalogique));
+  float tension = (float)((tensionArduino/entreeAnalogiqueMax)*(entreeAnalogique));
+  if (tension<0.3) tension = 0;
+
+  return tension;
 }
 
 float tensionEnDistance(float tension)
 {
-  float distanceEnCM;
-  distanceEnCM = 29.988 * pow(tension, -1.173);
+  if (tension==0) return 0;
+  float distanceEnCM = 29.988 * pow(tension, -1.173);
   return distanceEnCM;
 }
 
