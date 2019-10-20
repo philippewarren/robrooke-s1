@@ -18,6 +18,9 @@
 #define NOIR -1
 #define GRIS -50
 
+extern const uint16_t TOUTES_COULEURS[];
+extern const uint16_t COULEURS_OCTOGONE[];
+extern const uint16_t COULEURS_LETTRES[];
 
 //Initialise le capteur couleurs
 void initialiserCapteurCouleur();
@@ -26,6 +29,6 @@ void initialiserCapteurCouleur();
 void lireCapteurCouleur(uint8_t numero, uint16_t tableau[4]);
 
 //Transforme une couleur rgb dans un tableau en nom de couleur
-int evaluerCouleur(uint16_t tableau[4], const uint16_t couleursPossibles[] = TOUTES_COULEURS)
+int evaluerCouleur(uint16_t tableau[4], const uint16_t couleursPossibles[] = TOUTES_COULEURS);
 
 #endif
