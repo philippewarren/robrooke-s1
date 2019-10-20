@@ -3,7 +3,7 @@
 float lireDistanceIR(uint8_t capteur, uint8_t amplitude = 3)
 {
     int nombreDeLectures = (amplitude*2)-1;
-    int lectures[nombreDeLectures];
+    uint16_t lectures[nombreDeLectures];
     float distance;
     for (int i=0; i<nombreDeLectures; i++)
     {
