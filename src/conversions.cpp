@@ -27,3 +27,31 @@ float tensionEnDistance(float tension)
   distanceEnCM = 29.988 * pow(tension, -1.173);
   return distanceEnCM;
 }
+
+void rgbEnHsl(uint16_t tableau[4])
+{
+  float rouge = tableau[0]/255;
+  float vert = tableau[1]/255;
+  float bleu = tableau[2]/255;
+
+  float Cmax = max(rouge, max(vert, bleu));
+  float Cmin = min(rouge, min(vert, bleu));
+  float delta = Cmax-Cmin;
+
+  uint16_t H = 60, S, L;
+
+  if (delta==0) H *= 0;
+  else if (Cmax==rouge) H *= (uint16_t)(((uint16_t)((vert-bleu)/delta)) % 6);
+  else if (Cmax==vert) H *= (uint16_t)(((uint16_t)((bleu-rouge)/delta)) + 2);
+  else if (Cmax==bleu) H *= (uint16_t)(((uint16_t)((rouge-vert)/delta)) + 4);
+
+  S = (delta==0) ? 0 : (uint16_t)(100*delta/(1-abs(2*((Cmax+Cmin)/2)-1)));
+
+  L = (uint16_t)(100*(Cmax+Cmin)/2);
+
+  tableau[0] = H;
+  tableau[1] = S;
+  tableau[2] = L;
+   
+  return;
+}

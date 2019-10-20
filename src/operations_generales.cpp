@@ -1,8 +1,8 @@
 #include "operations_generales.h"
 
-void classerTableauCroissant(int tableau[], int NB_ELEMENTS)
+void classerTableauCroissant(uint16_t tableau[], int NB_ELEMENTS)
 {
-    int temp;
+    uint16_t temp;
     
     for (int i=0; i<NB_ELEMENTS-1; i++)
     {
@@ -19,10 +19,10 @@ void classerTableauCroissant(int tableau[], int NB_ELEMENTS)
     return;
 }
 
-float calculerMediane(int tableau[], int NB_ELEMENTS)
+uint16_t calculerMediane(uint16_t tableau[], int NB_ELEMENTS)
 {
     int position;
-    float mediane;
+    uint16_t mediane;
 
     classerTableauCroissant(tableau, NB_ELEMENTS);
     position = ((NB_ELEMENTS-1)/2);
