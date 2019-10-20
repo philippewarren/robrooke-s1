@@ -5,7 +5,7 @@ void loopNormal()
     if (lecture)
     {
         //test couleur
-        /*
+        
         Serial.println("lecture de la couleur");
         uint16_t couleur [4];
         lireCapteurCouleur(0,couleur);
@@ -26,9 +26,11 @@ void loopNormal()
         if (resultat == NOIR)Serial.print("noir");
         if (resultat == BLANC)Serial.print("blanc");
         if (resultat == GRIS)Serial.print("gris");
-        Serial.print('\n');*/
+        Serial.print('\n');
 
         //test distance
+        Serial.println("lecture de la distance");
+        Serial.println(lireDistanceIR(0));
         
         
         lecture = false;
