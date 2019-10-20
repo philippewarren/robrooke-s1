@@ -77,8 +77,8 @@ int evaluerCouleur(uint16_t tableauRGB[4], const uint16_t couleursPossibles[] = 
     couleur = NOIR;
 
     //Gris?
-    if (tableauRGB[1]<=15 && (tableauRGB[2]>=15 || tableauRGB[2]<90))
-    couleur = GRIS;
+    if (/*tableauRGB[1]<=15 &&*/ (tableauRGB[2]>=15 || tableauRGB[2]<90))
+    //couleur = GRIS;
 
     return couleur;
 }
