@@ -1,6 +1,6 @@
 #include "operations_generales.h"
 
-void classerTableauCroissant(uint16_t tableau[], int NB_ELEMENTS)
+void classerTableauCroissant(uint16_t tableau[], const int NB_ELEMENTS)
 {
     uint16_t temp;
     
@@ -19,7 +19,7 @@ void classerTableauCroissant(uint16_t tableau[], int NB_ELEMENTS)
     return;
 }
 
-uint16_t calculerMediane(uint16_t tableau[], int NB_ELEMENTS)
+uint16_t calculerMediane(uint16_t tableau[], const int NB_ELEMENTS)
 {
     int position;
     uint16_t mediane;

@@ -26,9 +26,9 @@ extern const uint16_t COULEURS_LETTRES[];
 void initialiserCapteurCouleur();
 
 //Lit les valeurs du capteur couleur et retourne les valeurs dans le tableau dans cet ordre: {rouge, vert, bleu, sansCouleur}
-void lireCapteurCouleur(uint8_t numero, uint16_t tableau[4]);
+void lireCapteurCouleur(uint8_t numeroDeCapteur, uint16_t tableauVide[4]);
 
 //Transforme une couleur rgb dans un tableau en nom de couleur
-int evaluerCouleur(uint16_t tableau[4], const uint16_t couleursPossibles[] = TOUTES_COULEURS);
+int evaluerCouleur(uint16_t tableauRGB[4], const uint16_t couleursPossibles[] = TOUTES_COULEURS);
 
 #endif

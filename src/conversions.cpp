@@ -28,11 +28,11 @@ float tensionEnDistance(float tension)
   return distanceEnCM;
 }
 
-void rgbEnHsl(uint16_t tableau[4])
+void rgbEnHsl(uint16_t tableauRGB[4])
 {
-  float rouge = 256*tableau[0]/tableau[4];
-  float vert = 256*tableau[1]/tableau[4];
-  float bleu = 256*tableau[2]/tableau[4];
+  float rouge = tableauRGB[0]/255;
+  float vert = tableauRGB[1]/255;
+  float bleu = tableauRGB[2]/255;
 
   float Cmax = max(rouge, max(vert, bleu));
   float Cmin = min(rouge, min(vert, bleu));
@@ -49,9 +49,9 @@ void rgbEnHsl(uint16_t tableau[4])
 
   L = (uint16_t)(100*(Cmax+Cmin)/2);
 
-  tableau[0] = H;
-  tableau[1] = S;
-  tableau[2] = L;
+  tableauRGB[0] = H;
+  tableauRGB[1] = S;
+  tableauRGB[2] = L;
    
   return;
 }

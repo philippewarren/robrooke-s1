@@ -21,6 +21,6 @@ float entreeAnalogiqueEnTension(uint16_t entreeAnalogique);
 float tensionEnDistance(float tension);
 
 //Convertit les 3 premiers nombres d'un tableau de 4 (r,g,b) en (h,s,l) dans le meme tableau, sans toucher la valeur 4 (sansCouleur)
-void rgbEnHsl(uint16_t tableau[4]);
+void rgbEnHsl(uint16_t tableauRGB[4]);
 
 #endif
