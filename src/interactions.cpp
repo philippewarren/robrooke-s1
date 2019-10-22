@@ -1,9 +1,9 @@
 #include "interactions.h"
 
 const byte PORT_DEL[] = {0, 45, 47, 49, 51};
-const byte PORT_BOUTON[] = {20, 22, 24, 26, 28};
+const byte PORT_BOUTON[] = {30, 22, 32, 24, 34};
 
-const byte PORT_INTERRUPT = 21;
+const byte PORT_INTERRUPT = 18;
 const byte PORT_RESTART = PORT_BOUTON[BOUTON_RESTART];
 
 bool loopEstCliqueEtRelache(uint8_t bumper)
@@ -24,26 +24,27 @@ bool loopEstCliqueEtRelache(uint8_t bumper)
 
 void allumerDEL(uint8_t numeroDEL = 1)
 {
-    if (numeroDEL==1||2||3||4)
+    if (numeroDEL==1 || numeroDEL==2 || numeroDEL==3 || numeroDEL==4)
     {
         digitalWrite(PORT_DEL[numeroDEL], HIGH);
     }
-    else if (numeroDEL==0)
+    else
     {
         for (int i=1; i<=4; i++)
         {
             digitalWrite(PORT_DEL[i], HIGH);
         }
     }
+    return;
 }
 
 void eteindreDEL(uint8_t numeroDEL = 1)
 {
-    if (numeroDEL==1||2||3||4)
+    if (numeroDEL==1 || numeroDEL==2 || numeroDEL==3 || numeroDEL==4)
     {
         digitalWrite(PORT_DEL[numeroDEL], LOW);
     }
-    else if (numeroDEL==0)
+    else
     {
         for (int i=1; i<=4; i++)
         {

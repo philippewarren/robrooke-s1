@@ -43,9 +43,10 @@ bool start = false;
 
 void setup()
 {
-  //initialiserBob();
-  BoardInit();
-  digitalWrite(13,HIGH);
+
+  initialiserBob();
+ // pinMode(36, OUTPUT);
+  //digitalWrite(36, HIGH);
 }
 
 /* ****************************************************************************
@@ -55,12 +56,8 @@ Fonctions de boucle infini (loop())
 
 void loop()
 {
+  if (arretUrgence) loopUrgence();
+  else loopNormal();
 
-  if (!start)
-    start =loopEstCliqueEtRelache(3);
-  else
-  {
-    suivreLigne(0.3);
-  }
-  delay(5);
+
 }
