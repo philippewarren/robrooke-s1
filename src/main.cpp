@@ -12,9 +12,10 @@ Inclure les librairies de functions que vous voulez utiliser
 
 //#include "init_robot.h"
 #include <Arduino.h>
-#include <LibRobus.h>
-#include "interactions.h"
-#include "suiveur_ligne.h"
+//#include <LibRobus.h>
+//#include "interactions.h"
+//#include "suiveur_ligne.h"
+#include "transfer.h"
 
 /* ****************************************************************************
 Variables globales et defines
@@ -40,13 +41,32 @@ Fonctions d'initialisation (setup)
 
 
 bool start = false;
+int taille = 0;
+int tableau[TAILLE_MAX][TAILLE_MAX];
+int ligne [TAILLE_MAX];
+
+void test_trajet(int d, int f)
+{
+  int out[TAILLE_MAX];
+  Serial.print("trajet de ");
+  Serial.print(d);
+  Serial.print(" a ");
+  Serial.print(f);
+  Serial.print('\n');
+  calculer_trajet(d,f,out);
+  afficher_trajet(out);
+}
 
 void setup()
 {
+  Serial.begin(9600);
+  test_trajet(0,4);
+  test_trajet(4,6);
+  test_trajet(5,0);
+  test_trajet(0,10);
+  test_trajet(1,2);
 
-  initialiserBob();
- // pinMode(36, OUTPUT);
-  //digitalWrite(36, HIGH);
+  
 }
 
 /* ****************************************************************************
@@ -56,8 +76,8 @@ Fonctions de boucle infini (loop())
 
 void loop()
 {
-  if (arretUrgence) loopUrgence();
-  else loopNormal();
+  //if (arretUrgence) loopUrgence();
+ // else loopNormal();
 
 
 }

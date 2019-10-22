@@ -34,6 +34,8 @@ void loopNormal()
         
         
         lecture = false;
+
+
     }
     else lecture = loopEstCliqueEtRelache(3);
 
