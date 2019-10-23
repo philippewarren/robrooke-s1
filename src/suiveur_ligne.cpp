@@ -2,21 +2,17 @@
 
 void lireSuiveurLigne(int output [8])
 {
+    const int pin = 13;
+    pinMode(pin,OUTPUT);
+    digitalWrite(13,HIGH);
     //constante
     int const NOMBRE_DE_LECTURE = 3;
     //lecture des donnée
-    output[0] = analogRead(A0);
-    output[1] = analogRead(A1);
-    output[2] = analogRead(A2);
-    output[3] = analogRead(A3);
-    output[4] = analogRead(A4);
-    output[5] = analogRead(A5);
-    output[6] = analogRead(A6);
-    output[7] = analogRead(A7);
-    for (int i=1;i<NOMBRE_DE_LECTURE;i++)
+    for(int i = 0; i<8;i++)output[i]=0;
+    for (int i=0;i<NOMBRE_DE_LECTURE;i++)
     {
     delay(1);
-    output[0] += analogRead(A0);
+    output[0] += analogRead(A8);
     output[1] += analogRead(A1);
     output[2] += analogRead(A2);
     output[3] += analogRead(A3);
@@ -25,15 +21,15 @@ void lireSuiveurLigne(int output [8])
     output[6] += analogRead(A6);
     output[7] += analogRead(A7);
     }
+    digitalWrite(pin,LOW);
 
     for (int i = 0; i<8; i++)output[i] /= NOMBRE_DE_LECTURE;
+
 }
 
 void suivreLigne(float vitesse)
 {
-    //constante proportionnelle à la différence de réflectivité des deux surfaces
-    // 1000 = sol blanc et ligne noir
-    const short CONTRASTE = 1000;
+    
 
     //lecture des données
     int lectureSuiveurDeLigne [8];
@@ -54,4 +50,31 @@ void suivreLigne(float vitesse)
     //modification de la vitesse des roues
     changerVitesseDeuxMoteurs(vitesse*(1+facteur),vitesse*(1-facteur));
 
+}
+
+bool detecterLigne()
+{
+    bool ligneDetecte = false;
+    //lecture des données
+    int lectureSuiveurDeLigne[8] ;
+    lireSuiveurLigne(lectureSuiveurDeLigne);
+
+    //calcule du seuil
+    long seuil = (long)CONTRASTE * 0.80;
+    seuil *= seuil  ;
+
+    //calcule de la somme des variances au carrée
+    for (int i=1;i<8;i++)
+    {
+        long delta = ((long)lectureSuiveurDeLigne[0]-(long)lectureSuiveurDeLigne[i]);
+        if (delta*delta > seuil)
+        {
+            ligneDetecte = true;
+        }
+    }
+
+    //test
+    return ligneDetecte;
+    
+    
 }

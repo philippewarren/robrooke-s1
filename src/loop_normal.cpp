@@ -1,5 +1,9 @@
 #include "loop_normal.h"
 bool lecture = false;
+bool avancer = false;
+bool ligne = false;
+long timerFinLigne = 0;
+bool timerLance = false;
 void loopNormal()
 {
     if (lecture)
@@ -42,6 +46,19 @@ void loopNormal()
         //test distance
         Serial.println("lecture de la distance");
         Serial.println(lireDistanceIR(0));
+
+        //test suiveur de ligne
+        int ligne[8];
+        lireSuiveurLigne(ligne);
+        Serial.println("lecture de la ligne");
+        for (int i = 0; i<8;i++)
+        {
+            Serial.print(ligne[i]);
+            Serial.print('\t');
+        }
+        Serial.print('\n');
+        Serial.println("presence de ligne");
+        Serial.println(detecterLigne());
         
         
         lecture = false;
@@ -49,6 +66,35 @@ void loopNormal()
 
     }
     else lecture = loopEstCliqueEtRelache(3);
+    if (avancer)
+    {
+        suivreLigne(0.5);
+        if(detecterLigne())
+        {
+            ligne = true;
+            timerLance = false;
+        }
+        else if(ligne)
+        {
+            if (!timerLance)
+            {
+                timerLance = true;
+                timerFinLigne = millis();
+            }
+            //si aucune ligne n'est détecter durant 0.300s, arret de la séquence
+            else if ((millis()-timerFinLigne)>300)
+            {
+                avancer=false;
+                changerVitesseDeuxMoteurs(0);
+                timerLance = false;
+            }
+        }
+    }
+    else
+    {
+        avancer = loopEstCliqueEtRelache(2);
+    }
+    
 
     // SOFT_TIMER_Update(); // A decommenter pour utiliser des compteurs logiciels
 }

@@ -4,8 +4,10 @@
 #include "init_robot.h"
 #include "interactions.h"
 #include "capteur_ir.h"
+#include "suiveur_ligne.h"
 //Loop standard
 void loopNormal();
+
 
 
 

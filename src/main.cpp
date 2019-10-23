@@ -41,6 +41,8 @@ Fonctions d'initialisation (setup)
 void setup()
 {
   initialiserBob();
+  pinMode(OUTPUT,12);
+  digitalWrite(12,HIGH);
 }
 
 /* ****************************************************************************
@@ -50,7 +52,7 @@ Fonctions de boucle infini (loop())
 
 void loop()
 {
-  if (arretUrgence) loopUrgence();
+  if (arretUrgence) /*loopUrgence()*/;
   else loopNormal();
   //pour ajouter des fonction à la boucle, veuillez modifier la boucle normale (loop_normal.cpp)
 
