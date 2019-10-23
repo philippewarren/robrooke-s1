@@ -1,6 +1,9 @@
 #include "loop_normal.h"
 bool lecture = false;
 bool avancer = false;
+bool ligne = false;
+long timerFinLigne = 0;
+bool timerLance = false;
 void loopNormal()
 {
     if (lecture)
@@ -43,6 +46,8 @@ void loopNormal()
             Serial.print('\t');
         }
         Serial.print('\n');
+        Serial.println("presence de ligne");
+        Serial.println(detecterLigne());
         
         
         lecture = false;
@@ -53,6 +58,26 @@ void loopNormal()
     if (avancer)
     {
         suivreLigne(0.5);
+        if(detecterLigne())
+        {
+            ligne = true;
+            timerLance = false;
+        }
+        else if(ligne)
+        {
+            if (!timerLance)
+            {
+                timerLance = true;
+                timerFinLigne = millis();
+            }
+            //si aucune ligne n'est détecter durant 0.300s, arret de la séquence
+            else if ((millis()-timerFinLigne)>300)
+            {
+                avancer=false;
+                changerVitesseDeuxMoteurs(0);
+                timerLance = false;
+            }
+        }
     }
     else
     {
