@@ -1,4 +1,4 @@
-#include "transfer.h"
+#include "transfert.h"
 
 void afficher_tableau (int tableau[TAILLE_MAX][TAILLE_MAX],int& taille)
 {

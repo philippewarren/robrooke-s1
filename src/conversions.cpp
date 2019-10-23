@@ -6,6 +6,8 @@ const uint16_t entreeAnalogiqueMax = 1023;
 const float diaRoue = 7.6;
 float largeurEss;
 
+extern uint16_t BORNES_COULEUR[];
+
 double clicsEnCm(long nbClics)
 {
   return nbClics/CLICS_PAR_CM;
@@ -32,24 +34,44 @@ float tensionEnDistance(float tension)
 
 void rgbEnHsl(uint16_t tableauRGB[4])
 {
-  float rouge = tableauRGB[0]/255;
-  float vert = tableauRGB[1]/255;
-  float bleu = tableauRGB[2]/255;
+  uint16_t etendue = BORNES_COULEUR[1]-BORNES_COULEUR[0];
+  
+  // float rouge = tableauRGB[0]/255.0;
+  // float vert = tableauRGB[1]/255.0;
+  // float bleu = tableauRGB[2]/255.0;
+  float rouge = ((float)tableauRGB[0]-BORNES_COULEUR[0])/(etendue);
+  float vert = ((float)tableauRGB[1]-BORNES_COULEUR[0])/(etendue);
+  float bleu = ((float)tableauRGB[2]-BORNES_COULEUR[0])/(etendue);
+  float sansCouleur = tableauRGB[3];
+  
+  {
+    Serial.print(255*rouge);
+    Serial.print('\t');
+    Serial.print(255*vert);
+    Serial.print('\t');
+    Serial.print(255*bleu);
+    Serial.print('\t');
+    Serial.println();
+  }
 
   float Cmax = max(rouge, max(vert, bleu));
   float Cmin = min(rouge, min(vert, bleu));
   float delta = Cmax-Cmin;
+  float preS;
 
-  uint16_t H = 60, S, L;
+  uint16_t H, S, L;
 
-  if (delta==0) H *= 0;
-  else if (Cmax==rouge) H *= (uint16_t)(((uint16_t)((vert-bleu)/delta)) % 6);
-  else if (Cmax==vert) H *= (uint16_t)(((uint16_t)((bleu-rouge)/delta)) + 2);
-  else if (Cmax==bleu) H *= (uint16_t)(((uint16_t)((rouge-vert)/delta)) + 4);
+  if (delta==0) H = 0;
+  else if (Cmax==rouge) H = (uint16_t)(60*(((vert-bleu)/delta) + (vert<bleu ? 6 : 0)));
+  else if (Cmax==vert) H = (uint16_t)(60*(((bleu-rouge)/delta) + 2));
+  else if (Cmax==bleu) H = (uint16_t)(60*(((rouge-vert)/delta) + 4));
 
-  S = (delta==0) ? 0 : (uint16_t)(100*delta/(1-abs(2*((Cmax+Cmin)/2)-1)));
+  preS = (delta==0) ? 0 : delta/(1-fabs(2*((Cmax+Cmin)/2)-1));
+  S = (uint16_t)(100*pow(preS, 0.5));
 
   L = (uint16_t)(100*(Cmax+Cmin)/2);
+  // L = (uint16_t)(100*((sansCouleur-3*BORNES_COULEUR[0])/(3.0*etendue)));
+ 
 
   tableauRGB[0] = H;
   tableauRGB[1] = S;

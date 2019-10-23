@@ -22,6 +22,8 @@ extern const uint16_t TOUTES_COULEURS[];
 extern const uint16_t COULEURS_OCTOGONE[];
 extern const uint16_t COULEURS_LETTRES[];
 
+extern const uint16_t BORNES_COULEUR[];
+
 //Initialise le capteur couleurs
 void initialiserCapteurCouleur();
 

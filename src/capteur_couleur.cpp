@@ -1,10 +1,12 @@
 #include "capteur_couleur.h"
 
-Adafruit_TCS34725 CapteurCouleur = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_4X);
+Adafruit_TCS34725 CapteurCouleur = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_1X);
 
 const uint16_t TOUTES_COULEURS[] = {ROUGE, JAUNE, VERT, TURQUOISE, BLEU, MAUVE};
 const uint16_t COULEURS_OCTOGONE[] = {ROUGE, JAUNE, VERT, BLEU};
 const uint16_t COULEURS_LETTRES[] = {ROUGE, VERT, BLEU};
+
+const uint16_t BORNES_COULEUR[] = {15, 165};
 
 void initialiserCapteurCouleur()
 {
@@ -16,7 +18,6 @@ void initialiserCapteurCouleur()
     {
         Serial.println("No TCS34725 found ... check your connections");
     }
-    // CapteurCouleur.setInterrupt(true);      // turn off LED
     
     return;
 }
@@ -28,59 +29,100 @@ void lireCapteurCouleur(uint8_t numeroDeCapteur, uint16_t tableauVide[4])
     uint16_t bleu;
     uint16_t sansCouleur;
 
-    // CapteurCouleur.setInterrupt(false);      // turn on LED
     CapteurCouleur.getRawData(&rouge, &vert, &bleu, &sansCouleur);
-    // CapteurCouleur.setInterrupt(true);      // turn off LED
+
+    Serial.print(rouge);
+    Serial.print("\t");
+    Serial.print(vert);
+    Serial.print("\t");
+    Serial.print(bleu);
+    Serial.print("\t");
+    Serial.println(sansCouleur);
     
     tableauVide[0] = (uint16_t)(256*(float)rouge/sansCouleur);
     tableauVide[1] = (uint16_t)(256*(float)vert/sansCouleur);
     tableauVide[2] = (uint16_t)(256*(float)bleu/sansCouleur);
     tableauVide[3] = sansCouleur;
 
+    rgbEnHsl(tableauVide);
+
     return;
 }
 
 int evaluerCouleur(uint16_t tableauRGB[4], const uint16_t couleursPossibles[] = TOUTES_COULEURS)
 {
-    rgbEnHsl(tableauRGB);
-    const int SEUIL_GRIS = 0;
+    // rgbEnHsl(tableauRGB);
+    const int SEUIL_NOIR = 20;
+    const int SEUIL_BLANC = 85;
+    const int SEUIL_GRIS = 15;
 
-    int couleur;
-    //Rouge?
-    if ((tableauRGB[0]>=330 || tableauRGB[0]<30) && (tableauRGB[1]>SEUIL_GRIS) && (tableauRGB[2]>25 && tableauRGB[2]<75))
-    couleur = ROUGE;
-    
-    //Jaune?
-    if ((tableauRGB[0]>=30 || tableauRGB[0]<90) && (tableauRGB[1]>SEUIL_GRIS) && (tableauRGB[2]>25 && tableauRGB[2]<75))
-    couleur = JAUNE;
+    int couleur = 0;
 
-    //Vert?
-    if ((tableauRGB[0]>=90 || tableauRGB[0]<150) && (tableauRGB[1]>SEUIL_GRIS) && (tableauRGB[2]>25 && tableauRGB[2]<75))
-    couleur = VERT;
+    //Blanc, noir, gris
+    if (tableauRGB[1]<=SEUIL_GRIS || (tableauRGB[2]<=SEUIL_NOIR || tableauRGB[2]>=SEUIL_BLANC))
+    {
+        // Blanc?
+        if (tableauRGB[2]>=SEUIL_BLANC)
+            couleur = BLANC;
 
-    //Turquoise?
-    if ((tableauRGB[0]>=150 || tableauRGB[0]<210) && (tableauRGB[1]>SEUIL_GRIS) && (tableauRGB[2]>25 && tableauRGB[2]<75))
-    couleur = TURQUOISE;
+        //Noir?
+        else if (tableauRGB[2]<=SEUIL_NOIR)
+            couleur = NOIR;
 
-    //Bleu?
-    if ((tableauRGB[0]>=210 || tableauRGB[0]<270) && (tableauRGB[1]>SEUIL_GRIS) && (tableauRGB[2]>25 && tableauRGB[2]<75))
-    couleur = BLEU;
+        //Gris?
+        else
+            couleur = GRIS;
+    }
+    else
+    {
+        // 6 couleurs
+        if (couleursPossibles == TOUTES_COULEURS)
+        {
+            //Rouge?
+            if (tableauRGB[0]>=330 || tableauRGB[0]<30)
+                couleur = ROUGE;
 
-    //Mauve?
-    if ((tableauRGB[0]>=270 || tableauRGB[0]<330) && (tableauRGB[1]>SEUIL_GRIS) && (tableauRGB[2]>25 && tableauRGB[2]<75))
-    couleur = MAUVE;
+            //Jaune?
+            else if (tableauRGB[0]>=30 && tableauRGB[0]<90)
+                couleur = JAUNE;
 
-    //Blanc?
-    if (/*tableauRGB[1]>75 &&*/ tableauRGB[2]>=90)
-    couleur = BLANC;
+            //Vert?
+            else if (tableauRGB[0]>=90 && tableauRGB[0]<150)
+                couleur = VERT;
 
-    //Noir?
-    if (/*tableauRGB[1]<25 &&*/ tableauRGB[2]<15)
-    couleur = NOIR;
+            //Turquoise?
+            else if (tableauRGB[0]>=150 && tableauRGB[0]<210)
+                couleur = TURQUOISE;
 
-    //Gris?
-    if (/*tableauRGB[1]<=SEUIL_GRIS &&*/ (tableauRGB[2]>=15 || tableauRGB[2]<90))
-    //couleur = GRIS;
+            //Bleu?
+            else if (tableauRGB[0]>=210 && tableauRGB[0]<270)
+                couleur = BLEU;
+
+            //Mauve?
+            else if (tableauRGB[0]>=270 && tableauRGB[0]<330)
+                couleur = MAUVE;
+        }
+
+        // 4 couleurs
+        else if (couleursPossibles == COULEURS_OCTOGONE)
+        {
+            //Rouge?
+            if (tableauRGB[0]>=285 || tableauRGB[0]<45)
+                couleur = ROUGE;
+
+            //Jaune?
+            else if (tableauRGB[0]>=45 && tableauRGB[0]<90)
+                couleur = JAUNE;
+
+            //Vert?
+            else if (tableauRGB[0]>=90 && tableauRGB[0]<175)
+                couleur = VERT;
+
+            //Bleu?
+            else if (tableauRGB[0]>=175 && tableauRGB[0]<285)
+                couleur = BLEU;
+        }
+    }
 
     return couleur;
 }

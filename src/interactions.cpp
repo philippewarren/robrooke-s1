@@ -1,6 +1,6 @@
 #include "interactions.h"
 
-const byte PORT_DEL[] = {0, 45, 47, 49, 51};
+const byte PORT_DEL[] = {0, 45, 47, 49, 48};
 const byte PORT_BOUTON[] = {30, 22, 32, 24, 34};
 
 const byte PORT_INTERRUPT = 18;
