@@ -1,5 +1,6 @@
 #include "loop_normal.h"
 bool lecture = false;
+bool avancer = false;
 void loopNormal()
 {
     if (lecture)
@@ -31,6 +32,17 @@ void loopNormal()
         //test distance
         Serial.println("lecture de la distance");
         Serial.println(lireDistanceIR(0));
+
+        //test suiveur de ligne
+        int ligne[8];
+        lireSuiveurLigne(ligne);
+        Serial.println("lecture de la ligne");
+        for (int i = 0; i<8;i++)
+        {
+            Serial.print(ligne[i]);
+            Serial.print('\t');
+        }
+        Serial.print('\n');
         
         
         lecture = false;
@@ -38,6 +50,15 @@ void loopNormal()
 
     }
     else lecture = loopEstCliqueEtRelache(3);
+    if (avancer)
+    {
+        suivreLigne(0.5);
+    }
+    else
+    {
+        avancer = loopEstCliqueEtRelache(2);
+    }
+    
 
     // SOFT_TIMER_Update(); // A decommenter pour utiliser des compteurs logiciels
 }

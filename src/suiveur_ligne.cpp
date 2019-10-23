@@ -5,9 +5,9 @@ void lireSuiveurLigne(int output [8])
     //constante
     int const NOMBRE_DE_LECTURE = 3;
     //lecture des donnée
-    output[0] = analogRead(A0);
+    output[0] = analogRead(A8);
     output[1] = analogRead(A1);
-    output[2] = analogRead(A2);
+    output[2] = analogRead(A2); //Si vous changer une valeur, pensez à la changé plus bas aussi
     output[3] = analogRead(A3);
     output[4] = analogRead(A4);
     output[5] = analogRead(A5);
@@ -16,7 +16,7 @@ void lireSuiveurLigne(int output [8])
     for (int i=1;i<NOMBRE_DE_LECTURE;i++)
     {
     delay(1);
-    output[0] += analogRead(A0);
+    output[0] += analogRead(A8);
     output[1] += analogRead(A1);
     output[2] += analogRead(A2);
     output[3] += analogRead(A3);
