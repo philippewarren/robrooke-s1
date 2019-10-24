@@ -13,6 +13,7 @@
 #include "capteur_couleur.h"
 #include "capteur_ir.h"
 #include "suiveur_ligne.h"
+#include "servomoteur.h"
 
 #include "loop_normal.h"
 #include "loop_urgence.h"

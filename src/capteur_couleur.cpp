@@ -16,11 +16,11 @@ void initialiserCapteurCouleur()
 {
     if (CapteurCouleur.begin())
     {
-        Serial.println("Found sensor");
+        Serial.println("Capteur couleur branché");
     }
     else
     {
-        Serial.println("No TCS34725 found ... check your connections");
+        Serial.println("Pas de capteur couleur ... verifiez la connection");
     }
     
     return;

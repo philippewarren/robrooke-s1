@@ -9,9 +9,10 @@ bool avancerDroit2 = false;
 bool ligne = false;
 long timerFinLigne = 0;
 bool timerLance = false;
+int angleCourrant = 0;
 void loopNormal()
 {
-    if (lecture)
+    /*if (lecture)
     {
         //test couleur
         
@@ -119,10 +120,9 @@ void loopNormal()
     {
         partielIntegralDerive(1,true);
         vitesseD=vitesseG=vitesse;
-        avancerDroit2 = loopEstCliqueEtRelache(0);
+       // avancerDroit2 = loopEstCliqueEtRelache(0);
         itt=0;
-    }
-    
+    }*/
 
     // SOFT_TIMER_Update(); // A decommenter pour utiliser des compteurs logiciels
 }

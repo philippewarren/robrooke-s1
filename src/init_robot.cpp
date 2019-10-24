@@ -16,6 +16,9 @@ void initialiserBob()
     // DIST_45 = DIST_90*TAN_22_5;              //la distance que Bob doit avancer pour un virage de 45 degres
     Serial.println("##Connection serie active et fonctionnelle.##");
     initialiserCapteurCouleur();
+    initialiserServoFixe(0);
+    delay(1000);
+    changerAngleServoLibre(0, 45);
 }
 
 void initialiserPortsDEL()
