@@ -5,6 +5,7 @@
 #include "interactions.h"
 #include "capteur_ir.h"
 #include "suiveur_ligne.h"
+#include "mouvement.h"
 //Loop standard
 void loopNormal();
 
