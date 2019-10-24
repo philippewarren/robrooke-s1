@@ -20,10 +20,16 @@ void changerVitesseDeuxMoteurs(float vitesseG, float vitesseD = 200.0);
 //Met la vitesse des deux moteurs à 0
 void arreterDeuxMoteurs();
 
-//PID retourne différence droite-gauche
+//PID retourne différence Gauche - Droite
 float partielIntegralDerive(float multiRoueDroite = 1,bool reset = 0);
-//mouvement non bloquant
+void syncroroue(float vitesse,float multiDroit = 1,bool reset = 0);
+
+//mouvement non bloquant, distance en cm
 bool avancerDroit(float vitesse, float distance);
+
+//rotation dans le sens anti-horaire
+bool tourner(float vitesse, float angle);
+
 
 
 

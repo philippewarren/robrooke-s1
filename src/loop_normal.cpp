@@ -1,8 +1,6 @@
 #include "loop_normal.h"
 int itt = 0;
-float vitesse = 0.5;
-float vitesseD = 0;
-float vitesseG=0;
+float vitesse = 0.3;
 bool lecture = false;
 bool avancerLigne = false;
 bool avancerDroit2 = false;
@@ -101,26 +99,11 @@ void loopNormal()
     }
     if (avancerDroit2)
     {
-        changerVitesseDeuxMoteurs(vitesse);
-        Serial.println(ENCODER_Read(0));
-        Serial.println(ENCODER_Read(1));
-        float corr = vitesse*partielIntegralDerive()/2;
-        Serial.println(corr);
-        vitesseD = vitesseD + corr;
-        vitesseG = vitesseG - corr;
-        changerVitesseDeuxMoteurs(vitesseG,vitesseD);
-
-        itt++;
-        if (itt >500)
-        {avancerDroit2 = false;
-        changerVitesseDeuxMoteurs(0);}
+        if (avancerDroit(vitesse,30) )avancerDroit2 = false;
     }
     else
     {
-        partielIntegralDerive(1,true);
-        vitesseD=vitesseG=vitesse;
         avancerDroit2 = loopEstCliqueEtRelache(0);
-        itt=0;
     }
     
 
