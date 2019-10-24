@@ -7,6 +7,7 @@ bool avancerDroit2 = false;
 bool ligne = false;
 long timerFinLigne = 0;
 bool timerLance = false;
+int angleCourrant = 0;
 void loopNormal()
 {
     if (lecture)
@@ -102,10 +103,11 @@ void loopNormal()
         if (avancerDroit(vitesse,30) )avancerDroit2 = false;
     }
     else
-    {
+
         avancerDroit2 = loopEstCliqueEtRelache(0);
     }
     
+
 
     // SOFT_TIMER_Update(); // A decommenter pour utiliser des compteurs logiciels
 }

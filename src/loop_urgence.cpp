@@ -6,6 +6,7 @@ void loopUrgence()
     allumerDEL(0);
     Serial.print("Interrompu ");
     Serial.println(compteur++);
+    arreterDeuxMoteurs();
     if (digitalRead(PORT_RESTART))
     {
         eteindreDEL(0);
