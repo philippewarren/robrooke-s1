@@ -1,5 +1,5 @@
 #ifndef SUIVEUR_LIGNE_H
-#define SUIVEUR_LIHNE_H
+#define SUIVEUR_LIGNE_H
 
 #include <Arduino.h>
 #include <LibRobus.h>

@@ -66,18 +66,18 @@ float partielIntegralDerive(bool reset = 0)
   float kd = 0;
   static int timer = micros();
   static float integrale = 0;
-  static float retour = 0;
+  static float ancienneErreur = 0;
   if (reset)
   {
     timer = micros();
     integrale = 0;
-    retour = 0;
+    ancienneErreur = 0;
   }
   float deltaT = (float)(micros()-timer)/1000000;
   float diffdist = ENCODER_ReadReset(0)-ENCODER_ReadReset(1);
   float partiel = kp*diffdist / deltaT;
   integrale += ki*diffdist;
-  float derive = kd*diffdist*deltaT;
+  float derive = kd*(diffdist-ancienneErreur)/(deltaT*deltaT);
   timer = micros();
   if(!reset)
   {
@@ -86,8 +86,8 @@ float partielIntegralDerive(bool reset = 0)
   Serial.println(integrale);
   Serial.println(derive);
   }
-  retour += (partiel + integrale + derive)/1000;
-  return retour;
+  ancienneErreur = diffdist;
+  return partiel + integrale + derive;
 
 
 }

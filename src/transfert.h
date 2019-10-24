@@ -1,5 +1,5 @@
-#ifndef TRANSFER_H
-#define TRANSFER_H
+#ifndef TRANSFERT_H
+#define TRANSFERT_H
 
 #include <Arduino.h>
 
@@ -29,6 +29,7 @@ void ajouter_ligne(int tableau[TAILLE_MAX][TAILLE_MAX],int& taille,int ajout[TAI
 //schéma
 /*
             0
+            |
         3---1---4
             |
         5---2---6
