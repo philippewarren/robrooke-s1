@@ -33,7 +33,7 @@ void changerVitesseMoteur(uint8_t moteur, float nouvelleVitesse)
   return;
 }
 
-void changerVitesseDeuxMoteurs(float vitesseG, float vitesseD = 200)
+void changerVitesseDeuxMoteurs(float vitesseG, float vitesseD = 200.0)
 {   
   if (vitesseD==200) vitesseD=vitesseG;
   
@@ -57,3 +57,39 @@ void arreterDeuxMoteurs()
   changerVitesseDeuxMoteurs(0);
   return;
 }
+
+//PI retourne différence droite-gauche
+float partielIntegralDerive(float multiRoueDroite = 1,bool reset = 0)
+{
+  float kp = 0.2;
+  float ki = 0.005;
+  float kd = 0;
+  static int timer = micros();
+  static float integrale = 0;
+  static float ancienneErreur = 0;
+  if (reset)
+  {
+    timer = micros();
+    integrale = 0;
+    ancienneErreur = 0;
+  }
+  float deltaT = (float)(micros()-timer)/1000000;
+  float diffdist = ENCODER_ReadReset(0)-(ENCODER_ReadReset(1)*multiRoueDroite);
+  float partiel = kp*diffdist / deltaT;
+  integrale += ki*diffdist;
+  float derive = kd*(diffdist-ancienneErreur)/(deltaT*deltaT);
+  timer = micros();
+  if(!reset)
+  {
+    Serial.println("iteration");
+  Serial.println(partiel);
+  Serial.println(integrale);
+  Serial.println(derive);
+  }
+  ancienneErreur = diffdist;
+  return partiel + integrale + derive;
+
+
+}
+//mouvement non bloquant
+bool avancerDroit(float vitesse, float distance);

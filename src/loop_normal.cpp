@@ -1,6 +1,11 @@
 #include "loop_normal.h"
+int itt = 0;
+float vitesse = 0.5;
+float vitesseD = 0;
+float vitesseG=0;
 bool lecture = false;
-bool avancer = false;
+bool avancerLigne = false;
+bool avancerDroit2 = false;
 bool ligne = false;
 long timerFinLigne = 0;
 bool timerLance = false;
@@ -66,9 +71,9 @@ void loopNormal()
 
     }
     else lecture = loopEstCliqueEtRelache(3);
-    if (avancer)
+    if (avancerLigne)
     {
-        suivreLigne(0.5);
+        suivreLigne(vitesse);
         if(detecterLigne())
         {
             ligne = true;
@@ -84,7 +89,7 @@ void loopNormal()
             //si aucune ligne n'est détecter durant 0.300s, arret de la séquence
             else if ((millis()-timerFinLigne)>300)
             {
-                avancer=false;
+                avancerLigne=false;
                 changerVitesseDeuxMoteurs(0);
                 timerLance = false;
             }
@@ -92,7 +97,30 @@ void loopNormal()
     }
     else
     {
-        avancer = loopEstCliqueEtRelache(2);
+        avancerLigne = loopEstCliqueEtRelache(2);
+    }
+    if (avancerDroit2)
+    {
+        changerVitesseDeuxMoteurs(vitesse);
+        Serial.println(ENCODER_Read(0));
+        Serial.println(ENCODER_Read(1));
+        float corr = vitesse*partielIntegralDerive()/2;
+        Serial.println(corr);
+        vitesseD = vitesseD + corr;
+        vitesseG = vitesseG - corr;
+        changerVitesseDeuxMoteurs(vitesseG,vitesseD);
+
+        itt++;
+        if (itt >500)
+        {avancerDroit2 = false;
+        changerVitesseDeuxMoteurs(0);}
+    }
+    else
+    {
+        partielIntegralDerive(1,true);
+        vitesseD=vitesseG=vitesse;
+        avancerDroit2 = loopEstCliqueEtRelache(0);
+        itt=0;
     }
     
 

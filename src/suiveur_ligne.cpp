@@ -48,6 +48,7 @@ void suivreLigne(float vitesse)
     facteur = facteur / (4 * CONTRASTE);
 
     //modification de la vitesse des roues
+    if(vitesse < 0)facteur *= -1;
     changerVitesseDeuxMoteurs(vitesse*(1+facteur),vitesse*(1-facteur));
 
 }
