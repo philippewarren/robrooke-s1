@@ -8,6 +8,10 @@ const uint16_t COULEURS_LETTRES[] = {ROUGE, VERT, BLEU};
 
 const uint16_t BORNES_COULEUR[] = {15, 165};
 
+    const int SEUIL_NOIR = 35;
+    const int SEUIL_BLANC = 85;
+    const int SEUIL_GRIS = 15;
+
 void initialiserCapteurCouleur()
 {
     if (CapteurCouleur.begin())
@@ -52,9 +56,6 @@ void lireCapteurCouleur(uint8_t numeroDeCapteur, uint16_t tableauVide[4])
 int evaluerCouleur(uint16_t tableauRGB[4], const uint16_t couleursPossibles[] = TOUTES_COULEURS)
 {
     // rgbEnHsl(tableauRGB);
-    const int SEUIL_NOIR = 20;
-    const int SEUIL_BLANC = 85;
-    const int SEUIL_GRIS = 15;
 
     int couleur = 0;
 
@@ -111,15 +112,15 @@ int evaluerCouleur(uint16_t tableauRGB[4], const uint16_t couleursPossibles[] = 
                 couleur = ROUGE;
 
             //Jaune?
-            else if (tableauRGB[0]>=45 && tableauRGB[0]<90)
+            else if (tableauRGB[0]>=40 && tableauRGB[0]<90)
                 couleur = JAUNE;
 
             //Vert?
-            else if (tableauRGB[0]>=90 && tableauRGB[0]<175)
+            else if (tableauRGB[0]>=90 && tableauRGB[0]<155)
                 couleur = VERT;
 
             //Bleu?
-            else if (tableauRGB[0]>=175 && tableauRGB[0]<285)
+            else if (tableauRGB[0]>=155 && tableauRGB[0]<285)
                 couleur = BLEU;
         }
     }

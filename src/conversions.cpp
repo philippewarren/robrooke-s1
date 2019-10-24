@@ -6,7 +6,7 @@ const uint16_t entreeAnalogiqueMax = 1023;
 const float diaRoue = 7.6;
 float largeurEss;
 
-extern uint16_t BORNES_COULEUR[];
+extern const uint16_t BORNES_COULEUR[];
 
 double clicsEnCm(long nbClics)
 {
@@ -67,7 +67,7 @@ void rgbEnHsl(uint16_t tableauRGB[4])
   else if (Cmax==bleu) H = (uint16_t)(60*(((rouge-vert)/delta) + 4));
 
   preS = (delta==0) ? 0 : delta/(1-fabs(2*((Cmax+Cmin)/2)-1));
-  S = (uint16_t)(100*pow(preS, 0.5));
+  S = /*(100*preS>SEUIL_NOIR) ? */(uint16_t)(100*pow(preS, 0.5)) /*: (uint16_t)(100*preS)*/;
 
   L = (uint16_t)(100*(Cmax+Cmin)/2);
   // L = (uint16_t)(100*((sansCouleur-3*BORNES_COULEUR[0])/(3.0*etendue)));

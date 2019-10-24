@@ -24,6 +24,10 @@ extern const uint16_t COULEURS_LETTRES[];
 
 extern const uint16_t BORNES_COULEUR[];
 
+extern const int SEUIL_NOIR;
+extern const int SEUIL_BLANC;
+extern const int SEUIL_GRIS;
+
 //Initialise le capteur couleurs
 void initialiserCapteurCouleur();
 

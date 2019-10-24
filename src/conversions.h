@@ -2,6 +2,8 @@
 #define CONVERSIONS_H
 #include <LibRobus.h>
 
+#include "capteur_couleur.h"
+
 extern const double CLICS_PAR_CM;
 //diametre de la roue en cm
 extern const float diaRoue;
