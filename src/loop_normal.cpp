@@ -117,7 +117,7 @@ void loopNormal()
     }
     else
     {
-        partielIntegralDerive(true);
+        partielIntegralDerive(1,true);
         vitesseD=vitesseG=vitesse;
         avancerDroit2 = loopEstCliqueEtRelache(0);
         itt=0;

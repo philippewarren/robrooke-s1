@@ -59,7 +59,7 @@ void arreterDeuxMoteurs()
 }
 
 //PI retourne différence droite-gauche
-float partielIntegralDerive(bool reset = 0)
+float partielIntegralDerive(float multiRoueDroite = 1,bool reset = 0)
 {
   float kp = 0.2;
   float ki = 0.005;
@@ -74,7 +74,7 @@ float partielIntegralDerive(bool reset = 0)
     ancienneErreur = 0;
   }
   float deltaT = (float)(micros()-timer)/1000000;
-  float diffdist = ENCODER_ReadReset(0)-ENCODER_ReadReset(1);
+  float diffdist = ENCODER_ReadReset(0)-(ENCODER_ReadReset(1)*multiRoueDroite);
   float partiel = kp*diffdist / deltaT;
   integrale += ki*diffdist;
   float derive = kd*(diffdist-ancienneErreur)/(deltaT*deltaT);

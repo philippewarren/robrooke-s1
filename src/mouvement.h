@@ -21,7 +21,7 @@ void changerVitesseDeuxMoteurs(float vitesseG, float vitesseD = 200.0);
 void arreterDeuxMoteurs();
 
 //PID retourne différence droite-gauche
-float partielIntegralDerive(bool reset = 0);
+float partielIntegralDerive(float multiRoueDroite = 1,bool reset = 0);
 //mouvement non bloquant
 bool avancerDroit(float vitesse, float distance);
 
