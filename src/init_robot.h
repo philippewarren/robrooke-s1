@@ -20,6 +20,9 @@
 #include "loop_A.h"
 #include "loop_B.h"
 
+//
+extern const int COULEURS_OCTOGONE[];
+
 //Bob-A ou Bob-B ('A' ou 'B', 'I' avant d'être initialisé)
 extern char Bob;
 
