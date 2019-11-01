@@ -42,25 +42,25 @@ void loopOctogoneA()
         switch (COULEURS_BOB[0])
         {
         case BLEU:
-            angle1 = -90;
-            angle2 = 0;
-            distance = 0;
+            angle1 = -135;
+            angle2 = 5;
+            distance = -45;
             break;
         
         case JAUNE:
-            angle1 = 90;
-            angle2 = 0;
-            distance = 0;
+            angle1 = 135;
+            angle2 = 5;
+            distance = 45;
             break;
         case ROUGE:
-            angle1 = 35;
-            angle2 = -20;
-            distance = 50;
+            angle1 = 45;
+            angle2 = 15;
+            distance = 110;
             break;
         case VERT:
-            angle1 = -35;
-            angle2 = 20;
-            distance = 50;
+            angle1 = -45;
+            angle2 = -15;
+            distance = 110;
             break;
         }
         etape = 1;
@@ -70,17 +70,18 @@ void loopOctogoneA()
         switch (etape)
         {
         case 1:
-            if (tourner(0.2,angle1))etape = 2;
+            if (avancerDroit(0.2,50))etape = 2;
             break;
         case 2:
-            if (avancerDroit(0.3,distance))etape = 3;
+            if (tourner(0.3,angle1))etape = 3;
             break;
         case 3:
-            if(tourner(0.2,angle2))etape = 4;
+            if (avancerDroit(0.2,20))etape = 4;
             break;
         case 4:
-            if(traquerLigne(0.5))etape = 5;
+            if (traquerLigne(0.3))etape = 0;
             break;
+
         
         }
     }

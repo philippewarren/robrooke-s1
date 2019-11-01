@@ -17,9 +17,9 @@ void loopNormal()
     // if (ROBUS_IsBumper(3)) lecture = true;
     // if (lecture == true) {if (avancerDroit(0.2, 25)) lecture = false;}
 
-    // if (lecture)
-    // {
-    //     //test couleur
+    if (lecture)
+    {
+        //test couleur
         
         Serial.println("lecture de la couleur");
         uint16_t couleur [4];

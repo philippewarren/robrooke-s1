@@ -61,7 +61,6 @@ void arreterDeuxMoteurs()
 void syncroroue(float vitesse, float multiDroit = 1, bool reset = 0)
 {
   static float correction = 1;
-  //Serial.println(correction);
   if (reset)
   {
     correction = 1;
@@ -111,7 +110,6 @@ bool avancerDroit(float vitesse, float distance)
 
     ancEnc = enc;
 
-    //Serial.println(distanceParcourue);
 
     if ((distanceParcourue >= distance && distance > 0)||(distanceParcourue <= distance && distance < 0))
     {
@@ -163,11 +161,9 @@ bool tourner(float vitesse, float angle)
 
   ancEnc = enc;
 
-  //Serial.println(distanceParcourue);
 
   if ((distanceParcourue >= distance && distance > 0)||(distanceParcourue <= distance && distance < 0))
   {
-    //Serial.println(distanceParcourue);
     distanceParcourue = 0;
     syncroroue(0, 1, true);
     return true;

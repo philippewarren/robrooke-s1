@@ -42,14 +42,17 @@ void suivreLigne(float vitesse)
     float delta4 = lectureSuiveurDeLigne[0]-lectureSuiveurDeLigne[7];
 
     //calcul du facteur de correction
-    float facteur = delta1*1 + delta2 * 1.5+ delta3 * 2+ delta4 * 3;
+    float facteur = delta1*1 + delta2 * 1.5+ delta3 * 3+ delta4 * 5;
     if (facteur > 4*CONTRASTE) facteur = 4*CONTRASTE;
     else if (facteur < -4*CONTRASTE) facteur = -4*CONTRASTE;
     facteur = facteur / (6 * CONTRASTE);
 
     //modification de la vitesse des roues
+    float factVit = facteur;
+    if(factVit<0)factVit *= -1;
+    factVit = 1 -factVit*0.7;
     if(vitesse < 0)facteur *= -1;
-    syncroroue(vitesse,(1+facteur));
+    syncroroue(vitesse*factVit,(1+facteur));
 
 }
 
@@ -61,7 +64,7 @@ bool detecterLigne()
     lireSuiveurLigne(lectureSuiveurDeLigne);
 
     //calcule du seuil
-    long seuil = (long)CONTRASTE * 0.60;
+    long seuil = (long)CONTRASTE * 0.50;
     seuil *= seuil  ;
 
     //calcule de la somme des variances au carrée
@@ -102,17 +105,17 @@ bool traquerLigne(float vitesse)
         timer = millis();
         }
          //si aucune ligne n'est détecter durant 0.300s, arret de la séquence
-        else if ((millis()-timer)>150/vitesse)
+        else if ((millis()-timer)>200/vitesse)
         {
-        changerVitesseDeuxMoteurs(0);
         timerLance = false;
         ligne = false;
         retour = true;
+        syncroroue(0,1,true);
         }
     }
     if (ligne)
     {
-        suivreLigne(vitesse*0.8);
+        suivreLigne(vitesse);
     }
     else if(retour == false)
     {
