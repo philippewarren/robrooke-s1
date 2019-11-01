@@ -10,13 +10,13 @@ const int POS_PINCE_FERMEE = 178;
 const int POS_BRAS_HAUT = 0;
 const int POS_BRAS_BAS = 0;
 
-void initialiserServo(uint8_t indexDuServomoteur, bool estFixe = false)
+bool initialiserServo(uint8_t indexDuServomoteur, bool estFixe = false)
 {
     activerServo(indexDuServomoteur);
     changerAngleServo(indexDuServomoteur, ANGLE_INITIAL[indexDuServomoteur]);
     if (!estFixe)
         desactiverServo(indexDuServomoteur);
-    return;
+    return estFixe;
 }
 
 void activerServo(uint8_t indexDuServomoteur)
@@ -33,7 +33,7 @@ void desactiverServo(uint8_t indexDuServomoteur)
     return;
 }
 
-void changerAngleServo(uint8_t indexDuServomoteur, uint8_t angle, bool estFixe = true)
+bool changerAngleServo(uint8_t indexDuServomoteur, uint8_t angle, bool estFixe = true)
 {
     activerServo(indexDuServomoteur);
     angle = angle<ANGLE_MINIMAL[indexDuServomoteur] ? ANGLE_MINIMAL[indexDuServomoteur] : angle;
@@ -45,7 +45,7 @@ void changerAngleServo(uint8_t indexDuServomoteur, uint8_t angle, bool estFixe =
         desactiverServo(indexDuServomoteur);
     }
 
-    return;
+    return estFixe;
 }
 
 bool ouvrirPince(bool estFixe = false)
