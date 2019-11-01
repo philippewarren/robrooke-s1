@@ -27,18 +27,28 @@ bool tempsBobB()
     return retour;
 }
 
+/* Plan de l'octogone
+R # # # V
+# # B # #
+# # O # #
+# # A # #
+J # # # B
+*/
+//Ordre modifiable au besoin {R    , V   , B   , J    }
+const int ORDRE_COULEURS[] = {ROUGE, VERT, BLEU, JAUNE};
+
 float calculAngleCouleur(int COULEUR)
 {
     float angle = 0;
-    if (COULEUR == ROUGE)
+    if (COULEUR == ORDRE_COULEURS[0])
     {
         angle = -(90+45);
     }
-    else if (COULEUR == VERT)
+    else if (COULEUR == ORDRE_COULEURS[1])
     {
         angle = (90+45);
     }
-    else if (COULEUR == BLEU)
+    else if (COULEUR == ORDRE_COULEURS[2])
     {
         angle = (43);
     }
@@ -60,7 +70,7 @@ J # # # B
 void loopOctogoneB()
 {
     //Tableau lié aux étape:   {0, 1, 2, 03, 4, 05, 6, 07, 8, 09, 10, 11}
-    static float distances[] = {0, 0, 0, 25.0, 0, 15.0, 0, 20.0, 0, 30.0, 0, -30.0};
+    static float distances[] = {0, 0, 0, 35.0, 0, 15.0, 0, 20.0, 0, 30.0, 0, -30.0};
     //static int distance = 0;
     static float angleCouleur = 0;
     
@@ -119,7 +129,7 @@ void loopOctogoneB()
         break;
 
     case 8:
-        if (traquerLigne(0.5)) etape += 1;
+        if (traquerLigne(0.3)) etape += 1;
         break;
     
     case 9:

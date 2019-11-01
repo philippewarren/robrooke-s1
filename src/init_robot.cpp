@@ -4,7 +4,7 @@ char Bob  = 'I';
 volatile bool arretUrgence = false;
 extern float largeurEss;
 
-const int COULEURS_BOB[] = {ROUGE, BLEU};
+const int COULEURS_BOB[] = {ROUGE, JAUNE};
 
 void initialiserBob()
 {
