@@ -49,12 +49,12 @@ void loopOctogoneA()
         case ROUGE:
             angle1 = 50;
             angle2 = -50;
-            distance = 10;
+            distance = 30;
             break;
         case VERT:
             angle1 = -50;
             angle2 = 50;
-            distance = 10;
+            distance = 30;
             break;
         }
         etape = 1;
