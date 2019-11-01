@@ -50,7 +50,7 @@ void loopOctogoneB()
         break;
 
     case 1:
-        if (departBobB(millis()) etape += 1;
+        if (departBobB(millis())) etape += 1;
         break;
 
     case 2:
