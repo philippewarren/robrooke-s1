@@ -15,6 +15,11 @@ bool tempsBobB()
     else return false;
 }
 
+bool loopRamasserBallonMilieu()
+{
+    
+}
+
 float calculAngleCouleur(int COULEUR)
 {
     float angle = 0;
@@ -58,8 +63,7 @@ void loopOctogoneB()
         3: ramasser ballon
         4: avancer au centre
         5: rotation en fonction de la couleur
-        6: avancer jusqu'à la ligne
-        : avancer en suivant la ligne
+        6: avancer jusqu'à la ligne, puis la suivre
         : avancer jusqu'au noir
         : déposer ballon
         : reculer un peu
@@ -96,7 +100,7 @@ void loopOctogoneB()
         break;
 
     case 6:
-        
+        //Fonctions pour trouver et suivre une ligne
         break;
 
     case 7:
