@@ -88,6 +88,7 @@ bool avancerDroit(float vitesse, float distance)
     return true;
   else
   {
+    if (vitesse*distance < 0)vitesse *= -1;
 
     distance /= 1.175;
 
@@ -112,7 +113,7 @@ bool avancerDroit(float vitesse, float distance)
 
     Serial.println(distanceParcourue);
 
-    if (distanceParcourue >= distance)
+    if ((distanceParcourue >= distance && distance > 0)||(distanceParcourue <= distance && distance < 0))
     {
       distanceParcourue = 0;
       syncroroue(0, 1, true);
@@ -164,7 +165,7 @@ bool tourner(float vitesse, float angle)
 
   Serial.println(distanceParcourue);
 
-  if (distanceParcourue >= distance)
+  if ((distanceParcourue >= distance && distance > 0)||(distanceParcourue <= distance && distance < 0))
   {
     Serial.println(distanceParcourue);
     distanceParcourue = 0;

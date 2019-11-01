@@ -30,8 +30,10 @@ void loopOctogoneA()
     static float distance = 0;
     static int etape = 0;
     static long timer = 0;
-
+    if (etape !=0)
+    {
     Serial.println(etape);
+    }
 
     if (etape == 0 && loopEstCliqueEtRelache(3))
     {
@@ -40,24 +42,24 @@ void loopOctogoneA()
         switch (COULEURS_BOB[0])
         {
         case BLEU:
-            angle1 = 90;
+            angle1 = -90;
             angle2 = 0;
             distance = 0;
             break;
         
         case JAUNE:
-            angle1 = -90;
+            angle1 = 90;
             angle2 = 0;
             distance = 0;
             break;
         case ROUGE:
-            angle1 = -50;
-            angle2 = 50;
+            angle1 = 50;
+            angle2 = -50;
             distance = 30;
             break;
         case VERT:
-            angle1 = 50;
-            angle2 = -50;
+            angle1 = -50;
+            angle2 = 50;
             distance = 30;
             break;
         }
@@ -74,7 +76,7 @@ void loopOctogoneA()
             if (avancerDroit(0.5,distance))etape = 3;
             break;
         case 3:
-            if(tourner(0.5,angle2))etape = 4;
+            if(tourner(0.5,angle2))etape = 0;
             break;
         case 4:
             if(traquerLigne(0.5))etape = 5;
