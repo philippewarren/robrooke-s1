@@ -112,5 +112,19 @@ void loopNormal()
     
 
 
+    if (loopEstCliqueEtRelache(0))
+    {
+        // angleCourrant+=5;
+        // changerAngleServo(PINCE, angleCourrant);
+        ouvrirPince(true);
+    }
+
+    if (loopEstCliqueEtRelache(1))
+    {
+        // angleCourrant-=5;
+        // changerAngleServo(PINCE, angleCourrant);
+        fermerPince(true);
+    }
+
     // SOFT_TIMER_Update(); // A decommenter pour utiliser des compteurs logiciels
 }
