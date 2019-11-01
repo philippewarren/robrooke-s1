@@ -42,7 +42,7 @@ void suivreLigne(float vitesse)
     float delta4 = lectureSuiveurDeLigne[0]-lectureSuiveurDeLigne[7];
 
     //calcul du facteur de correction
-    float facteur = delta1*1 + delta2 * 1.5+ delta3 * 3+ delta4 * 5;
+    float facteur = delta1*1 + delta2 * 2+ delta3 * 3+ delta4 * 4;
     if (facteur > 4*CONTRASTE) facteur = 4*CONTRASTE;
     else if (facteur < -4*CONTRASTE) facteur = -4*CONTRASTE;
     facteur = facteur / (6 * CONTRASTE);
@@ -105,7 +105,7 @@ bool traquerLigne(float vitesse)
         timer = millis();
         }
          //si aucune ligne n'est détecter durant 0.300s, arret de la séquence
-        else if ((millis()-timer)>200/vitesse)
+        else if ((millis()-timer)>300/vitesse)
         {
         timerLance = false;
         ligne = false;
@@ -121,7 +121,65 @@ bool traquerLigne(float vitesse)
     {
         syncroroue(vitesse);
     }
+
+    
     
     return retour;
   
+}
+
+bool avancerDroitLigne(float vitesse, float distance)
+{
+  static float distanceParcourue = 0;
+  static long timer = millis();
+  static bool reset = true;
+  static bool resetEnc = false;
+  static float ancEnc = 0;
+
+  if (distance == 0)
+    return true;
+  else
+  {
+    if (vitesse*distance < 0)vitesse *= -1;
+
+    if(Bob == 'A') distance /= 1.175;
+    else distance /= 1.05;
+
+    float enc = clicsEnCm(ENCODER_Read(0));
+
+    if (reset)
+    {
+      timer = millis();
+      ancEnc = clicsEnCm(ENCODER_Read(0));
+      reset = false;
+    }
+
+    distanceParcourue += enc - ancEnc;
+
+    if (resetEnc)
+    {
+      distanceParcourue += ancEnc;
+      resetEnc = false;
+    }
+
+    ancEnc = enc;
+
+
+    if ((distanceParcourue >= distance && distance > 0)||(distanceParcourue <= distance && distance < 0))
+    {
+      distanceParcourue = 0;
+      syncroroue(0, 1, true);
+      return true;
+    }
+    else
+    {
+      if (millis() - timer > 50)
+      {
+        suivreLigne(vitesse);
+        resetEnc = true;
+        timer = millis();
+      }
+      return false;
+    }
+  }
 }
