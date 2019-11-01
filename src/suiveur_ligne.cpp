@@ -42,7 +42,7 @@ void suivreLigne(float vitesse)
     float delta4 = lectureSuiveurDeLigne[0]-lectureSuiveurDeLigne[7];
 
     //calcul du facteur de correction
-    float facteur = delta1*1 + delta2 * 1.25+ delta3 * 1.75+ delta4 * 2;
+    float facteur = delta1*1 + delta2 * 1.5+ delta3 * 2+ delta4 * 3;
     if (facteur > 4*CONTRASTE) facteur = 4*CONTRASTE;
     else if (facteur < -4*CONTRASTE) facteur = -4*CONTRASTE;
     facteur = facteur / (6 * CONTRASTE);
@@ -61,7 +61,7 @@ bool detecterLigne()
     lireSuiveurLigne(lectureSuiveurDeLigne);
 
     //calcule du seuil
-    long seuil = (long)CONTRASTE * 0.80;
+    long seuil = (long)CONTRASTE * 0.60;
     seuil *= seuil  ;
 
     //calcule de la somme des variances au carrée
@@ -112,7 +112,7 @@ bool traquerLigne(float vitesse)
     }
     if (ligne)
     {
-        suivreLigne(vitesse);
+        suivreLigne(vitesse*0.8);
     }
     else if(retour == false)
     {
