@@ -69,8 +69,11 @@ void loopOctogoneA()
         case 2:
             if (avancerDroit(0.5,distance))etape = 3;
             break;
-        case 4:
+        case 3:
             if(tourner(0.5,angle2))etape = 4;
+            break;
+        case 4:
+            if(traquerLigne(0.5))etape = 5;
             break;
         
         }
