@@ -47,7 +47,7 @@ J # # # B
 */
 void loopOctogoneB()
 {
-    static float distances[] = {25, 15, 30, -30};
+    static float distances[] = {25, 15, 20, 30, -30};
     static int distance = 0;
     static float angleCouleur = 0;
     
@@ -59,11 +59,12 @@ void loopOctogoneB()
         4: ramasser ballon
         5: avancer au centre
         6: rotation en fonction de la couleur
-        7: avancer jusqu'à la ligne, puis la suivre
-        8: avancer jusqu'au noir
-        9: déposer ballon
-        10: reculer un peu
-        11 (default): fini
+        7: avancer jusqu'à la ligne
+        8: suivre la ligne
+        9: avancer jusqu'au noir
+        10: déposer ballon
+        11: reculer un peu
+        12 (default): fini
     */
     static int etape = 0;
 
@@ -101,20 +102,24 @@ void loopOctogoneB()
         break;
 
     case 7:
-        //Fonctions pour trouver et suivre une ligne
+        if (avancerDroit(0.1, distance++)) etape += 1;
         break;
 
     case 8:
+        if (traquerLigne(0.5)) etape += 1;
+        break;
+    
+    case 9:
         if (avancerDroit(0.5, distance++)) etape += 1;
         break;
 
-    case 9:
+    case 10:
         ouvrirPince();
         etape += 1;
         break;
 
-    case 10:
-        if (avancerDroit(-0.2, distance)) etape += 1;
+    case 11:
+        if (avancerDroit(0.2, distance)) etape += 1;
         break;
 
     default:
