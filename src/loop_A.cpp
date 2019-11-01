@@ -24,11 +24,39 @@
 
 void loopOctogoneA()
 {
+    static float angle1 = 0;
+    static float angle2 = 0;
+    static float distance = 0;
     static int etape = 0;
     static long timer = 0;
     if (etape = 0 & loopEstCliqueEtRelache(3))
     {
+        //initialisation
         timer = millis();
+        switch (COULEURS_OCTOGONE[0])
+        {
+        case BLEU:
+            angle1 = -90;
+            angle2 = 0;
+            distance = 0;
+            break;
+        
+        case JAUNE:
+            angle1 = 90;
+            angle2 = 0;
+            distance = 0;
+            break;
+        case ROUGE;
+            angle1 = 50;
+            angle2 = -50;
+            distance = 10;
+            break;
+        case VERT:
+            angle1 = -50;
+            angle2 = 50;
+            distance = 10;
+            break;
+        }
         etape = 1;
     }
     if (millis() - timer < 59500)
@@ -36,8 +64,14 @@ void loopOctogoneA()
         switch (etape)
         {
         case 1:
+            if (tourner(angle1))etape = 2;
             break;
-        case
+        case 2:
+            if (avancerDroit(0.5,distance))etape = 3;
+            break;
+        case 4:
+            if(tourner(angle2))etape = 4;
+            break;
         
         }
     }
