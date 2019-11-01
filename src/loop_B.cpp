@@ -129,11 +129,12 @@ void loopOctogoneB()
         break;
 
     case 8:
-        if (traquerLigne(0.3)) etape += 1;
+       // if (traquerLigne(0.3)) etape += 1;
+        if (avancerDroit(0.3, 65)) etape += 1;
         break;
     
     case 9:
-        if (avancerDroit(0.5, distances[etape])) etape += 1;
+        if (avancerDroit(0.3, distances[etape])) etape += 1;
         break;
 
     case 10:
