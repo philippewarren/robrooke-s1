@@ -3,17 +3,39 @@
 const long DEPART_BOB_B = 60*1000 + 1000;
 const long ARRET_BOB_B = 60*1000*2 - 1000;
 
-//Prend millis() en paramètre
-bool departBobB(long tempsInitialBumper)
+bool tempsBobB()
 {
     static long tempsInitial = 0;
     static long delais = 0;
-    if (tempsInitial==0) tempsInitial = tempsInitialBumper;
+    if (tempsInitial==0) tempsInitial = millis();
 
     delais = millis()-tempsInitial;
 
-    if (delais>=DEPART_BOB_B && delais<ARRET_BOB_B) return true;
+    if (delais>=DEPART_BOB_B && delais<=ARRET_BOB_B) return true;
     else return false;
+}
+
+float calculAngleCouleur(int COULEUR)
+{
+    float angle = 0;
+    if (COULEUR == ROUGE)
+    {
+        angle = -(90+45);
+    }
+    else if (COULEUR == VERT)
+    {
+        angle = (90+45);
+    }
+    else if (COULEUR == BLEU)
+    {
+        angle = (45);
+    }
+    else //COULEUR ==JAUNE
+    {
+        angle = (-45);
+    }
+
+    return angle;
 }
 
 /* Plan de l'octogone
@@ -25,52 +47,56 @@ J # # # B
 */
 void loopOctogoneB()
 {
-    static float distance = 0;
+    static float distances[] = {25, 15};
+    static int distance = 0;
+    static float angleCouleur = 0;
     
     /*Etapes:
-        0: attendre l'appui
-        1: attendre le temps
+        0: attendre l'appui du bumper arrière
+        1: attendre le temps d'une minute
         2: avancer vers ballon au centre
         3: ramasser ballon
-        4: calcul de l'itinéraire selon la couleur
+        4: avancer au centre
         5: rotation en fonction de la couleur
         6: avancer jusqu'à la ligne
-        7: avancer en suivant la ligne
-        8: avancer jusqu'au noir
-        9: déposer ballon
-        10: reculer un peu
-        11 (default): fini
+        : avancer en suivant la ligne
+        : avancer jusqu'au noir
+        : déposer ballon
+        : reculer un peu
+         (default): fini
     */
     static int etape = 0;
 
     switch (etape)
     {
     case 0:
+        if (angleCouleur == 0) angleCouleur = calculAngleCouleur(COULEURS_BOB[1]);
         if (loopEstCliqueEtRelache(3)) etape += 1;
         break;
 
     case 1:
-        if (departBobB(millis())) etape += 1;
+        if (tempsBobB()) etape += 1;
         break;
 
     case 2:
-        if (avancerDroit(0.1, distance)) etape += 1;
+        if (avancerDroit(0.1, distance++)) etape += 1;
         break;
 
     case 3:
-        etape = loopEstCliqueEtRelache(3);
+        fermerPince();
+        etape += 1;
         break;
 
     case 4:
-        etape = loopEstCliqueEtRelache(3);
+        if (avancerDroit(0.1, distance++)) etape += 1;
         break;
 
     case 5:
-        etape = loopEstCliqueEtRelache(3);
+        tourner(0.5, angleCouleur);
         break;
 
     case 6:
-        etape = loopEstCliqueEtRelache(3);
+        
         break;
 
     case 7:
@@ -92,4 +118,6 @@ void loopOctogoneB()
     default:
         break;
     }
+
+    if (etape > 1 && !tempsBobB()) etape = 11;
 }

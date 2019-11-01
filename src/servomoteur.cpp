@@ -61,20 +61,20 @@ void changerAngleServoLibre(uint8_t indexDuServomoteur, uint8_t angle)
     return;
 }
 
-void ouvrirPince(bool estFixe = false)
+bool ouvrirPince(bool estFixe = false)
 {
     if (estFixe)
         changerAngleServoFixe(PINCE,POS_PINCE_OUVERTE);
     else
         changerAngleServoLibre(PINCE, POS_PINCE_OUVERTE);
-    return;
+    return estFixe;
 }
 
-void fermerPince(bool estFixe = true)
+bool fermerPince(bool estFixe = true)
 {
      if (estFixe)
         changerAngleServoFixe(PINCE,POS_PINCE_FERMEE);
     else
         changerAngleServoLibre(PINCE, POS_PINCE_FERMEE);
-    return;
+    return estFixe;
 }
