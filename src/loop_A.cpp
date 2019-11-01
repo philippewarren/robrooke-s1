@@ -33,7 +33,7 @@ void loopOctogoneA()
     {
         //initialisation
         timer = millis();
-        switch (COULEURS_OCTOGONE[0])
+        switch (COULEURS_BOB[0])
         {
         case BLEU:
             angle1 = -90;
