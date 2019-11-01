@@ -1,7 +1,7 @@
 #include "loop_B.h"
 
 const long DEPART_BOB_B = 60*1000 + 1000;
-const long ARRET_BOB_B = 60*1000*2 - 1000;
+const long ARRET_BOB_B = 2*60*1000 - 1000;
 
 bool tempsBobB()
 {
@@ -13,11 +13,6 @@ bool tempsBobB()
 
     if (delais>=DEPART_BOB_B && delais<=ARRET_BOB_B) return true;
     else return false;
-}
-
-bool loopRamasserBallonMilieu()
-{
-    
 }
 
 float calculAngleCouleur(int COULEUR)
@@ -52,22 +47,23 @@ J # # # B
 */
 void loopOctogoneB()
 {
-    static float distances[] = {25, 15};
+    static float distances[] = {25, 15, 30, -30};
     static int distance = 0;
     static float angleCouleur = 0;
     
     /*Etapes:
         0: attendre l'appui du bumper arrière
         1: attendre le temps d'une minute
-        2: avancer vers ballon au centre
-        3: ramasser ballon
-        4: avancer au centre
-        5: rotation en fonction de la couleur
-        6: avancer jusqu'à la ligne, puis la suivre
-        : avancer jusqu'au noir
-        : déposer ballon
-        : reculer un peu
-         (default): fini
+        2: ouvrir pince
+        3: avancer vers ballon au centre
+        4: ramasser ballon
+        5: avancer au centre
+        6: rotation en fonction de la couleur
+        7: avancer jusqu'à la ligne, puis la suivre
+        8: avancer jusqu'au noir
+        9: déposer ballon
+        10: reculer un peu
+        11 (default): fini
     */
     static int etape = 0;
 
@@ -83,43 +79,47 @@ void loopOctogoneB()
         break;
 
     case 2:
-        if (avancerDroit(0.1, distance++)) etape += 1;
+        ouvrirPince(true);
+        etape += 1;
         break;
 
     case 3:
+        if (avancerDroit(0.1, distance++)) etape += 1;
+        break;
+
+    case 4:
         fermerPince();
         etape += 1;
         break;
 
-    case 4:
+    case 5:
         if (avancerDroit(0.1, distance++)) etape += 1;
         break;
 
-    case 5:
-        tourner(0.5, angleCouleur);
-        break;
-
     case 6:
-        //Fonctions pour trouver et suivre une ligne
+        if (tourner(0.5, angleCouleur)) etape += 1;
         break;
 
     case 7:
-        etape = loopEstCliqueEtRelache(3);
+        //Fonctions pour trouver et suivre une ligne
         break;
 
     case 8:
-        etape = loopEstCliqueEtRelache(3);
+        if (avancerDroit(0.5, distance++)) etape += 1;
         break;
 
     case 9:
-        etape = loopEstCliqueEtRelache(3);
+        ouvrirPince();
+        etape += 1;
         break;
 
     case 10:
-        etape = loopEstCliqueEtRelache(3);
+        if (avancerDroit(-0.2, distance)) etape += 1;
         break;
 
     default:
+        arreterDeuxMoteurs();
+        desactiverServo(PINCE);
         break;
     }
 
