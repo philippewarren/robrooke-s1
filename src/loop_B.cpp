@@ -3,6 +3,7 @@
 const long DEPART_BOB_B = 60*1000 + 1000;
 const long ARRET_BOB_B = 60*1000*2 - 1000;
 
+//Prend millis() en paramètre
 bool departBobB(long tempsInitialBumper)
 {
     static long tempsInitial = 0;
@@ -38,49 +39,57 @@ void loopOctogoneB()
         8: avancer jusqu'au noir
         9: déposer ballon
         10: reculer un peu
-        11: fini
+        11 (default): fini
     */
     static int etape = 0;
 
     switch (etape)
     {
     case 0:
-        etape = loopEstCliqueEtRelache(3);
+        if (loopEstCliqueEtRelache(3)) etape += 1;
         break;
-    case 1;
-        etape = (departBobB(mmillis())) ? 2 : 1;
+
+    case 1:
+        if (departBobB(millis()) etape += 1;
         break;
+
     case 2:
-        etape = loopEstCliqueEtRelache(3);
+        if (avancerDroit(0.1, distance)) etape += 1;
         break;
+
     case 3:
         etape = loopEstCliqueEtRelache(3);
         break;
+
     case 4:
         etape = loopEstCliqueEtRelache(3);
         break;
+
     case 5:
         etape = loopEstCliqueEtRelache(3);
         break;
+
     case 6:
         etape = loopEstCliqueEtRelache(3);
         break;
+
     case 7:
         etape = loopEstCliqueEtRelache(3);
         break;
+
     case 8:
         etape = loopEstCliqueEtRelache(3);
         break;
+
     case 9:
         etape = loopEstCliqueEtRelache(3);
         break;
+
     case 10:
         etape = loopEstCliqueEtRelache(3);
         break;
-    case 0:
-        etape = loopEstCliqueEtRelache(3);
-        break;
+
     default:
-    } break;
+        break;
     }
 }
