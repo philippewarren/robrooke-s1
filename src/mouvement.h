@@ -3,6 +3,7 @@
 
 #include <LibRobus.h>
 #include "conversions.h"
+#include "init_robot.h"
 
 //Reset les deux encodeurs
 void resetDeuxEncodeurs();

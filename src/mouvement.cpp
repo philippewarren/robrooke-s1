@@ -90,7 +90,8 @@ bool avancerDroit(float vitesse, float distance)
   {
     if (vitesse*distance < 0)vitesse *= -1;
 
-    distance /= 1.175;
+    if(Bob == 'A') distance /= 1.175;
+    else distance /= 1.05;
 
     float enc = clicsEnCm(ENCODER_Read(0));
 
@@ -141,7 +142,8 @@ bool tourner(float vitesse, float angle)
   static float ancEnc = 0;
 
   float distance = (19 * 3.14160) / 360 * angle;
-  distance /= 1.175;
+  if(Bob == 'A') distance /= 1.175;
+  else distance /= 1.05;
   float enc = clicsEnCm(ENCODER_Read(1));
 
   if (reset)

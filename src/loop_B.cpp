@@ -40,7 +40,7 @@ float calculAngleCouleur(int COULEUR)
     }
     else if (COULEUR == BLEU)
     {
-        angle = (45);
+        angle = (43);
     }
     else //COULEUR ==JAUNE
     {
@@ -113,7 +113,7 @@ void loopOctogoneB()
         break;
 
     case 6:
-        if (tourner(0.5, angleCouleur)) etape += 1;
+        if (tourner(0.3, angleCouleur)) etape += 1;
         break;
 
     case 7:
