@@ -19,6 +19,8 @@ void suivreLigne(float vitesse);
 bool detecterLigne();
 //trouve et suis une ligne
 bool traquerLigne(float vitesse);
+//comme avancerDroit mais avec une ligne
+bool avancerDroitLigne(float vitesse, float distance);
 
 
 #endif

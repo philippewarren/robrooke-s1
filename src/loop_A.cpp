@@ -43,24 +43,16 @@ void loopOctogoneA()
         {
         case BLEU:
             angle1 = -135;
-            angle2 = 5;
-            distance = -45;
             break;
         
         case JAUNE:
             angle1 = 135;
-            angle2 = 5;
-            distance = 45;
             break;
         case ROUGE:
             angle1 = 45;
-            angle2 = 15;
-            distance = 110;
             break;
         case VERT:
             angle1 = -45;
-            angle2 = -15;
-            distance = 110;
             break;
         }
         etape = 1;
@@ -70,17 +62,51 @@ void loopOctogoneA()
         switch (etape)
         {
         case 1:
-            if (avancerDroit(0.2,50))etape = 2;
+            if (avancerDroit(0.3,50))etape = 101;
+            break;
+        case 101:
+            if (ouvrirPinceOctogone(true))etape = 2;
             break;
         case 2:
-            if (tourner(0.3,angle1))etape = 3;
+            if (tourner(0.3,etape))etape = 3;
             break;
         case 3:
-            if (avancerDroit(0.2,20))etape = 4;
+            if (avancerDroit(0.3,20))etape = 4;
             break;
         case 4:
-            if (traquerLigne(0.3))etape = 0;
+            if (avancerDroitLigne(0.3,75))etape = 6;
             break;
+        case 5:
+            if (avancerDroit(0.3,5))etape = 6;
+            break;
+        case 6:
+            if (traquerLigne(0.3))etape = 7;
+            break;
+        case 7:
+            if (fermerPinceOctogone(true))etape = 8;
+            break;
+        case 8:
+            if(tourner(0.3,180))etape = 9;
+            break;
+        case 9:
+            if(traquerLigne(0.3))etape = 10;
+            break;
+        case 10:
+            if(avancerDroitLigne(0.3,70))etape = 11;
+            break;
+        case 11:
+            if(ouvrirPinceOctogone(true))etape = 12;
+            break;
+        case 12:
+            if (avancerDroit(-0.3,-50))etape = 13;
+            break;
+        case 13:
+            if (tourner(0.3,90))etape = 14;
+            break;
+        case 14:
+            if(avancerDroitLigne(0.3,30))etape = 0;
+            break;
+
 
         
         }
