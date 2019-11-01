@@ -113,7 +113,7 @@ void loopOctogoneB()
         break;
 
     case 4:
-        if (fermerPinceOctogone()) etape += 1;
+        if (fermerPinceOctogone(true)) etape += 1;
         break;
 
     case 5:

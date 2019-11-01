@@ -18,12 +18,12 @@ void desactiverServo(uint8_t indexDuServomoteur);
 bool changerAngleServo(uint8_t indexDuServomoteur, uint8_t angle, bool estFixe = true);
 
 //Ouvre la pince et la libère par défaut
-bool ouvrirPince(bool estFixe = false);
+bool ouvrirPince(bool estFixe = true);
 //Ferme la pince et la maintiens fermée par défaut
 bool fermerPince(bool estFixe = true);
 
 //Ouvre la pince et attend un délais non-bloquant, puis retourne true
-bool ouvrirPinceOctogone(bool estFixe = false);
+bool ouvrirPinceOctogone(bool estFixe = true);
 //Ferme la pince et attend un délais non-bloquant, puis retourne true
 bool fermerPinceOctogone(bool estFixe = true);
 

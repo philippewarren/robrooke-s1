@@ -50,7 +50,7 @@ bool changerAngleServo(uint8_t indexDuServomoteur, uint8_t angle, bool estFixe =
     return estFixe;
 }
 
-bool ouvrirPince(bool estFixe = false)
+bool ouvrirPince(bool estFixe = true)
 {
     changerAngleServo(PINCE,POS_PINCE_OUVERTE, estFixe);
     return estFixe;
@@ -62,7 +62,7 @@ bool fermerPince(bool estFixe = true)
     return estFixe;
 }
 
-bool ouvrirPinceOctogone(bool estFixe = false)
+bool ouvrirPinceOctogone(bool estFixe = true)
 {
     bool retour = false;
     static bool ouverte = false;
