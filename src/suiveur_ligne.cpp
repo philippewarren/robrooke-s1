@@ -79,3 +79,44 @@ bool detecterLigne()
     
     
 }
+
+bool traquerLigne(float vitesse)
+{
+    static bool ligne = false;
+    static bool timerLance = false;
+    static bool timer = 0;
+
+    bool retour = false;
+
+    if(detecterLigne())
+    {
+       ligne = true;
+       timerLance = false;
+    }
+    else if(ligne)
+    {
+        if (!timerLance)
+        {
+        timerLance = true;
+        timer = millis();
+    }
+     //si aucune ligne n'est détecter durant 0.300s, arret de la séquence
+    else if ((millis()-timer)>300)
+    {
+        changerVitesseDeuxMoteurs(0);
+        timerLance = false;
+        ligne = false;
+        retour = true;
+    }
+    if (ligne)
+    {
+        suivreLigne(vitesse);
+    }
+    else
+    {
+        syncroroue(vitesse);
+    }
+    
+    return retour;
+  }
+}

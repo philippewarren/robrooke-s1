@@ -17,6 +17,8 @@ void lireSuiveurLigne(int output [8]);
 void suivreLigne(float vitesse);
 //détection d'une ligne
 bool detecterLigne();
+//trouve et suis une ligne
+bool traquerLigne(float vitesse);
 
 
 #endif

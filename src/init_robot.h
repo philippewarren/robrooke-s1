@@ -17,6 +17,12 @@
 
 #include "loop_normal.h"
 #include "loop_urgence.h"
+#include "loop_A.h"
+#include "loop_B.h"
+
+//Indice 0: où Bob-A va chercher le ballon
+//Indice 1: où Bob-B va porter le ballon
+extern const int COULEURS_BOB[];
 
 //Bob-A ou Bob-B ('A' ou 'B', 'I' avant d'être initialisé)
 extern char Bob;
