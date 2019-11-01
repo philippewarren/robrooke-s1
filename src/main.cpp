@@ -43,6 +43,7 @@ void setup()
   initialiserBob();
   pinMode(OUTPUT,12);
   digitalWrite(12,HIGH);
+  initialiserServo(PINCE, false);
 }
 
 /* ****************************************************************************
