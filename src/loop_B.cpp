@@ -95,8 +95,7 @@ void loopOctogoneB()
         break;
 
     case 2:
-        ouvrirPince(true);
-        etape += 1;
+        if (ouvrirPinceOctogone(true)) etape += 1;
         break;
 
     case 3:
@@ -104,8 +103,7 @@ void loopOctogoneB()
         break;
 
     case 4:
-        fermerPince();
-        etape += 1;
+        if (fermerPinceOctogone()) etape += 1;
         break;
 
     case 5:
@@ -129,8 +127,7 @@ void loopOctogoneB()
         break;
 
     case 10:
-        ouvrirPince();
-        etape += 1;
+        if (ouvrirPinceOctogone(true)) etape += 1;
         break;
 
     case 11:

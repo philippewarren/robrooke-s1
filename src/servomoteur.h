@@ -22,6 +22,11 @@ bool ouvrirPince(bool estFixe = false);
 //Ferme la pince et la maintiens fermée par défaut
 bool fermerPince(bool estFixe = true);
 
+//Ouvre la pince et attend un délais non-bloquant, puis retourne true
+bool ouvrirPinceOctogone(bool estFixe = false);
+//Ferme la pince et attend un délais non-bloquant, puis retourne true
+bool fermerPinceOctogone(bool estFixe = true);
+
 
 
 
