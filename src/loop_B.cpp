@@ -16,5 +16,5 @@ bool departBobB(long tempsInitialBumper)
 
 void loopOctogoneB()
 {
-
+    //ajout;
 }
