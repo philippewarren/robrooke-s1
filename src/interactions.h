@@ -24,7 +24,11 @@ extern const byte PORT_INTERRUPT;
 //Utilisé pour réactiver le robot après un arrêt d'urgence
 extern const byte PORT_RESTART;
 
-// Vrai si clique et relache, faux si ce n'est pas le cas
+//Vrai si clique et relache, faux si ce n'est pas le cas
+//Arrière: 3
+//Avant: 2
+//Gauche: 0
+//Droite: 1
 bool loopEstCliqueEtRelache(uint8_t);
 
 //Allume une DEL, de 1 (défaut) à 3. 0 allume toutes les DEL
