@@ -1,4 +1,5 @@
 #include "loop_normal.h"
+
 int itt = 0;
 float vitesse = 0.3;
 bool lecture = false;
@@ -10,6 +11,8 @@ bool timerLance = false;
 int angleCourrant = 0;
 void loopNormal()
 {
+    if (Bob=='A') ;//loopOctogoneA();
+    else loopOctogoneB();
     if (lecture)
     {
         //test couleur
@@ -103,7 +106,7 @@ void loopNormal()
         if (avancerDroit(vitesse,30) )avancerDroit2 = false;
     }
     else
-
+    {
         avancerDroit2 = loopEstCliqueEtRelache(0);
     }
     
