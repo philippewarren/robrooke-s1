@@ -58,14 +58,22 @@ void arreterDeuxMoteurs()
   return;
 }
 
-
-void syncroroue(float vitesse,float multiDroit = 1,bool reset = 0)
+void syncroroue(float vitesse, float multiDroit = 1, bool reset = 0)
 {
   static float correction = 1;
-  if (reset) {correction = 1;resetDeuxEncodeurs();}
-  if (correction * multiDroit < 0)correction *= -1;
-  if(ENCODER_Read(0)!= 0 && ENCODER_Read(1)!= 0)correction *= ENCODER_ReadReset(0)/(ENCODER_ReadReset(1)*multiDroit);
-  changerVitesseDeuxMoteurs(vitesse/correction,vitesse);
+  Serial.println(correction);
+  if (reset)
+  {
+    correction = 1;
+    resetDeuxEncodeurs();
+  }
+  if (ENCODER_Read(0) != 0 && ENCODER_Read(1) != 0)
+    correction *= ENCODER_ReadReset(0) / (ENCODER_ReadReset(1) * multiDroit);
+  if (correction * multiDroit < 0)
+  {
+    correction *= -1;
+  }
+  changerVitesseDeuxMoteurs(vitesse / correction, vitesse);
 }
 //mouvement non bloquant
 bool avancerDroit(float vitesse, float distance)
@@ -76,45 +84,52 @@ bool avancerDroit(float vitesse, float distance)
   static bool resetEnc = false;
   static float ancEnc = 0;
 
-  distance /= 1.175;
-
-  float enc = clicsEnCm(ENCODER_Read(0));
-
-  if (reset){timer = millis();ancEnc = clicsEnCm(ENCODER_Read(0));reset = false;}
-
-  distanceParcourue += enc-ancEnc;
-  
-  if (resetEnc) 
-  {
-    distanceParcourue += ancEnc;
-    resetEnc = false;
-  }
-
-  
-  ancEnc = enc;
-
-  Serial.println(distanceParcourue);
-
-  
-  if (distanceParcourue >= distance)
-  {
-    distanceParcourue = 0;
-    syncroroue(0,1,true);
+  if (distance == 0)
     return true;
-  }
   else
   {
-    if (millis()-timer > 50)
-    {
-      syncroroue(vitesse);
-      resetEnc = true;
-      timer = millis();
-    }
-    return false;
-  }
-  
-}
 
+    distance /= 1.175;
+
+    float enc = clicsEnCm(ENCODER_Read(0));
+
+    if (reset)
+    {
+      timer = millis();
+      ancEnc = clicsEnCm(ENCODER_Read(0));
+      reset = false;
+    }
+
+    distanceParcourue += enc - ancEnc;
+
+    if (resetEnc)
+    {
+      distanceParcourue += ancEnc;
+      resetEnc = false;
+    }
+
+    ancEnc = enc;
+
+    Serial.println(distanceParcourue);
+
+    if (distanceParcourue >= distance)
+    {
+      distanceParcourue = 0;
+      syncroroue(0, 1, true);
+      return true;
+    }
+    else
+    {
+      if (millis() - timer > 50)
+      {
+        syncroroue(vitesse);
+        resetEnc = true;
+        timer = millis();
+      }
+      return false;
+    }
+  }
+}
 
 bool tourner(float vitesse, float angle)
 {
@@ -124,43 +139,46 @@ bool tourner(float vitesse, float angle)
   static bool resetEnc = false;
   static float ancEnc = 0;
 
-  float distance = (19 * 3.14160)/360*angle;
+  float distance = (19 * 3.14160) / 360 * angle;
   distance /= 1.175;
   float enc = clicsEnCm(ENCODER_Read(1));
 
-  if (reset){timer = millis();ancEnc = clicsEnCm(ENCODER_Read(1));reset = false;}
+  if (reset)
+  {
+    timer = millis();
+    ancEnc = clicsEnCm(ENCODER_Read(1));
+    reset = false;
+  }
 
-  distanceParcourue += enc-ancEnc;
-  if(angle * vitesse < 0)vitesse *= -1;
-  
-  if (resetEnc) 
+  distanceParcourue += enc - ancEnc;
+  if (angle * vitesse < 0)
+    vitesse *= -1;
+
+  if (resetEnc)
   {
     distanceParcourue += ancEnc;
     resetEnc = false;
   }
 
-  
   ancEnc = enc;
 
   Serial.println(distanceParcourue);
 
-  
   if (distanceParcourue >= distance)
   {
     Serial.println(distanceParcourue);
     distanceParcourue = 0;
-    syncroroue(0,1,true);
+    syncroroue(0, 1, true);
     return true;
   }
   else
   {
-    if (millis()-timer > 50)
+    if (millis() - timer > 50)
     {
-      syncroroue(vitesse,-1.0);
+      syncroroue(vitesse, -1.0);
       resetEnc = true;
       timer = millis();
     }
     return false;
   }
-  
 }
