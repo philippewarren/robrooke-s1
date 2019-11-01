@@ -1,18 +1,30 @@
 #include "loop_B.h"
 
-const long DEPART_BOB_B = 60*1000 + 1000;
-const long ARRET_BOB_B = 2*60*1000 - 1000;
+const long long DEPART_BOB_B = 2000;// 60*1000 + 1000;
+const long long ARRET_BOB_B = 119000;
 
 bool tempsBobB()
 {
+    bool retour = false;
     static long tempsInitial = 0;
-    static long delais = 0;
+    long delais = 0;
     if (tempsInitial==0) tempsInitial = millis();
 
     delais = millis()-tempsInitial;
 
-    if (delais>=DEPART_BOB_B && delais<=ARRET_BOB_B) return true;
-    else return false;
+    if (delais>=ARRET_BOB_B)
+    {
+        retour = false;
+    }
+    else if (delais>=DEPART_BOB_B)
+    {
+        retour = true;
+    }
+
+    Serial.println(delais);
+    Serial.println(retour);
+
+    return retour;
 }
 
 float calculAngleCouleur(int COULEUR)
@@ -47,8 +59,9 @@ J # # # B
 */
 void loopOctogoneB()
 {
-    static float distances[] = {25, 15, 20, 30, -30};
-    static int distance = 0;
+    //Tableau lié aux étape:   {0, 1, 2, 03, 4, 05, 6, 07, 8, 09, 10, 11}
+    static float distances[] = {0, 0, 0, 25.0, 0, 15.0, 0, 20.0, 0, 30.0, 0, -30.0};
+    //static int distance = 0;
     static float angleCouleur = 0;
     
     /*Etapes:
@@ -68,6 +81,8 @@ void loopOctogoneB()
     */
     static int etape = 0;
 
+    if (etape!=11) Serial.println(etape);
+
     switch (etape)
     {
     case 0:
@@ -85,7 +100,7 @@ void loopOctogoneB()
         break;
 
     case 3:
-        if (avancerDroit(0.1, distance++)) etape += 1;
+        if (avancerDroit(0.3, distances[etape])) etape += 1;
         break;
 
     case 4:
@@ -94,7 +109,7 @@ void loopOctogoneB()
         break;
 
     case 5:
-        if (avancerDroit(0.1, distance++)) etape += 1;
+        if (avancerDroit(0.3, distances[etape])) etape += 1;
         break;
 
     case 6:
@@ -102,7 +117,7 @@ void loopOctogoneB()
         break;
 
     case 7:
-        if (avancerDroit(0.1, distance++)) etape += 1;
+        if (avancerDroit(0.3, distances[etape])) etape += 1;
         break;
 
     case 8:
@@ -110,7 +125,7 @@ void loopOctogoneB()
         break;
     
     case 9:
-        if (avancerDroit(0.5, distance++)) etape += 1;
+        if (avancerDroit(0.5, distances[etape])) etape += 1;
         break;
 
     case 10:
@@ -119,7 +134,7 @@ void loopOctogoneB()
         break;
 
     case 11:
-        if (avancerDroit(0.2, distance)) etape += 1;
+        if (avancerDroit(0.2, distances[etape])) etape += 1;
         break;
 
     default:

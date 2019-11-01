@@ -13,6 +13,10 @@ void loopNormal()
 {
     if (Bob=='A') loopOctogoneA();
     else loopOctogoneB();
+
+    // if (ROBUS_IsBumper(3)) lecture = true;
+    // if (lecture == true) {if (avancerDroit(0.2, 25)) lecture = false;}
+
     // if (lecture)
     // {
     //     //test couleur
