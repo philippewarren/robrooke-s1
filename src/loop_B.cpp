@@ -38,6 +38,7 @@ void loopOctogoneB()
         8: avancer jusqu'au noir
         9: déposer ballon
         10: reculer un peu
+        11: fini
     */
     static int etape = 0;
 
@@ -47,7 +48,38 @@ void loopOctogoneB()
         etape = loopEstCliqueEtRelache(3);
         break;
     case 1;
-    
+        etape = (departBobB(mmillis())) ? 2 : 1;
+        break;
+    case 2:
+        etape = loopEstCliqueEtRelache(3);
+        break;
+    case 3:
+        etape = loopEstCliqueEtRelache(3);
+        break;
+    case 4:
+        etape = loopEstCliqueEtRelache(3);
+        break;
+    case 5:
+        etape = loopEstCliqueEtRelache(3);
+        break;
+    case 6:
+        etape = loopEstCliqueEtRelache(3);
+        break;
+    case 7:
+        etape = loopEstCliqueEtRelache(3);
+        break;
+    case 8:
+        etape = loopEstCliqueEtRelache(3);
+        break;
+    case 9:
+        etape = loopEstCliqueEtRelache(3);
+        break;
+    case 10:
+        etape = loopEstCliqueEtRelache(3);
+        break;
+    case 0:
+        etape = loopEstCliqueEtRelache(3);
+        break;
     default:
     } break;
     }
