@@ -11,7 +11,7 @@ bool timerLance = false;
 int angleCourrant = 0;
 void loopNormal()
 {
-    if (Bob=='A') ;//loopOctogoneA();
+    if (Bob=='A') loopOctogoneA();
     else loopOctogoneB();
     if (lecture)
     {

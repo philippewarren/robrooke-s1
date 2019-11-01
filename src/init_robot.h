@@ -17,7 +17,7 @@
 
 #include "loop_normal.h"
 #include "loop_urgence.h"
-//#include "loop_A.h"
+#include "loop_A.h"
 #include "loop_B.h"
 
 //Bob-A ou Bob-B ('A' ou 'B', 'I' avant d'être initialisé)
