@@ -9,7 +9,7 @@
 
 //constante proportionnelle à la différence de réflectivité des deux surfaces
 // 1000 = sol blanc et ligne noir
-const short CONTRASTE = 700;
+const short CONTRASTE = 1000;
 
 //fait une lecture du suiveur de ligne et place le résultat dans output
 void lireSuiveurLigne(int output [8]);

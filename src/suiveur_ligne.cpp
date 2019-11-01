@@ -12,10 +12,10 @@ void lireSuiveurLigne(int output [8])
     for (int i=0;i<NOMBRE_DE_LECTURE;i++)
     {
     delay(1);
-    output[0] += analogRead(A8);
-    output[1] += analogRead(A1);
-    output[2] += analogRead(A2);
-    output[3] += analogRead(A3);
+    output[0] += analogRead(A10);
+    output[1] += analogRead(A11);
+    output[2] += analogRead(A12);
+    output[3] += analogRead(A13);
     output[4] += analogRead(A4);
     output[5] += analogRead(A5);
     output[6] += analogRead(A6);
@@ -42,14 +42,14 @@ void suivreLigne(float vitesse)
     float delta4 = lectureSuiveurDeLigne[0]-lectureSuiveurDeLigne[7];
 
     //calcul du facteur de correction
-    float facteur = delta1 + delta2 * 2+ delta3 * 3+ delta4 * 4;
+    float facteur = delta1*1 + delta2 * 1.25+ delta3 * 1.75+ delta4 * 2;
     if (facteur > 4*CONTRASTE) facteur = 4*CONTRASTE;
     else if (facteur < -4*CONTRASTE) facteur = -4*CONTRASTE;
-    facteur = facteur / (4 * CONTRASTE);
+    facteur = facteur / (6 * CONTRASTE);
 
     //modification de la vitesse des roues
     if(vitesse < 0)facteur *= -1;
-    changerVitesseDeuxMoteurs(vitesse*(1+facteur),vitesse*(1-facteur));
+    syncroroue(vitesse,(1+facteur));
 
 }
 
@@ -82,6 +82,7 @@ bool detecterLigne()
 
 bool traquerLigne(float vitesse)
 {
+    //2 static
     static bool ligne = false;
     static bool timerLance = false;
     static bool timer = 0;
@@ -99,24 +100,25 @@ bool traquerLigne(float vitesse)
         {
         timerLance = true;
         timer = millis();
-    }
-     //si aucune ligne n'est détecter durant 0.300s, arret de la séquence
-    else if ((millis()-timer)>300)
-    {
+        }
+         //si aucune ligne n'est détecter durant 0.300s, arret de la séquence
+        else if ((millis()-timer)>150/vitesse)
+        {
         changerVitesseDeuxMoteurs(0);
         timerLance = false;
         ligne = false;
         retour = true;
+        }
     }
     if (ligne)
     {
         suivreLigne(vitesse);
     }
-    else
+    else if(retour == false)
     {
         syncroroue(vitesse);
     }
     
     return retour;
-  }
+  
 }

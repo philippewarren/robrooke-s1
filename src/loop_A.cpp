@@ -53,14 +53,14 @@ void loopOctogoneA()
             distance = 0;
             break;
         case ROUGE:
-            angle1 = 50;
-            angle2 = -50;
-            distance = 30;
+            angle1 = 35;
+            angle2 = -20;
+            distance = 50;
             break;
         case VERT:
-            angle1 = -50;
-            angle2 = 50;
-            distance = 30;
+            angle1 = -35;
+            angle2 = 20;
+            distance = 50;
             break;
         }
         etape = 1;
@@ -70,13 +70,13 @@ void loopOctogoneA()
         switch (etape)
         {
         case 1:
-            if (tourner(0.5,angle1))etape = 2;
+            if (tourner(0.2,angle1))etape = 2;
             break;
         case 2:
-            if (avancerDroit(0.5,distance))etape = 3;
+            if (avancerDroit(0.3,distance))etape = 3;
             break;
         case 3:
-            if(tourner(0.5,angle2))etape = 0;
+            if(tourner(0.2,angle2))etape = 4;
             break;
         case 4:
             if(traquerLigne(0.5))etape = 5;
