@@ -10,6 +10,8 @@ const int POS_PINCE_FERMEE = 178;
 const int POS_BRAS_HAUT = 0;
 const int POS_BRAS_BAS = 0;
 
+const int DELAIS_OCTOGONE = 1500;
+
 bool initialiserServo(uint8_t indexDuServomoteur, bool estFixe = false)
 {
     activerServo(indexDuServomoteur);
@@ -58,4 +60,56 @@ bool fermerPince(bool estFixe = true)
 {
     changerAngleServo(PINCE,POS_PINCE_FERMEE, estFixe);
     return estFixe;
+}
+
+bool ouvrirPinceOctogone(bool estFixe = false)
+{
+    bool retour = false;
+    static bool ouverte = false;
+    static long tempsInitial = 0;
+    long delais = 0;
+    if (tempsInitial==0) tempsInitial = millis();
+
+    if (!ouverte)
+    {
+        ouvrirPince(estFixe);
+        ouverte = true;
+    }
+
+    delais = millis()-tempsInitial;
+
+    if (delais>=DELAIS_OCTOGONE)
+    {
+        tempsInitial=0;
+        ouverte = false;
+        retour = true;
+    }
+    
+    return retour;
+}
+
+bool fermerPinceOctogone(bool estFixe = true)
+{
+    bool retour = false;
+    static bool fermee = false;
+    static long tempsInitial = 0;
+    long delais = 0;
+    if (tempsInitial==0) tempsInitial = millis();
+
+    if (!fermee)
+    {
+        fermerPince(estFixe);
+        fermee = true;
+    }
+
+    delais = millis()-tempsInitial;
+
+    if (delais>=DELAIS_OCTOGONE)
+    {
+        tempsInitial=0;
+        fermee = false;
+        retour = true;
+    }
+    
+    return retour;
 }
