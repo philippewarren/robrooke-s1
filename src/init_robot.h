@@ -22,8 +22,7 @@
 
 //Indice 0: où Bob-A va chercher le ballon
 //Indice 1: où Bob-B va porter le ballon
-
-const int COULEURS_OCTOGONE[] = {ROUGE, BLEU};
+//extern const int COULEURS_OCTOGONE[];
 
 //Bob-A ou Bob-B ('A' ou 'B', 'I' avant d'être initialisé)
 extern char Bob;
