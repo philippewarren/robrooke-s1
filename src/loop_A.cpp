@@ -21,12 +21,13 @@
 //8 lacher ballon
 //9 rotation
 //10 aller se cacher
-void octogoneA()
+void octogoneA(int couleur = -1500)
 {
     //initialisation
     float angle = 0;
     float vitesse = 0.3;
-    switch (COULEURS_BOB[0])
+    if (couleur == -1500)couleur = COULEURS_BOB[0];
+    switch (couleur)
         {
         case BLEU:
             angle = -135;
@@ -42,14 +43,24 @@ void octogoneA()
             break;
         }
     ouvrirPince(true);
-    avancerDroitBloque(vitesse,50);
+    avancerDroitBloque(vitesse-0.1,42);
+    delay(300);
     tournerBloque(vitesse,angle);
     avancerDroitBloque(vitesse,20);
-    avancerDroitLigneBloque(vitesse,75);
-    avancerDroitBloque(vitesse,40);
-    fermerPince();
+    centrerLigne(10);
+    avancerDroitLigneBloque(vitesse,55);
+    avancerDroitBloque(vitesse,35);
+    fermerPince(true);
     delay(2000);
+    avancerDroitBloque(vitesse,-35);
     tournerBloque(vitesse,180);
+    centrerLigne(10);
+    avancerDroitLigneBloque(vitesse,54.3);
+    ouvrirPince();
+    delay(2000);
+    avancerDroitBloque(vitesse,-50);
+    tournerBloque(vitesse+0.1,90);
+    avancerDroitBloque(vitesse,60);
     }
 
 void loopOctogoneA()

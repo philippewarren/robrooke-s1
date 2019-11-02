@@ -27,5 +27,8 @@ bool tournerNoir(float vitesse,int nbrLigne);
 //comme avancerDroit mais avec une ligne
 bool avancerDroitLigneBloque(float vitesse, float distance);
 
+//bloquante centre sur une ligne
+bool centrerLigne(float angleVue = 30);
+
 
 #endif

@@ -42,15 +42,15 @@ void suivreLigne(float vitesse)
     float delta4 = lectureSuiveurDeLigne[0]-lectureSuiveurDeLigne[7];
 
     //calcul du facteur de correction
-    float facteur = delta1*1 + delta2 * 2+ delta3 * 3+ delta4 * 4;
+    float facteur = delta1*1 + delta2 * 2+ delta3 * 3+ delta4 * 6;
     if (facteur > 4*CONTRASTE) facteur = 4*CONTRASTE;
     else if (facteur < -4*CONTRASTE) facteur = -4*CONTRASTE;
-    facteur = facteur / (6 * CONTRASTE);
+    facteur = facteur / (4 * CONTRASTE);
 
     //modification de la vitesse des roues
     float factVit = facteur;
     if(factVit<0)factVit *= -1;
-    factVit = 1 -factVit*0.7;
+    factVit = 1 -factVit*0.5;
     if(vitesse < 0)facteur *= -1;
     syncroroue(vitesse*factVit,(1+facteur));
 
@@ -249,4 +249,30 @@ bool avancerDroitLigneBloque(float vitesse, float distance)
   }
   syncroroue (0,1,true);
   return true;
+}
+
+bool centrerLigne(float angleVue = 30)
+{
+  int nbrValeur =(angleVue * 2) / 5;
+  int valeur[nbrValeur];
+  int lecture[8];
+  int i = 0;
+
+  tournerBloque(0.3,angleVue);
+  while (i< nbrValeur)
+  {
+    lireSuiveurLigne(lecture);
+    int donnee = lecture[3]+lecture[4];
+    tournerBloque(0.3,-5);
+    valeur[i]=donnee;
+    i++;
+  }
+  int max = 0;
+  i = 1;
+  while (i<nbrValeur)
+  {
+    if(valeur[i]>valeur[max])max = i;
+    i++;
+  }
+  tournerBloque(0.3,5*(nbrValeur - max));
 }
