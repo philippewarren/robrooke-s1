@@ -5,10 +5,29 @@ const int ANGLE_INITIAL[] = {0, 0};
 const int ANGLE_MINIMAL[] = {0, 0};
 const int ANGLE_MAXIMAL[] = {180, 180};
 
-const int POS_PINCE_OUVERTE = 45;
-const int POS_PINCE_FERMEE = 178;
-const int POS_BRAS_HAUT = 0;
-const int POS_BRAS_BAS = 0;
+int POS_PINCE_OUVERTE;
+int POS_PINCE_FERMEE;
+int POS_BRAS_HAUT;
+int POS_BRAS_BAS;
+
+void initialiserConstantesServos()
+{
+    if (Bob == 'A')
+    {
+        POS_PINCE_OUVERTE = 45;
+        POS_PINCE_FERMEE = 178;
+        POS_BRAS_HAUT = 0;
+        POS_BRAS_BAS = 0;
+    }
+    else
+    {
+        POS_PINCE_OUVERTE = 45;
+        POS_PINCE_FERMEE = 178;
+        POS_BRAS_HAUT = 0;
+        POS_BRAS_BAS = 0;
+    }
+    return;
+}
 
 const int DELAIS_OCTOGONE = 1500;
 

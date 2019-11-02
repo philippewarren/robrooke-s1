@@ -2,9 +2,13 @@
 #define SERVOMOTEUR_H
 
 #include <LibRobus.h>
+#include "init_robot.h"
 
 #define PINCE 0
 #define BRAS 1
+
+//Appelée par initialiserBob, set les angles des servos ouverts et fermés selon le robot.
+void initialiserConstantesServos();
 
 //Initialise un servo à son angle initial (BRAS: 0 ou PINCE: 1)
 bool initialiserServo(uint8_t indexDuServomoteur, bool estFixe = false);
