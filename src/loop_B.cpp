@@ -50,9 +50,9 @@ float calculAngleCouleur(int COULEUR)
     }
     else if (COULEUR == ORDRE_COULEURS[2])
     {
-        angle = (43);
+        angle = (45);
     }
-    else //COULEUR ==JAUNE
+    else //COULEUR == ORDRE_COULEURS[3]
     {
         angle = (-45);
     }
@@ -70,7 +70,7 @@ J # # # B
 void loopOctogoneB()
 {
     //Tableau lié aux étape:   {0, 1, 2, 03, 4, 05, 6, 07, 8, 09, 10, 11}
-    static float distances[] = {0, 0, 0, 35.0, 0, 15.0, 0, 20.0, 0, 30.0, 0, -30.0};
+    static float distances[] = {0, 0, 0, 42.0, 0, 0.0, 0, 20.0, 0, 0, 35.0, -10.0};
     //static int distance = 0;
     static float angleCouleur = 0;
     
@@ -91,7 +91,7 @@ void loopOctogoneB()
     */
     static int etape = 0;
 
-    if (etape!=11) Serial.println(etape);
+    if (etape!=12) Serial.println(etape);
 
     switch (etape)
     {
@@ -109,11 +109,11 @@ void loopOctogoneB()
         break;
 
     case 3:
-        if (avancerDroit(0.3, distances[etape])) etape += 1;
+        if (avancerDroit(0.16, distances[etape])) etape += 1;
         break;
 
     case 4:
-        if (fermerPinceOctogone()) etape += 1;
+        if (fermerPinceOctogone(true)) etape += 1;
         break;
 
     case 5:
@@ -121,7 +121,7 @@ void loopOctogoneB()
         break;
 
     case 6:
-        if (tourner(0.3, angleCouleur)) etape += 1;
+        if (tourner(0.15, angleCouleur)) etape += 1;
         break;
 
     case 7:
@@ -129,20 +129,22 @@ void loopOctogoneB()
         break;
 
     case 8:
-        if (traquerLigne(0.3)) etape += 1;
+        // if (traquerLigne(0.3)) etape += 1;
+        // if (avancerDroit(0.3, 65)) etape += 1;
+        if (avancerDroitLigne(0.3, 65)) etape += 1;
         break;
     
     case 9:
-        if (avancerDroit(0.5, distances[etape])) etape += 1;
-        break;
-
-    case 10:
         if (ouvrirPinceOctogone(true)) etape += 1;
         break;
-
-    case 11:
-        if (avancerDroit(0.2, distances[etape])) etape += 1;
+    
+    case 10:
+        if (avancerDroit(0.3, distances[etape])) etape += 1;
         break;
+
+    // case 11:
+    //     if (avancerDroit(0.2, distances[etape])) etape += 1;
+    //     break;
 
     default:
         arreterDeuxMoteurs();
@@ -150,5 +152,5 @@ void loopOctogoneB()
         break;
     }
 
-    if (etape > 1 && !tempsBobB()) etape = 11;
+    if (etape > 1 && !tempsBobB()) etape = 12;
 }
