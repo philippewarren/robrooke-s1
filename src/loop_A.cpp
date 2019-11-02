@@ -62,48 +62,54 @@ void loopOctogoneA()
         switch (etape)
         {
         case 1:
+            //aller au milieu
             if (avancerDroit(0.3,50))etape = 101;
             break;
         case 101:
+            //ouvrir la pince
             if (ouvrirPinceOctogone(true))etape = 2;
             break;
         case 2:
-            if (tourner(0.3,etape))etape = 3;
+            //tourner vers couleur
+            if (tourner(0.3,angle1))etape = 3;
             break;
         case 3:
+            //sortir milieu
             if (avancerDroit(0.3,20))etape = 4;
             break;
         case 4:
-            if (avancerDroitLigne(0.3,75))etape = 6;
+            //suivre ligne
+            if (avancerDroitLigne(0.3,75))etape = 602;
             break;
-        case 5:
-            if (avancerDroit(0.3,5))etape = 6;
-            break;
-        case 6:
-            if (traquerLigne(0.3))etape = 7;
-            break;
+        case 602:
+            //aller au ballon
+            if (avancerDroitLigne(0.3,40))etape = 7;
         case 7:
+            //prendre ballon
             if (fermerPinceOctogone(true))etape = 8;
             break;
         case 8:
-            if(tourner(0.3,180))etape = 9;
-            break;
-        case 9:
-            if(traquerLigne(0.3))etape = 10;
+            //demi-tour
+            if(tourner(0.3,190))etape = 10;
             break;
         case 10:
-            if(avancerDroitLigne(0.3,70))etape = 11;
+            //aller au milieu
+            if(avancerDroitLigne(0.3,200))etape = 11;
             break;
         case 11:
+            //lacher ballon
             if(ouvrirPinceOctogone(true))etape = 12;
             break;
         case 12:
+            //reculer
             if (avancerDroit(-0.3,-50))etape = 13;
             break;
         case 13:
+            //tourner
             if (tourner(0.3,90))etape = 14;
             break;
         case 14:
+            //avancer
             if(avancerDroitLigne(0.3,30))etape = 0;
             break;
 

@@ -169,6 +169,7 @@ bool avancerDroitLigne(float vitesse, float distance)
     {
       distanceParcourue = 0;
       syncroroue(0, 1, true);
+      reset = true;
       return true;
     }
     else
@@ -182,4 +183,46 @@ bool avancerDroitLigne(float vitesse, float distance)
       return false;
     }
   }
+}
+
+
+
+bool tournerNoir(float vitesse,int nbrLigne)
+{
+    static bool reset = true;
+    static int ligne = 0;
+    static bool sur = false;
+    bool retour = false;
+    if (reset)
+    {
+        syncroroue(vitesse,-1,true);
+        ligne = 0;
+        reset = false;
+        sur = false;
+    }
+    else
+    {
+        syncroroue(vitesse,-1);
+        int lecture[8];
+        lireSuiveurLigne(lecture);
+        if (lecture[4]>700)
+        {
+            if(!sur)
+            {
+                sur = true;
+                ligne += 1;
+                if(ligne >= nbrLigne)
+                {
+                    syncroroue(0,1,true);
+                    reset = true;
+                    retour = true;
+                }
+            }
+        }
+        else sur = false;
+
+    }
+    return retour;
+    
+
 }

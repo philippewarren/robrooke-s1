@@ -166,6 +166,7 @@ bool tourner(float vitesse, float angle)
 
   if ((distanceParcourue >= distance && distance > 0)||(distanceParcourue <= distance && distance < 0))
   {
+    reset = true;
     distanceParcourue = 0;
     syncroroue(0, 1, true);
     return true;
