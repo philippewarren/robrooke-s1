@@ -227,3 +227,26 @@ bool tournerNoir(float vitesse,int nbrLigne)
     
 
 }
+
+bool avancerDroitLigneBloque(float vitesse, float distance)
+{
+  float distanceParcourue = 0;
+  bool fin = false;
+
+  distance = cmEnClics(distance);
+  if(Bob == 'A') distance /= 1;
+  else distance /= 1;
+  resetDeuxEncodeurs();
+  syncroroue (vitesse,1,true);
+  if (vitesse * distance < 0)vitesse *= -1;
+
+  while (!fin)
+  {
+    delay(50);
+    distanceParcourue += ENCODER_Read(0);
+    suivreLigne(vitesse);
+    fin = (distanceParcourue >= distance && distance > 0)||(distanceParcourue <= distance && distance < 0);
+  }
+  syncroroue (0,1,true);
+  return true;
+}

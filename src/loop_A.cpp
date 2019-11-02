@@ -23,8 +23,34 @@
 //10 aller se cacher
 void octogoneA()
 {
-    ;
-}
+    //initialisation
+    float angle = 0;
+    float vitesse = 0.3;
+    switch (COULEURS_BOB[0])
+        {
+        case BLEU:
+            angle = -135;
+            break;
+        case JAUNE:
+            angle = 135;
+            break;
+        case ROUGE:
+            angle = 45;
+            break;
+        case VERT:
+            angle = -45;
+            break;
+        }
+    ouvrirPince(true);
+    avancerDroitBloque(vitesse,50);
+    tournerBloque(vitesse,angle);
+    avancerDroitBloque(vitesse,20);
+    avancerDroitLigneBloque(vitesse,75);
+    avancerDroitBloque(vitesse,40);
+    fermerPince();
+    delay(2000);
+    tournerBloque(vitesse,180);
+    }
 
 void loopOctogoneA()
 {

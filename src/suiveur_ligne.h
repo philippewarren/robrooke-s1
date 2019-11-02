@@ -24,5 +24,8 @@ bool avancerDroitLigne(float vitesse, float distance);
 //tourne un nombre de ligne
 bool tournerNoir(float vitesse,int nbrLigne);
 
+//comme avancerDroit mais avec une ligne
+bool avancerDroitLigneBloque(float vitesse, float distance);
+
 
 #endif
