@@ -31,6 +31,12 @@ bool avancerDroit(float vitesse, float distance);
 //rotation dans le sens anti-horaire
 bool tourner(float vitesse, float angle);
 
+//mouvement bloquant, distance en cm
+bool avancerDroitBloque(float vitesse, float distance);
+
+//rotation bloauante dans le sens anti-horaire
+bool tournerBloque(float vitesse, float angle);
+
 
 
 

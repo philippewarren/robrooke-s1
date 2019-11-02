@@ -21,6 +21,10 @@
 //8 lacher ballon
 //9 rotation
 //10 aller se cacher
+void octogoneA()
+{
+    ;
+}
 
 void loopOctogoneA()
 {

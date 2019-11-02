@@ -183,3 +183,50 @@ bool tourner(float vitesse, float angle)
     return false;
   }
 }
+
+//mouvement bloquant
+bool avancerDroitBloque(float vitesse, float distance)
+{
+  float distanceParcourue = 0;
+  bool fin = false;
+
+  distance = cmEnClics(distance);
+  if(Bob == 'A') distance /= 1;
+  else distance /= 1;
+  resetDeuxEncodeurs();
+  syncroroue (vitesse,1,true);
+  if (vitesse * distance < 0)vitesse *= -1;
+
+  while (!fin)
+  {
+    delay(50);
+    distanceParcourue += ENCODER_Read(0);
+    syncroroue(vitesse);
+    fin = (distanceParcourue >= distance && distance > 0)||(distanceParcourue <= distance && distance < 0);
+  }
+  syncroroue (0,1,true);
+  return true;
+}
+
+bool tournerBloque(float vitesse, float angle)
+{
+  float distanceParcourue = 0;
+  bool fin = false;
+
+  float distance = cmEnClics((19 * 3.14160) / 360 * angle);
+  if(Bob == 'A') distance /= 1;
+  else distance /= 1;
+  resetDeuxEncodeurs();
+  syncroroue (vitesse,-1,true);
+  if (vitesse * angle < 0)vitesse *= -1;
+
+  while (!fin)
+  {
+    delay(50);
+    distanceParcourue += ENCODER_Read(1);
+    syncroroue(vitesse,-1);
+    fin = (distanceParcourue >= distance && distance > 0)||(distanceParcourue <= distance && distance < 0);
+  }
+  syncroroue (0,1,true);
+  return true;
+}
