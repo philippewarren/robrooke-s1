@@ -1,0 +1,37 @@
+#ifndef SERVOMOTEUR_H
+#define SERVOMOTEUR_H
+
+#include <LibRobus.h>
+#include "init_robot.h"
+
+#define PINCE 0
+#define BRAS 1
+
+//Appelée par initialiserBob, set les angles des servos ouverts et fermés selon le robot.
+void initialiserConstantesServos();
+
+//Initialise un servo à son angle initial (BRAS: 0 ou PINCE: 1)
+bool initialiserServo(uint8_t indexDuServomoteur, bool estFixe = false);
+
+//Active un servomoteur s'il ne l'était pas déjà (BRAS: 0 ou PINCE: 1)
+void activerServo(uint8_t indexDuServomoteur);
+//Désactive un servomoteur s'il ne l'était pas déjà (BRAS: 0 ou PINCE: 1)
+void desactiverServo(uint8_t indexDuServomoteur);
+
+//Pose l'angle d'un servo (BRAS: 0 ou PINCE: 1)
+bool changerAngleServo(uint8_t indexDuServomoteur, uint8_t angle, bool estFixe = true);
+
+//Ouvre la pince et la libère par défaut
+bool ouvrirPince(bool estFixe = true);
+//Ferme la pince et la maintiens fermée par défaut
+bool fermerPince(bool estFixe = true);
+
+//Ouvre la pince et attend un délais non-bloquant, puis retourne true
+bool ouvrirPinceOctogone(bool estFixe = true);
+//Ferme la pince et attend un délais non-bloquant, puis retourne true
+bool fermerPinceOctogone(bool estFixe = true);
+
+
+
+
+#endif
