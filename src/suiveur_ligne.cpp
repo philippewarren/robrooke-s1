@@ -149,6 +149,7 @@ bool avancerDroitLigne(float vitesse, float distance)
 
     if (reset)
     {
+        distanceParcourue = 0;
       timer = millis();
       ancEnc = clicsEnCm(ENCODER_Read(0));
       reset = false;
@@ -195,7 +196,7 @@ bool tournerNoir(float vitesse,int nbrLigne)
     bool retour = false;
     if (reset)
     {
-        syncroroue(vitesse,-1,true);
+        syncroroue(vitesse,-0.8,true);
         ligne = 0;
         reset = false;
         sur = false;
@@ -205,7 +206,7 @@ bool tournerNoir(float vitesse,int nbrLigne)
         syncroroue(vitesse,-1);
         int lecture[8];
         lireSuiveurLigne(lecture);
-        if (lecture[4]>700)
+        if (lecture[4]>600 && lecture[5]>600)
         {
             if(!sur)
             {

@@ -146,6 +146,7 @@ bool tourner(float vitesse, float angle)
 
   if (reset)
   {
+    distanceParcourue = 0;
     timer = millis();
     ancEnc = clicsEnCm(ENCODER_Read(1));
     reset = false;

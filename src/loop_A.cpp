@@ -30,9 +30,11 @@ void loopOctogoneA()
     static float distance = 0;
     static int etape = 0;
     static long timer = 0;
-    if (etape !=0)
+    static int ancEtape = 0;
+    if (etape != ancEtape)
     {
     Serial.println(etape);
+    ancEtape = etape;
     }
 
     if (etape == 0 && loopEstCliqueEtRelache(3))
@@ -90,11 +92,15 @@ void loopOctogoneA()
             break;
         case 8:
             //demi-tour
-            if(tourner(0.3,190))etape = 10;
+            if(tourner(0.3,210))etape = 10;
             break;
         case 10:
             //aller au milieu
-            if(avancerDroitLigne(0.3,200))etape = 11;
+            if(avancerDroit(0.3,50))etape = 1004;
+            break;
+       
+        case 1004:
+            if(avancerDroitLigne(0.3,70+35))etape = 11;
             break;
         case 11:
             //lacher ballon
@@ -110,7 +116,7 @@ void loopOctogoneA()
             break;
         case 14:
             //avancer
-            if(avancerDroitLigne(0.3,30))etape = 0;
+            if(avancerDroitLigne(0.3,50))etape = 0;
             break;
 
 
