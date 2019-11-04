@@ -1,14 +1,15 @@
 #ifndef LOOP_B_H
 #define LOOP_B_H
 
-#include "LibRobus.h"
-#include "mouvement.h"
-#include "interactions.h"
-#include "suiveur_ligne.h"
-
+#include "init_robot.h"
 
 //Fonction loop utilisée par le défi du combattant, robot B
-void loopOctogoneB();
+//Prend en paramètre la couleur voulue, avec par défaut la valeur du tableau dans init_robot.cpp
+void loopOctogoneB(int COULEUR = -1500);
+
+//Fonction bloquante utilisée par le défi du combattant, robot bloquante
+//Prend en paramètre la couleur voulue, avec par défaut la valeur du tableau dans init_robot.cpp
+void octogoneB(int COULEUR = -1500);
 
 
 
