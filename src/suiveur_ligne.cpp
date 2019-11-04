@@ -64,14 +64,23 @@ bool detecterLigne()
     lireSuiveurLigne(lectureSuiveurDeLigne);
 
     //calcule du seuil
-    long seuil = (long)CONTRASTE * 0.50;
-    seuil *= seuil  ;
+    long seuil = (long)CONTRASTE * 0.70;
 
-    //calcule de la somme des variances au carrée
+    //compare les variances 
     for (int i=1;i<8;i++)
     {
         long delta = ((long)lectureSuiveurDeLigne[0]-(long)lectureSuiveurDeLigne[i]);
-        if (delta*delta > seuil)
+        if (delta > seuil)
+        {
+            ligneDetecte = true;
+        }
+    }
+
+    //si le capteur 1 est défectueux
+    for (int i=6;i>-1;i--)
+    {
+        long delta = ((long)lectureSuiveurDeLigne[7]-(long)lectureSuiveurDeLigne[i]);
+        if (delta > seuil)
         {
             ligneDetecte = true;
         }
