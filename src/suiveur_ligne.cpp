@@ -42,7 +42,7 @@ void suivreLigne(float vitesse)
     float delta4 = lectureSuiveurDeLigne[0]-lectureSuiveurDeLigne[7];
 
     //calcul du facteur de correction
-    float facteur = delta1*1 + delta2 * 2+ delta3 * 3+ delta4 * 6;
+    float facteur = delta1*0.5 + delta2 * 1+ delta3 * 2+ delta4 * 6;
     if (facteur > 4*CONTRASTE) facteur = 4*CONTRASTE;
     else if (facteur < -4*CONTRASTE) facteur = -4*CONTRASTE;
     facteur = facteur / (4 * CONTRASTE);
@@ -262,7 +262,7 @@ bool centrerLigne(float angleVue = 30)
   while (i< nbrValeur)
   {
     lireSuiveurLigne(lecture);
-    int donnee = lecture[3]+lecture[4];
+    int donnee = lecture[3]+lecture[4]+lecture[2]*0.1+lecture[5]*0.1;
     tournerBloque(0.3,-5);
     valeur[i]=donnee;
     i++;
