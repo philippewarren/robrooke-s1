@@ -284,4 +284,5 @@ bool centrerLigne(float angleVue = 30)
     i++;
   }
   tournerBloque(0.3,5*(nbrValeur - max));
+  return true;
 }
