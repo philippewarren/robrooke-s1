@@ -215,8 +215,9 @@ void octogoneB(int COULEUR = -1500)
     delay(1500);
     tournerBloque(vitesse/2, angle);
     avancerDroitBloque(vitesse, distanceLigne);
-    centrerLigne(10);
-    avancerDroitLigneBloque(vitesse, distanceZoneCouleur);
+    //centrerLigne(30);
+    // avancerDroitLigneBloque(vitesse, distanceZoneCouleur);
+    suivreLigneSimple(distanceZoneCouleur, vitesse);
     ouvrirPince(true);
     delay(1500);
     avancerDroitBloque(vitesse+0.2, distancePousserBallon);

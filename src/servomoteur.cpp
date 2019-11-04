@@ -1,7 +1,7 @@
 #include "servomoteur.h"
 
 bool servoActif[] = {false, false};
-const int ANGLE_INITIAL[] = {0, 0};
+const int ANGLE_INITIAL[] = {40, 0};
 const int ANGLE_MINIMAL[] = {0, 0};
 const int ANGLE_MAXIMAL[] = {180, 180};
 
@@ -14,8 +14,8 @@ void initialiserConstantesServos()
 {
     if (Bob == 'A')
     {
-        POS_PINCE_OUVERTE = 45;
-        POS_PINCE_FERMEE = 178;
+        POS_PINCE_OUVERTE = 95;
+        POS_PINCE_FERMEE = 40;
         POS_BRAS_HAUT = 0;
         POS_BRAS_BAS = 0;
     }
@@ -38,6 +38,13 @@ bool initialiserServo(uint8_t indexDuServomoteur, bool estFixe = false)
     if (!estFixe)
         desactiverServo(indexDuServomoteur);
     return estFixe;
+}
+
+void initialiserDeuxServos()
+{
+    initialiserConstantesServos();
+    initialiserServo(PINCE, ANGLE_INITIAL[PINCE]);
+    initialiserServo(BRAS, ANGLE_INITIAL[BRAS]);
 }
 
 void activerServo(uint8_t indexDuServomoteur)
@@ -131,4 +138,17 @@ bool fermerPinceOctogone(bool estFixe = true)
     }
     
     return retour;
+}
+
+void loopAjustementServo(uint8_t indexDuServomoteur)
+{
+    static int angle = 0;
+    changerAngleServo(indexDuServomoteur, angle);
+    Serial.println(angle);
+
+    if (loopEstCliqueEtRelache(0)) angle += 5;
+    if (loopEstCliqueEtRelache(1)) angle -= 5;
+    if (loopEstCliqueEtRelache(3)) angle = 0;
+    angle = (angle>180) ? 0 : angle;
+    angle = (angle<0) ? 180 : angle;
 }

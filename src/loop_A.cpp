@@ -39,7 +39,7 @@ void octogoneA(int couleur = -1500)
         case JAUNE:
             angle = 135;
             distanceCentre = 42;
-            distanceRetour = 54;
+            distanceRetour = 68;
             break;
         case ROUGE:
             angle = 45;
@@ -57,15 +57,17 @@ void octogoneA(int couleur = -1500)
     delay(300);
     tournerBloque(vitesse,angle);
     avancerDroitBloque(vitesse,20);
-    centrerLigne(10);
-    avancerDroitLigneBloque(vitesse,55);
+    //centrerLigne(10);
+    // avancerDroitLigneBloque(vitesse,55);
+    suivreLigneSimple(55, vitesse);
     avancerDroitBloque(vitesse,35);
     fermerPince(true);
     delay(2000);
     avancerDroitBloque(vitesse,-35);
     tournerBloque(vitesse,180);
-    centrerLigne(10);
-    avancerDroitLigneBloque(vitesse,distanceRetour);
+    //centrerLigne(10);
+    // avancerDroitLigneBloque(vitesse,distanceRetour);
+    suivreLigneSimple(distanceRetour, vitesse);
     ouvrirPince();
     delay(2000);
     avancerDroitBloque(vitesse,-50);

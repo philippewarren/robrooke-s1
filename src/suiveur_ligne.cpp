@@ -285,3 +285,88 @@ bool centrerLigne(float angleVue = 30)
   }
   tournerBloque(0.3,5*(nbrValeur - max));
 }
+
+void lireSuiveurLigneDeuxCapteurs(int deuxLectures[2])
+{
+  int lectures[8];
+  lireSuiveurLigne(lectures);
+  deuxLectures[0] = lectures[2];
+  deuxLectures[1] = lectures[5];
+}
+
+void estLigne(int lectures[2])
+{
+  lectures[0] = (lectures[0] > 400) ? 1 : (lectures[0] > 250) ? 2 : 0;
+  lectures[1] = (lectures[1] > 400) ? 1 : (lectures[1] > 250) ? 2 : 0;
+}
+
+void suivreLigneSimple(float DISTANCE, float VITESSE = 0.3)
+{
+  int deuxLectures[2];
+ // long long distance = 0;
+  long long clicsTotaux = cmEnClics(DISTANCE);
+  float vitesseG = VITESSE;
+  float vitesseD = VITESSE;
+  int estFinLigne = 0;
+
+  //BobB
+  float coefki = 0;
+  float coefkp = 0.03;
+  //bobA
+  if (Bob =='A')
+  {
+    float coefki = 0;
+    float coefkp = 0.025;  
+  }
+  float e_vitesse = 0;
+  //float v_initiale = 0.45; //vitesse initiale
+  static float ki = 0; //Variable intégrale
+  float kp = 0; //Variable proportionelle
+
+  const int DT = 5; //délais du pid
+
+  bool ligneAuCentre = false;
+
+  resetDeuxEncodeurs();
+
+  while (ENCODER_Read(0)<clicsTotaux && estFinLigne<3)
+  {
+    lireSuiveurLigneDeuxCapteurs(deuxLectures);
+    estLigne(deuxLectures);
+
+    changerVitesseDeuxMoteurs(vitesseG, vitesseD);
+    // changerVitesseDeuxMoteurs(vitesseG, vitesseD+kp);
+    // //fonction pid
+    delay(DT);
+    // e_vitesse = (float)(ENCODER_Read(0) - ENCODER_Read(1))/DT;
+    // // e_vitesse = (float)(deuxLectures[0] - deuxLectures[1])/DT;
+    // //ki += e_vitesse*VITESSE * coefki;
+    // kp= e_vitesse*VITESSE*coefkp;
+
+    //Commenter ce if.. pour tourner en rond quand il voit pas de ligne, ce qui facilite leur recherche
+    if (deuxLectures[0]==deuxLectures[1]>=1)
+    {
+      changerVitesseDeuxMoteurs(VITESSE, VITESSE);
+    }
+    if (deuxLectures[0] >= 1 && deuxLectures[1] >= 1)
+    {
+      estFinLigne++;
+    }
+    else if (deuxLectures[1]==1) //Capteur de gauche == ligne
+    {
+      changerVitesseDeuxMoteurs(0, 0.2);
+      // vitesseD = vitesseD-0.02;
+      // changerVitesseMoteur(1, vitesseD);
+      // delay(500);
+    }
+    else if (deuxLectures[0]==1)   //Capteur de droite == ligne
+    {
+      changerVitesseDeuxMoteurs(0.2, 0);
+      // vitesseD = vitesseD+0.02;
+      // changerVitesseMoteur(1, vitesseD);
+      // delay(500);
+    }
+  }
+  arreterDeuxMoteurs();
+  resetDeuxEncodeurs();
+}
