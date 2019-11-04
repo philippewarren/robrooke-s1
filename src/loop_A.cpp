@@ -26,24 +26,34 @@ void octogoneA(int couleur = -1500)
     //initialisation
     float angle = 0;
     float vitesse = 0.3;
+    float distanceCentre = 0;
+    float distanceRetour = 0;
     if (couleur == -1500)couleur = COULEURS_BOB[0];
     switch (couleur)
         {
         case BLEU:
             angle = -135;
+            distanceCentre = 42;
+            distanceRetour = 54;
             break;
         case JAUNE:
             angle = 135;
+            distanceCentre = 42;
+            distanceRetour = 54;
             break;
         case ROUGE:
             angle = 45;
+            distanceCentre = 42;
+            distanceRetour = 54;
             break;
         case VERT:
             angle = -45;
+            distanceCentre = 42;
+            distanceRetour = 54;
             break;
         }
     ouvrirPince(true);
-    avancerDroitBloque(vitesse-0.1,42);
+    avancerDroitBloque(vitesse-0.1,distanceCentre);
     delay(300);
     tournerBloque(vitesse,angle);
     avancerDroitBloque(vitesse,20);
@@ -55,7 +65,7 @@ void octogoneA(int couleur = -1500)
     avancerDroitBloque(vitesse,-35);
     tournerBloque(vitesse,180);
     centrerLigne(10);
-    avancerDroitLigneBloque(vitesse,54.3);
+    avancerDroitLigneBloque(vitesse,distanceRetour);
     ouvrirPince();
     delay(2000);
     avancerDroitBloque(vitesse,-50);
