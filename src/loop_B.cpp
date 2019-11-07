@@ -297,10 +297,10 @@ void octogoneAlternatifB(int couleur = -1500)
     {
         // avancerDroitBloque(vitesse-0.1, 5);             //Se centre
         // delay(300);
-        avancerDroitBloque(vitesse, distanceDebut);
+        avancerDroitBloque(vitesse, distanceDebut+15);
         delay(300);
         tournerBloque(vitesse/2, 170);                  //Demi-tour
-        avancerDroitBloque(vitesse, 2*distanceDebut);     //Sort du centre
+        avancerDroitBloque(vitesse, 2*distanceDebut+15);     //Sort du centre
     }
     else avancerDroitBloque(vitesse, 5+distanceDebut);  //
     delay(500);
