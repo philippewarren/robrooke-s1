@@ -254,7 +254,8 @@ void octogoneAlternatifA(int couleur = -1500)
     {
         avancerDroitBloque(vitesse-0.1, distanceDebut);     //avance au milieu
         delay(300);
-        tournerBloque(vitesse,sensInitial*90);              //tourne de 90 à droite ou à gauche selon la couleur
+        if (couleur == ROUGE) tournerBloque(vitesse, -280);
+        else tournerBloque(vitesse,sensInitial*90);              //tourne de 90 à droite ou à gauche selon la couleur
         avancerDroitBloque(vitesse,distanceDebut);          //sort du milieu
         tournerBloque(vitesse, -sensInitial*90);            //tourne vers l'avant (vers la couleur)
         avancerDroitBloque(vitesse, pythagoreDiagonale);    //avance jusqu'à la diagonale
