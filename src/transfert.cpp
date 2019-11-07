@@ -135,11 +135,27 @@ bool transfer(int noeud)
     int i = 0;
     int taille = NBR_RELATIONS[noeud];
     bool fin = false;
+    int angle = 0;
+    int trouve = false;
     while(!fin)
     {
-        
+        if (RELATION[noeud][i][0]== _position)
+        {
+            trouve = true;
+            fin = true;
+            angle = RELATION[noeud][i][1];
+        }
+
         if(i >= taille) fin = true;
     }
+
+    if (trouve)
+    {
+        tournerBloque(0.3,angle - _orientation);
+        
+        return true;
+    }
+    else return false;
 }
 
 bool allerVers(int noeud)
