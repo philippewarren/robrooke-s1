@@ -1,5 +1,7 @@
 #include "loop_normal.h"
 
+int tableau[8];
+
 void loopNormal()
 {
     // loopAjustementServo(PINCE);
@@ -22,4 +24,8 @@ void loopNormal()
     }
 
     // if (loopEstCliqueEtRelache(3)) suivreLigneSimpleHuit(120, 0.2);
+
+    // lireSuiveurLigne(tableau);
+    // afficherLigne(tableau);
+    // delay(800);
 }
