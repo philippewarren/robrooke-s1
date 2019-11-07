@@ -510,3 +510,13 @@ void trouverLigne(int sensDeRotation)
   arreterDeuxMoteurs();
   return;
 }
+
+void afficherLigne(int ligne[8])
+{
+  for(int i = 0; i<8;i++)
+  {
+    Serial.print(ligne[i]);
+    Serial.print('\t');
+  }
+  Serial.print('\n');
+}

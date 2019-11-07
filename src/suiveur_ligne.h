@@ -43,6 +43,9 @@ void suivreLigneSimpleHuit(float distance, float vitesse);
 //Sens de rotation horaire = 0, anti-horaire=1
 void trouverLigne(int sensDeRotation);
 
+//affiche une ligne
+void afficherLigne(int ligne[8]);
+
 
 
 #endif
