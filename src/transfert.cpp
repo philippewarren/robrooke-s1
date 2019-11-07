@@ -1,4 +1,6 @@
 #include "transfert.h"
+//variables globales
+int _position;
 
 void afficher_tableau (int tableau[TAILLE_MAX][TAILLE_MAX],int& taille)
 {
@@ -120,3 +122,5 @@ void afficher_trajet(int trajet[TAILLE_MAX])
     }
     Serial.print('\n');
 }
+
+void poserEtat(int position = -1, int orientation = -1);

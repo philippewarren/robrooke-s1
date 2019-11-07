@@ -308,7 +308,7 @@ void octogoneAlternatifB(int couleur = -1500)
     avancerDroitBloque(vitesse, pythagoreDiagonale);    //avance jusqu'à la diagonale
     suivreLigneSimpleHuit(150, vitesse-0.1);            //suit la ligne jusqu'à la zone noire et fonce dans le ballon
     // avancerDroitBloque(vitesse-0.1, -40);
-    // ouvrirPince(true);
+    ouvrirPince(true);
     // delay(2000);
     // avancerDroitBloque(vitesse, 20);
     delay(60000);

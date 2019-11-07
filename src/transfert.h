@@ -26,7 +26,14 @@ void ajouter_ligne(int tableau[TAILLE_MAX][TAILLE_MAX],int& taille,int ajout[TAI
 
 //le concepte de noeud est important pour ce code. Chaque noeud représente une intersection et sont numéroté à partir de 0.
 
-//schéma
+//orientation:
+//    0
+//    |
+//90-----270
+//    |
+//   180
+
+//position
 /*
             0
             |
@@ -95,6 +102,28 @@ void calculer_trajet(int depart, int fin, int output[TAILLE_MAX]);
 
 //pour debug
 void afficher_trajet(int trajet[TAILLE_MAX]);
+
+//Mouvement entre les noeuds/////////////////////////////////
+
+//fonction pour modification de la position
+
+//orientation:
+//    0
+//    |
+//90-----270
+//    |
+//   180
+
+//position
+/*
+            0
+            |
+        3---1---4
+            |
+        5---2---6
+*/
+
+void poserEtat(int position = -1, int orientation = -1);
 
 
 
