@@ -213,7 +213,7 @@ void octogoneAlternatifA(int couleur = -1500)
             passeParCentreDebut = false;
             distanceDebut = 45;
             distanceMilieu = 70;
-            pythagoreDiagonale = 20;
+            pythagoreDiagonale = 15;
             distanceSortieCouleur = 45;
             distanceLigne = 50;
             distanceCoin = -95;
@@ -223,7 +223,7 @@ void octogoneAlternatifA(int couleur = -1500)
             passeParCentreDebut = false;
             distanceDebut = 45;
             distanceMilieu = 70;
-            pythagoreDiagonale = 30;
+            pythagoreDiagonale = 15;
             distanceSortieCouleur = 48;
             distanceLigne = 50;
             distanceCoin = -95;
@@ -233,9 +233,9 @@ void octogoneAlternatifA(int couleur = -1500)
             passeParCentreDebut = true;
             distanceDebut = 45;
             distanceMilieu = 70;
-            pythagoreDiagonale = 38;
+            pythagoreDiagonale = 15;
             distanceSortieCouleur = 45;
-            distanceLigne = 50;
+            distanceLigne = 55;
             distanceCoin = -95;
             break;
         case VERT:
@@ -243,7 +243,7 @@ void octogoneAlternatifA(int couleur = -1500)
             passeParCentreDebut = true;
             distanceDebut = 45;
             distanceMilieu = 70;
-            pythagoreDiagonale = 20;
+            pythagoreDiagonale = 15;
             distanceSortieCouleur = 45;
             distanceLigne = 50;
             distanceCoin = -95;
@@ -254,7 +254,7 @@ void octogoneAlternatifA(int couleur = -1500)
     {
         avancerDroitBloque(vitesse-0.1, distanceDebut);     //avance au milieu
         delay(300);
-        if (couleur == ROUGE) tournerBloque(vitesse, -280);
+        if (couleur == ROUGE) tournerBloque(vitesse, -285);
         else tournerBloque(vitesse,sensInitial*90);              //tourne de 90 à droite ou à gauche selon la couleur
         avancerDroitBloque(vitesse,distanceDebut);          //sort du milieu
         tournerBloque(vitesse, -sensInitial*90);            //tourne vers l'avant (vers la couleur)
