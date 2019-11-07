@@ -330,7 +330,7 @@ void estLigneHuit(int lectures[8])
 {
   for (int i=0; i<8; i++)
   {
-    lectures[i] = (lectures[i] > 450) ? 1 : /*(lectures[i] > 250) ? 2 :*/ 0;//(350 rouge ok; vert ok)
+    lectures[i] = (lectures[i] > 325) ? 1 : /*(lectures[i] > 250) ? 2 :*/ 0;//(350 rouge ok; vert ok; problème vert?)
   }
 }
 

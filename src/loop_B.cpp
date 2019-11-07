@@ -246,7 +246,7 @@ void octogoneAlternatifB(int couleur = -1500)
         case BLEU:
             sensInitial = 1;
             rotation180Debut = false;
-            distanceDebut = 35;
+            distanceDebut = 30;
             distanceMilieu = 70;
             pythagoreDiagonale = 15;
             distanceSortieCouleur = 45;
@@ -256,7 +256,7 @@ void octogoneAlternatifB(int couleur = -1500)
         case JAUNE:
             sensInitial = -1;
             rotation180Debut = false;
-            distanceDebut = 35;
+            distanceDebut = 30;
             distanceMilieu = 70;
             pythagoreDiagonale = 15;
             distanceSortieCouleur = 48;
@@ -266,7 +266,7 @@ void octogoneAlternatifB(int couleur = -1500)
         case ROUGE:
             sensInitial = 1;
             rotation180Debut = true;
-            distanceDebut = 35;
+            distanceDebut = 30;
             distanceMilieu = 70;
             pythagoreDiagonale = 15;
             distanceSortieCouleur = 45;
@@ -276,7 +276,7 @@ void octogoneAlternatifB(int couleur = -1500)
         case VERT:
             sensInitial = -1;
             rotation180Debut = true;
-            distanceDebut = 35;
+            distanceDebut = 30;
             distanceMilieu = 70;
             pythagoreDiagonale = 15;
             distanceSortieCouleur = 45;
@@ -308,7 +308,7 @@ void octogoneAlternatifB(int couleur = -1500)
     avancerDroitBloque(vitesse, pythagoreDiagonale);    //avance jusqu'à la diagonale
     suivreLigneSimpleHuit(150, vitesse-0.1);            //suit la ligne jusqu'à la zone noire et fonce dans le ballon
     // avancerDroitBloque(vitesse-0.1, -40);
-    ouvrirPince(true);
+    // ouvrirPince(true);
     // delay(2000);
     // avancerDroitBloque(vitesse, 20);
     delay(60000);
