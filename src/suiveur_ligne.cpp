@@ -536,6 +536,7 @@ void traquerLigneBloque(float vitesse)
   }
   fin = false;
   iteration = 0;
+  centrerLigne(20);
   while (!fin)
   {
     if (detecterLigne)iteration = 0;
