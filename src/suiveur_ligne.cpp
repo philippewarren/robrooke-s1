@@ -523,5 +523,27 @@ void afficherLigne(int ligne[8])
 
 void traquerLigneBloque(float vitesse)
 {
-  ;
+  syncroroue(vitesse,1,true);
+  bool fin = false;
+  int iteration = 0;
+  while (!fin)
+  {
+    if (!detecterLigne)iteration = 0;
+    else iteration += 1;
+    if (iteration > 2) fin = true;
+    syncroroue(vitesse,1);
+    delay(30);
+  }
+  fin = false;
+  iteration = 0;
+  while (!fin)
+  {
+    if (detecterLigne)iteration = 0;
+    else iteration += 1;
+    if (iteration > 2) fin = true;
+    suivreLigne(vitesse);
+    delay(30);
+  }
+  syncroroue(0,1,true);
+  
 }
