@@ -152,7 +152,8 @@ bool transfer(int noeud)
     if (trouve)
     {
         tournerBloque(0.3,angle - _orientation);
-        
+        traquerLigneBloque(0.5);
+        poserEtat(noeud,angle);
         return true;
     }
     else return false;
