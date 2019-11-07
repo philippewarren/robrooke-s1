@@ -13,14 +13,14 @@ void loopNormal()
     if (Bob=='B')
     {
         if(loopEstCliqueEtRelache(3)) octogoneAlternatifB(VERT);
-        if(loopEstCliqueEtRelache(0)) octogoneAlternatifB(JAUNE);
-        if(loopEstCliqueEtRelache(1)) octogoneAlternatifB(ROUGE);
+        // if(loopEstCliqueEtRelache(0)) octogoneAlternatifB(JAUNE);
+        // if(loopEstCliqueEtRelache(1)) octogoneAlternatifB(ROUGE);
     }
     else
     {
-        if(loopEstCliqueEtRelache(3)) octogoneAlternatifA(BLEU);
-        if(loopEstCliqueEtRelache(0)) octogoneAlternatifA(ROUGE);
-        if(loopEstCliqueEtRelache(1)) octogoneAlternatifA(JAUNE);
+        if(loopEstCliqueEtRelache(3)) octogoneAlternatifA(ROUGE);
+        // if(loopEstCliqueEtRelache(0)) octogoneAlternatifA(ROUGE);
+        // if(loopEstCliqueEtRelache(1)) octogoneAlternatifA(JAUNE);
     }
 
     // if (loopEstCliqueEtRelache(3)) suivreLigneSimpleHuit(120, 0.2);

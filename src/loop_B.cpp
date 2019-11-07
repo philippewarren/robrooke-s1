@@ -286,12 +286,13 @@ void octogoneAlternatifB(int couleur = -1500)
     }
     
     
-    delay(2000);                                        //attend 61 secondes
+    delay(61000);                                        //attend 61 secondes
 
     ouvrirPince(true);
     delay(1500);
     avancerDroitBloque(vitesse-0.15, distanceDebut);    //avance au milieu
     fermerPince(true);
+    avancerDroitBloque(vitesse-0.15, 5);
     delay(1500);
     if (rotation180Debut==true)
     {
@@ -299,7 +300,7 @@ void octogoneAlternatifB(int couleur = -1500)
         // delay(300);
         avancerDroitBloque(vitesse, distanceDebut+15);
         delay(300);
-        tournerBloque(vitesse/2, 170);                  //Demi-tour
+        tournerBloque(vitesse/2, 168);                  //Demi-tour
         avancerDroitBloque(vitesse, 2*distanceDebut+15);     //Sort du centre
     }
     else avancerDroitBloque(vitesse, 5+distanceDebut);  //

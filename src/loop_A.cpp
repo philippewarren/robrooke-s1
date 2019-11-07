@@ -212,7 +212,7 @@ void octogoneAlternatifA(int couleur = -1500)
             sensInitial = -1;
             passeParCentreDebut = false;
             distanceDebut = 45;
-            distanceMilieu = 70;
+            distanceMilieu = 65;
             pythagoreDiagonale = 15;
             distanceSortieCouleur = 45;
             distanceLigne = 50;
@@ -222,7 +222,7 @@ void octogoneAlternatifA(int couleur = -1500)
             sensInitial = 1;
             passeParCentreDebut = false;
             distanceDebut = 45;
-            distanceMilieu = 70;
+            distanceMilieu = 65;
             pythagoreDiagonale = 15;
             distanceSortieCouleur = 48;
             distanceLigne = 50;
@@ -232,7 +232,7 @@ void octogoneAlternatifA(int couleur = -1500)
             sensInitial = 1;
             passeParCentreDebut = true;
             distanceDebut = 45;
-            distanceMilieu = 70;
+            distanceMilieu = 65;
             pythagoreDiagonale = 15;
             distanceSortieCouleur = 45;
             distanceLigne = 55;
@@ -242,7 +242,7 @@ void octogoneAlternatifA(int couleur = -1500)
             sensInitial = -1;
             passeParCentreDebut = true;
             distanceDebut = 45;
-            distanceMilieu = 70;
+            distanceMilieu = 65;
             pythagoreDiagonale = 15;
             distanceSortieCouleur = 45;
             distanceLigne = 50;
@@ -254,18 +254,19 @@ void octogoneAlternatifA(int couleur = -1500)
     {
         avancerDroitBloque(vitesse-0.1, distanceDebut);     //avance au milieu
         delay(300);
-        if (couleur == ROUGE) tournerBloque(vitesse, -285);
-        else tournerBloque(vitesse,sensInitial*90);              //tourne de 90 à droite ou à gauche selon la couleur
+        tournerBloque(vitesse,sensInitial*90);              //tourne de 90 à droite ou à gauche selon la couleur
         avancerDroitBloque(vitesse,distanceDebut);          //sort du milieu
         tournerBloque(vitesse, -sensInitial*90);            //tourne vers l'avant (vers la couleur)
         avancerDroitBloque(vitesse, pythagoreDiagonale);    //avance jusqu'à la diagonale
         ouvrirPince(true);
         delay(2000);
         suivreLigneSimpleHuit(150, vitesse-0.1);            //suit la ligne jusqu'à la zone noire et fonce dans le ballon
+        // traquerLigneBloque(vitesse);
+        // avancerDroitBloque(vitesse, 30);
         avancerDroitBloque(vitesse-0.15, -1);               //recule un peu
         fermerPince(true);
         delay(2000);
-        tournerBloque(vitesse, sensInitial*(180-40));       //tourne vers la ligne du carré
+        tournerBloque(vitesse, sensInitial*(180-45-sensInitial*5));       //tourne vers la ligne du carré
         avancerDroitBloque(vitesse, distanceSortieCouleur); //sort de la couleur vers la ligne du carré
         suivreLigneSimpleHuit(distanceLigne, vitesse-0.1);  //suit la ligne jusqu'au milieu
         tournerBloque(vitesse, sensInitial*90);             //tourne face au milieu
