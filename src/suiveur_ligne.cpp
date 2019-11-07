@@ -520,3 +520,8 @@ void afficherLigne(int ligne[8])
   }
   Serial.print('\n');
 }
+
+void traquerLigneBloque(float vitesse)
+{
+  ;
+}

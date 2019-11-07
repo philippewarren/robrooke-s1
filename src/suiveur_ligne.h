@@ -46,6 +46,10 @@ void trouverLigne(int sensDeRotation);
 //affiche une ligne
 void afficherLigne(int ligne[8]);
 
+//trouve une ligne, la suis et arrête à la fin en étant bloquant
+void traquerLigneBloque(float vitesse);
+
+
 
 
 #endif
