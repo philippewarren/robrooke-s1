@@ -233,8 +233,7 @@ bool tournerBloque(float vitesse, float angle)
   float distanceParcourue = 0;
   bool fin = false;
 
-  if(Bob == 'A') angle -
-  3;
+  if(Bob == 'A') angle /= 1.125;
   else angle /= 1;
   float distance = cmEnClics((19 * 3.14160) / 360 * angle);
   resetDeuxEncodeurs();

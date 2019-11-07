@@ -47,11 +47,11 @@ float calculAngleCouleur(int COULEUR)
     }
     else if (COULEUR == ORDRE_COULEURS[1])
     {
-        angle = (90+45);
+        angle = -360+(90+45);
     }
     else if (COULEUR == ORDRE_COULEURS[2])
     {
-        angle = (45);
+        angle = -360+(45);
     }
     else //COULEUR == ORDRE_COULEURS[3]
     {
@@ -171,7 +171,7 @@ void octogoneB(int COULEUR = -1500)
     //initialisation
     float angle = 0;
     float vitesse = 0.3;
-    float distanceCentre = 42;
+    float distanceCentre = 35;
     float distanceLigne = 20;
     float distanceZoneCouleur = 65;
     float distancePousserBallon = 35;
@@ -181,25 +181,25 @@ void octogoneB(int COULEUR = -1500)
     switch (COULEUR)
     {
     case BLEU:
-        distanceCentre = 42;
+        distanceCentre = 35;
         distanceLigne = 20;
         distanceZoneCouleur = 65;
         distancePousserBallon = 35;
         break;
     case JAUNE:
-        distanceCentre = 42;
+        distanceCentre = 35;
         distanceLigne = 20;
         distanceZoneCouleur = 65;
         distancePousserBallon = 35;
         break;
     case ROUGE:
-        distanceCentre = 42;
+        distanceCentre = 35;
         distanceLigne = 20;
         distanceZoneCouleur = 65;
         distancePousserBallon = 35;
         break;
     case VERT:
-        distanceCentre = 42;
+        distanceCentre = 35;
         distanceLigne = 20;
         distanceZoneCouleur = 65;
         distancePousserBallon = 35;
@@ -210,14 +210,15 @@ void octogoneB(int COULEUR = -1500)
 
     ouvrirPince(true);
     delay(1500);
-    avancerDroitBloque(vitesse-0.1, distanceCentre);
+    avancerDroitBloque(vitesse-0.15, distanceCentre);
     fermerPince(true);
     delay(1500);
+    avancerDroitBloque(vitesse-0.1, 5);
     tournerBloque(vitesse/2, angle);
     avancerDroitBloque(vitesse, distanceLigne);
-    //centrerLigne(30);
-    // avancerDroitLigneBloque(vitesse, distanceZoneCouleur);
-    suivreLigneSimple(distanceZoneCouleur, vitesse);
+    // centrerLigne(30);
+    avancerDroitLigneBloque(vitesse, distanceZoneCouleur);
+    // suivreLigneSimple(distanceZoneCouleur, vitesse);
     ouvrirPince(true);
     delay(1500);
     avancerDroitBloque(vitesse+0.2, distancePousserBallon);

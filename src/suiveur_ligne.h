@@ -5,6 +5,10 @@
 #include <LibRobus.h>
 #include "mouvement.h"
 
+#define CAPTEUR_GAUCHE 5
+#define CAPTEUR_DROIT 2
+
+
 //ne peu pas être utilisé en me temps que IR1,IR2,IR3,J20,J21,J22
 
 //constante proportionnelle à la différence de réflectivité des deux surfaces
@@ -32,6 +36,13 @@ bool centrerLigne(float angleVue = 30);
 
 //Suiveur de ligne de PW
 void suivreLigneSimple(float distance, float vitesse);
+
+void suivreLigneSimpleHuit(float distance, float vitesse);
+
+//Trouve une ligne
+//Sens de rotation horaire = 0, anti-horaire=1
+void trouverLigne(int sensDeRotation);
+
 
 
 #endif

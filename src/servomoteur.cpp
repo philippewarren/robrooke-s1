@@ -1,7 +1,7 @@
 #include "servomoteur.h"
 
 bool servoActif[] = {false, false};
-const int ANGLE_INITIAL[] = {40, 0};
+int ANGLE_INITIAL[] = {0, 0};
 const int ANGLE_MINIMAL[] = {0, 0};
 const int ANGLE_MAXIMAL[] = {180, 180};
 
@@ -15,16 +15,18 @@ void initialiserConstantesServos()
     if (Bob == 'A')
     {
         POS_PINCE_OUVERTE = 95;
-        POS_PINCE_FERMEE = 40;
+        POS_PINCE_FERMEE = 39;
         POS_BRAS_HAUT = 0;
         POS_BRAS_BAS = 0;
+        ANGLE_INITIAL[PINCE] = 0;
     }
     else
     {
-        POS_PINCE_OUVERTE = 45;
-        POS_PINCE_FERMEE = 178;
+        POS_PINCE_OUVERTE = 125;
+        POS_PINCE_FERMEE = 69;
         POS_BRAS_HAUT = 0;
         POS_BRAS_BAS = 0;
+        ANGLE_INITIAL[PINCE] = 30;
     }
     return;
 }
@@ -68,7 +70,7 @@ bool changerAngleServo(uint8_t indexDuServomoteur, uint8_t angle, bool estFixe =
     angle = angle>ANGLE_MAXIMAL[indexDuServomoteur] ? ANGLE_MAXIMAL[indexDuServomoteur] : angle;
 
     SERVO_SetAngle(indexDuServomoteur, angle);
-    if (!estFixe)
+    if (estFixe==false)
     {
         desactiverServo(indexDuServomoteur);
     }

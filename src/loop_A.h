@@ -5,6 +5,7 @@
 
 void octogoneA(int couleur = -1500);
 void loopOctogoneA();
+void octogoneAlternatifA(int couleur = -1500);
 
 
 #endif 

@@ -36,16 +36,16 @@ void suivreLigne(float vitesse)
     lireSuiveurLigne(lectureSuiveurDeLigne);
 
     //calcul des différences entre capteurs opposés
-    float delta1 = lectureSuiveurDeLigne[3]-lectureSuiveurDeLigne[4];
-    float delta2 = lectureSuiveurDeLigne[2]-lectureSuiveurDeLigne[5];
-    float delta3 = lectureSuiveurDeLigne[1]-lectureSuiveurDeLigne[6];
-    float delta4 = lectureSuiveurDeLigne[0]-lectureSuiveurDeLigne[7];
+    float delta1 = ((float)lectureSuiveurDeLigne[3]*lectureSuiveurDeLigne[3])-((float)lectureSuiveurDeLigne[4]*lectureSuiveurDeLigne[4]);
+    float delta2 = ((float)lectureSuiveurDeLigne[2]*lectureSuiveurDeLigne[2])-((float)lectureSuiveurDeLigne[5]*lectureSuiveurDeLigne[5]);
+    float delta3 = ((float)lectureSuiveurDeLigne[1]*lectureSuiveurDeLigne[1])-((float)lectureSuiveurDeLigne[6]*lectureSuiveurDeLigne[6]);
+    float delta4 = ((float)lectureSuiveurDeLigne[0]*lectureSuiveurDeLigne[0])-((float)lectureSuiveurDeLigne[7]*lectureSuiveurDeLigne[7]);
 
     //calcul du facteur de correction
     float facteur = delta1*0.5 + delta2 * 1+ delta3 * 2+ delta4 * 6;
-    if (facteur > 4*CONTRASTE) facteur = 4*CONTRASTE;
-    else if (facteur < -4*CONTRASTE) facteur = -4*CONTRASTE;
-    facteur = facteur / (4 * CONTRASTE);
+    if (facteur > 4*(float)CONTRASTE*(float)CONTRASTE) facteur = 4*(float)CONTRASTE*(float)CONTRASTE;
+    else if (facteur < -4*CONTRASTE*CONTRASTE) facteur = -4*CONTRASTE*CONTRASTE;
+    facteur = facteur / (4 * (float)CONTRASTE*(float)CONTRASTE);
 
     //modification de la vitesse des roues
     float factVit = facteur;
@@ -260,22 +260,47 @@ bool avancerDroitLigneBloque(float vitesse, float distance)
   return true;
 }
 
+bool tournerBloqueSansArret(float vitesse, float angle)
+{
+  float distanceParcourue = 0;
+  bool fin = false;
+
+  if(Bob == 'A') angle -
+  3;
+  else angle /= 1;
+  float distance = cmEnClics((19 * 3.14160) / 360 * angle);
+  resetDeuxEncodeurs();
+  if (vitesse * angle < 0)vitesse *= -1;
+
+  while (!fin)
+  {
+    delay(30);
+    distanceParcourue += ENCODER_Read(1);
+    syncroroue(vitesse,-1);
+    fin = (distanceParcourue >= distance && distance > 0)||(distanceParcourue <= distance && distance < 0);
+  }
+  return true;
+}
+
 bool centrerLigne(float angleVue = 30)
 {
   int nbrValeur =(angleVue * 2) / 5;
   int valeur[nbrValeur];
   int lecture[8];
   int i = 0;
-
+  
+  syncroroue (0.3,-1,true);
   tournerBloque(0.3,angleVue);
   while (i< nbrValeur)
   {
     lireSuiveurLigne(lecture);
     int donnee = lecture[3]+lecture[4]+lecture[2]*0.1+lecture[5]*0.1;
-    tournerBloque(0.3,-5);
+    tournerBloqueSansArret(0.3,-5);
     valeur[i]=donnee;
     i++;
   }
+  
+  syncroroue (0,-1,true);
   int max = 0;
   i = 1;
   while (i<nbrValeur)
@@ -301,30 +326,23 @@ void estLigne(int lectures[2])
   lectures[1] = (lectures[1] > 400) ? 1 : (lectures[1] > 250) ? 2 : 0;
 }
 
+void estLigneHuit(int lectures[8])
+{
+  for (int i=0; i<8; i++)
+  {
+    lectures[i] = (lectures[i] > 400) ? 1 : /*(lectures[i] > 250) ? 2 :*/ 0;
+  }
+}
+
 void suivreLigneSimple(float DISTANCE, float VITESSE = 0.3)
 {
   int deuxLectures[2];
- // long long distance = 0;
   long long clicsTotaux = cmEnClics(DISTANCE);
   float vitesseG = VITESSE;
   float vitesseD = VITESSE;
   int estFinLigne = 0;
 
-  //BobB
-  float coefki = 0;
-  float coefkp = 0.03;
-  //bobA
-  if (Bob =='A')
-  {
-    float coefki = 0;
-    float coefkp = 0.025;  
-  }
-  float e_vitesse = 0;
-  //float v_initiale = 0.45; //vitesse initiale
-  static float ki = 0; //Variable intégrale
-  float kp = 0; //Variable proportionelle
-
-  const int DT = 5; //délais du pid
+  const int DT = 5; //délais du cycle
 
   bool ligneAuCentre = false;
 
@@ -336,16 +354,10 @@ void suivreLigneSimple(float DISTANCE, float VITESSE = 0.3)
     estLigne(deuxLectures);
 
     changerVitesseDeuxMoteurs(vitesseG, vitesseD);
-    // changerVitesseDeuxMoteurs(vitesseG, vitesseD+kp);
-    // //fonction pid
     delay(DT);
-    // e_vitesse = (float)(ENCODER_Read(0) - ENCODER_Read(1))/DT;
-    // // e_vitesse = (float)(deuxLectures[0] - deuxLectures[1])/DT;
-    // //ki += e_vitesse*VITESSE * coefki;
-    // kp= e_vitesse*VITESSE*coefkp;
 
     //Commenter ce if.. pour tourner en rond quand il voit pas de ligne, ce qui facilite leur recherche
-    if (deuxLectures[0]==deuxLectures[1]>=1)
+    if (deuxLectures[0]==deuxLectures[1])
     {
       changerVitesseDeuxMoteurs(VITESSE, VITESSE);
     }
@@ -370,4 +382,131 @@ void suivreLigneSimple(float DISTANCE, float VITESSE = 0.3)
   }
   arreterDeuxMoteurs();
   resetDeuxEncodeurs();
+}
+
+void suivreLigneSimpleHuit(float DISTANCE, float VITESSE = 0.3)
+{
+  int huitLectures[8];
+  long long clicsTotaux = cmEnClics(DISTANCE);
+  float vitesseG = VITESSE;
+  float vitesseD = VITESSE;
+  int estFinLigne = 0;
+  int estPasLigneCentre = 0;
+  int estLigneCentre = 0;
+  int directionRotation = 0;
+
+  int CLICS_360_DEGRES = cmEnClics(largeurEss*2*PI);
+
+  const int DT = 5; //délais du cycle
+
+  bool ligneAuCentre = false;
+
+  resetDeuxEncodeurs();
+
+  while (ENCODER_Read(0)<clicsTotaux && estFinLigne<10)
+  {
+    lireSuiveurLigne(huitLectures);
+    estLigneHuit(huitLectures);
+
+    changerVitesseDeuxMoteurs(vitesseG, vitesseD);
+    delay(DT);
+
+    if(huitLectures[3]>=1 || huitLectures[4]>=1)
+    {
+      estLigneCentre++;
+    }
+    else
+    {
+      estPasLigneCentre ++;
+    }
+    if (estPasLigneCentre>30)
+    {
+      ligneAuCentre = false;
+      estPasLigneCentre = 0;
+    }
+    else if (estLigneCentre>30)
+    {
+      ligneAuCentre = true;
+      estLigneCentre = 0;
+    }
+
+    if (ligneAuCentre)
+    {
+      //Commenter ce if.. pour tourner en rond quand il voit pas de ligne, ce qui facilite leur recherche
+      if (huitLectures[CAPTEUR_DROIT]==huitLectures[CAPTEUR_GAUCHE])
+      {
+        vitesseG = VITESSE;
+        vitesseD = VITESSE;
+      }
+      if (huitLectures[CAPTEUR_DROIT] >= 1 && huitLectures[CAPTEUR_GAUCHE] >= 1)
+      {
+        estFinLigne++;
+      }
+      else if (huitLectures[CAPTEUR_GAUCHE]==1) //Capteur de gauche == ligne
+      {
+        // changerVitesseDeuxMoteurs(0, 0.2);
+        vitesseG = 0;
+        vitesseD = 0.2;
+        // vitesseD = vitesseD-0.02;
+        // changerVitesseMoteur(1, vitesseD);
+        // delay(500);
+      }
+      else if (huitLectures[CAPTEUR_DROIT]==1)   //Capteur de droite == ligne
+      {
+        // changerVitesseDeuxMoteurs(0.2, 0);
+        vitesseG = 0.2;
+        vitesseD = 0;
+        // vitesseD = vitesseD+0.02;
+        // changerVitesseMoteur(1, vitesseD);
+        // delay(500);
+      }
+    }
+    else
+    {
+      if (huitLectures[CAPTEUR_DROIT] >= 1 && directionRotation!=-1)
+      {
+        // changerVitesseDeuxMoteurs(-0.2, 0.2);
+        vitesseG = 0;
+        vitesseD = 0.2;
+        directionRotation = 1;
+      }
+      else if (huitLectures[CAPTEUR_GAUCHE] >= 1 && directionRotation!=1)
+      {
+        // changerVitesseDeuxMoteurs(0.2, -0.2);
+        vitesseG = 0.2;
+        vitesseD = 0;
+        directionRotation = -1;
+      }
+    }
+  }
+  arreterDeuxMoteurs();
+  resetDeuxEncodeurs();
+}
+
+void trouverLigne(int sensDeRotation)
+{
+  int sens = (sensDeRotation==0) ? 1 : -1;
+  int indexSens = (sensDeRotation==0) ? CAPTEUR_GAUCHE : CAPTEUR_DROIT;
+  float vitesse = 0.2;
+  int lectures[8];
+  int CLICS_180_DEGRES = cmEnClics(largeurEss*PI);
+  bool capteurInverseVu = false;
+  bool aTrouveLigne = false;
+
+  changerVitesseMoteur(sensDeRotation, vitesse);
+  while (!aTrouveLigne && ENCODER_Read(sensDeRotation)<CLICS_180_DEGRES)
+  {
+    lireSuiveurLigne(lectures);
+    estLigneHuit(lectures);
+
+    if (lectures[indexSens+sens*2]>=1) capteurInverseVu = true;
+    if (lectures[indexSens]>=1 && capteurInverseVu) aTrouveLigne = true;
+
+    // for (int i=0; i<8; i++)
+    // {
+    //   if (lectures[i]>=1) aTrouveLigne = true;
+    // }
+  }
+  arreterDeuxMoteurs();
+  return;
 }
