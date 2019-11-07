@@ -11,6 +11,7 @@ void loopOctogoneB(int COULEUR = -1500);
 //Prend en paramètre la couleur voulue, avec par défaut la valeur du tableau dans init_robot.cpp
 void octogoneB(int COULEUR = -1500);
 
+void octogoneAlternatifB(int COULEUR = -1500);
 
 
 
