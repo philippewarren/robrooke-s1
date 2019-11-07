@@ -272,6 +272,7 @@ void octogoneAlternatifA(int couleur = -1500)
         ouvrirPince(true);
         delay(2000);
         avancerDroitBloque(vitesse,distanceCoin);           //recule dans le coin
+        delay(120000);
     }
     else
     {
@@ -295,7 +296,7 @@ void octogoneAlternatifA(int couleur = -1500)
         ouvrirPince(true);
         delay(2000);
         avancerDroitBloque(vitesse,distanceCoin);           //recule dans le coin
-        delay(60000);
+        delay(120000);
     }
     
 }
