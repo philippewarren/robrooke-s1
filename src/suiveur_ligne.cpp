@@ -528,22 +528,22 @@ void traquerLigneBloque(float vitesse)
   int iteration = 0;
   while (!fin)
   {
-    if (!detecterLigne)iteration = 0;
+    if (!detecterLigne())iteration = 0;
     else iteration += 1;
     if (iteration > 2) fin = true;
     syncroroue(vitesse,1);
-    delay(30);
+    delay(10);
   }
   fin = false;
   iteration = 0;
   centrerLigne(20);
   while (!fin)
   {
-    if (detecterLigne)iteration = 0;
+    if (detecterLigne())iteration = 0;
     else iteration += 1;
     if (iteration > 2) fin = true;
     suivreLigne(vitesse);
-    delay(30);
+    delay(10);
   }
   syncroroue(0,1,true);
   
