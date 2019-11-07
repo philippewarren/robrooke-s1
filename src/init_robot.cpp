@@ -4,21 +4,21 @@ char Bob  = 'I';
 volatile bool arretUrgence = false;
 extern float largeurEss;
 
-const int COULEURS_BOB[] = {ROUGE, JAUNE};
+const int COULEURS_BOB[] = {VERT, JAUNE};
 
 void initialiserBob()
 {
     BoardInit();
+    Bob = EEPROM.read(0);
+    initialiserDeuxServos();
     initialiserPortsDEL();
     //initialiserPortsBoutons();
     //initialiserPortsInterrupt();
-    Bob = EEPROM.read(0);
     largeurEss = Bob=='A' ? 18.2 : 18.1;
     // DIST_90 = (largeurParc-largeurEss)/2;    //la distance que Bob doit avancer pour un virage de 90 degres
     // DIST_45 = DIST_90*TAN_22_5;              //la distance que Bob doit avancer pour un virage de 45 degres
     Serial.println("##Connection serie active et fonctionnelle.##");
     //initialiserCapteurCouleur();
-    initialiserConstantesServos();
 }
 
 void initialiserPortsDEL()

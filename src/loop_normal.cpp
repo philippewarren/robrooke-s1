@@ -1,17 +1,25 @@
 #include "loop_normal.h"
 
-int itt = 0;
-float vitesse = 0.3;
-bool lecture = false;
-bool avancerLigne = false;
-bool avancerDroit2 = false;
-bool ligne = false;
-long timerFinLigne = 0;
-bool timerLance = false;
-int angleCourrant = 0;
 void loopNormal()
 {
-    if (Bob=='A') loopOctogoneA();
-    else loopOctogoneB();
+    // loopAjustementServo(PINCE);
+    // if(loopEstCliqueEtRelache(0)) ouvrirPince(true);
+    // else if (loopEstCliqueEtRelache(1)) fermerPince(true);
 
+    // if (loopEstCliqueEtRelache(3)) suivreLigneSimple(100, 0.5);
+
+    if (Bob=='B')
+    {
+        if(loopEstCliqueEtRelache(3)) octogoneAlternatifB(VERT);
+        if(loopEstCliqueEtRelache(0)) octogoneAlternatifB(JAUNE);
+        if(loopEstCliqueEtRelache(1)) octogoneAlternatifB(ROUGE);
+    }
+    else
+    {
+        if(loopEstCliqueEtRelache(3)) octogoneAlternatifA(BLEU);
+        if(loopEstCliqueEtRelache(0)) octogoneAlternatifA(ROUGE);
+        if(loopEstCliqueEtRelache(1)) octogoneAlternatifA(JAUNE);
+    }
+
+    // if (loopEstCliqueEtRelache(3)) suivreLigneSimpleHuit(120, 0.2);
 }
