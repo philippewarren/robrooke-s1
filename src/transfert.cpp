@@ -1,6 +1,7 @@
 #include "transfert.h"
 //variables globales
-int _position;
+int _position = 0;
+int _orientation = 0;
 
 void afficher_tableau (int tableau[TAILLE_MAX][TAILLE_MAX],int& taille)
 {
@@ -123,4 +124,34 @@ void afficher_trajet(int trajet[TAILLE_MAX])
     Serial.print('\n');
 }
 
-void poserEtat(int position = -1, int orientation = -1);
+void poserEtat(int position = -1, int orientation = -1)
+{
+    if (position >= 0) _position = position;
+    if (orientation >= 0) _orientation = orientation;
+}
+
+bool transfer(int noeud)
+{
+    int i = 0;
+    int taille = NBR_RELATIONS[noeud];
+    bool fin = false;
+    while(!fin)
+    {
+        
+        if(i >= taille) fin = true;
+    }
+}
+
+bool allerVers(int noeud)
+{
+    int trajet[10];
+    calculer_trajet(_position,noeud,trajet);
+    afficher_trajet(trajet);
+    int i = 0;
+    int fin = false;
+    while(!fin)
+    {
+        fin = true;
+    }
+    
+}

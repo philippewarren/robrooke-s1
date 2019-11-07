@@ -2,6 +2,8 @@
 #define TRANSFERT_H
 
 #include <Arduino.h>
+#include <mouvement.h>
+#include <suiveur_ligne.h>
 
 //utilisation de  vector pour pauvre//////////////////////////////////////////////////////////////////////
 
@@ -123,9 +125,14 @@ void afficher_trajet(int trajet[TAILLE_MAX]);
         5---2---6
 */
 
+//change l'état du robot (position et orientation)
 void poserEtat(int position = -1, int orientation = -1);
 
+//permet de se rendre à un noeud adjascent, retourne une réussite (true) ou un échec (false)
+bool transfer(int noeud);
 
+//permet de se rendre à un noeud éloignée et adjascent, retourne une réussite (true) ou un échec (false)
+bool allerVers(int noeud);
 
 
 
