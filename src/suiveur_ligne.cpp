@@ -466,7 +466,7 @@ void suivreLigneSimpleHuit(float DISTANCE, float VITESSE = 0.3)
       if (huitLectures[CAPTEUR_DROIT] >= 1 && directionRotation!=-1)
       {
         // changerVitesseDeuxMoteurs(-0.2, 0.2);
-        vitesseG = 0.1;
+        vitesseG = 0;
         vitesseD = 0.2;
         directionRotation = 1;
       }
@@ -474,7 +474,7 @@ void suivreLigneSimpleHuit(float DISTANCE, float VITESSE = 0.3)
       {
         // changerVitesseDeuxMoteurs(0.2, -0.2);
         vitesseG = 0.2;
-        vitesseD = 0.1;
+        vitesseD = 0;
         directionRotation = -1;
       }
     }
