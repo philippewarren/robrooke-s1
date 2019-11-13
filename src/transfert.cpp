@@ -161,14 +161,31 @@ bool transfer(int noeud)
 
 bool allerVers(int noeud)
 {
+
+    bool reussite = true;
     int trajet[10];
-    calculer_trajet(_position,noeud,trajet);
-    afficher_trajet(trajet);
+    if (noeud == _position)reussite = false;
+    else 
+    {
+        calculer_trajet(_position,noeud,trajet);
+        afficher_trajet(trajet);
+    }
     int i = 0;
     int fin = false;
-    while(!fin)
+    while(!fin && reussite)
     {
-        fin = true;
+        if (trajet[i]== _position)
+        {
+            if (i+1 >= 0)
+                reussite = transfer(trajet[i+1]);
+            i++;
+        }
+        else
+        {
+          fin = true;  
+        }
     }
+
+    return reussite;
     
 }
