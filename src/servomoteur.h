@@ -23,10 +23,15 @@ void desactiverServo(uint8_t indexDuServomoteur);
 //Pose l'angle d'un servo (BRAS: 0 ou PINCE: 1)
 bool changerAngleServo(uint8_t indexDuServomoteur, uint8_t angle, bool estFixe = true);
 
-//Ouvre la pince et la libère par défaut
+//Ouvre la pince et la maintiens ouverte par défaut
 bool ouvrirPince(bool estFixe = true);
 //Ferme la pince et la maintiens fermée par défaut
 bool fermerPince(bool estFixe = true);
+
+//Lève le bras et le maintiens levé par défaut
+bool leverBras(bool estFixe = true);
+//Baisse le bras et le maintiens baissé par défaut
+bool baisserBras(bool estFixe = true);
 
 //Ouvre la pince et attend un délais non-bloquant, puis retourne true
 bool ouvrirPinceOctogone(bool estFixe = true);

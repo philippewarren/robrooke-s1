@@ -1,5 +1,7 @@
 #include "servomoteur.h"
 
+float MS_PAR_ANGLE = 7.2;
+
 bool servoActif[] = {false, false};
 int ANGLE_INITIAL[] = {0, 0};
 const int ANGLE_MINIMAL[] = {0, 0};
@@ -19,6 +21,7 @@ void initialiserConstantesServos()
         POS_BRAS_HAUT = 0;
         POS_BRAS_BAS = 0;
         ANGLE_INITIAL[PINCE] = 0;
+        ANGLE_INITIAL[BRAS] = 0;
     }
     else
     {
@@ -26,7 +29,8 @@ void initialiserConstantesServos()
         POS_PINCE_FERMEE = 69;
         POS_BRAS_HAUT = 0;
         POS_BRAS_BAS = 0;
-        ANGLE_INITIAL[PINCE] = 30;
+        ANGLE_INITIAL[PINCE] = 0;
+        ANGLE_INITIAL[BRAS] = 30;
     }
     return;
 }
@@ -36,30 +40,34 @@ const int DELAIS_OCTOGONE = 1500;
 bool initialiserServo(uint8_t indexDuServomoteur, bool estFixe = false)
 {
     activerServo(indexDuServomoteur);
-    changerAngleServo(indexDuServomoteur, ANGLE_INITIAL[indexDuServomoteur]);
-    if (!estFixe)
-        desactiverServo(indexDuServomoteur);
+    changerAngleServo(indexDuServomoteur, ANGLE_INITIAL[indexDuServomoteur], estFixe);
     return estFixe;
 }
 
 void initialiserDeuxServos()
 {
     initialiserConstantesServos();
-    initialiserServo(PINCE, ANGLE_INITIAL[PINCE]);
-    initialiserServo(BRAS, ANGLE_INITIAL[BRAS]);
+    initialiserServo(PINCE);
+    initialiserServo(BRAS);
 }
 
 void activerServo(uint8_t indexDuServomoteur)
 {
-    if (!servoActif[indexDuServomoteur]) 
+    if (!servoActif[indexDuServomoteur])
+    {
         SERVO_Enable(indexDuServomoteur);
+        servoActif[indexDuServomoteur] = true;
+    }
     return;
 }
 
 void desactiverServo(uint8_t indexDuServomoteur)
 {
     if (servoActif[indexDuServomoteur]) 
+    {
         SERVO_Disable(indexDuServomoteur);
+        servoActif[indexDuServomoteur] = false;
+    }
     return;
 }
 
@@ -70,6 +78,7 @@ bool changerAngleServo(uint8_t indexDuServomoteur, uint8_t angle, bool estFixe =
     angle = angle>ANGLE_MAXIMAL[indexDuServomoteur] ? ANGLE_MAXIMAL[indexDuServomoteur] : angle;
 
     SERVO_SetAngle(indexDuServomoteur, angle);
+    delay((indexDuServomoteur==PINCE) ? MS_PAR_ANGLE*max(abs(ANGLE_MAXIMAL[indexDuServomoteur]-angle), abs(ANGLE_MINIMAL[indexDuServomoteur]-angle)) : 3000);
     if (estFixe==false)
     {
         desactiverServo(indexDuServomoteur);
@@ -87,6 +96,18 @@ bool ouvrirPince(bool estFixe = true)
 bool fermerPince(bool estFixe = true)
 {
     changerAngleServo(PINCE,POS_PINCE_FERMEE, estFixe);
+    return estFixe;
+}
+
+bool leverBras(bool estFixe = true)
+{
+    changerAngleServo(BRAS,POS_BRAS_HAUT, estFixe);
+    return estFixe;
+}
+
+bool baisserBras(bool estFixe = true)
+{
+    changerAngleServo(BRAS,POS_BRAS_BAS, estFixe);
     return estFixe;
 }
 

@@ -40,4 +40,7 @@ int evaluerCouleur(uint16_t tableauRGB[4], const uint16_t couleursPossibles[] = 
 //Lit la couleur du plancher et retourne une valeur de couleur
 int obtenirCouleurPlancher();
 
+void debugCapteurCouleur();
+
+
 #endif

@@ -134,3 +134,37 @@ int obtenirCouleurPlancher()
     lireCapteurCouleur(0,tableau);
     return evaluerCouleur(tableau,COULEURS_OCTOGONE);
 }
+
+void debugCapteurCouleur()
+{
+    static uint16_t tableau[4];
+    static String nomCouleur;
+    lireCapteurCouleur(0, tableau);
+    
+    Serial.print("R: ");
+    Serial.print(tableau[0]);
+    Serial.print("\tV: ");
+    Serial.print(tableau[1]);
+    Serial.print("\tB: ");
+    Serial.print(tableau[2]);
+    Serial.print("\tC: ");
+    Serial.print(tableau[3]);
+    Serial.print("\tCouleur: ");
+    switch (evaluerCouleur(tableau, COULEURS_OCTOGONE))
+    {
+        case ROUGE:
+            nomCouleur = "ROUGE";
+            break;
+        case BLEU:
+            nomCouleur = "BLEU";
+            break;
+        case VERT:
+            nomCouleur = "VERT";
+            break;
+        case JAUNE:
+            nomCouleur = "JAUNE";
+            break;
+    }
+    Serial.println(nomCouleur);
+    delay(1000);
+}

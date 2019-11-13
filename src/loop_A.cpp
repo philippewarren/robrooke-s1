@@ -267,8 +267,8 @@ void octogoneAlternatifA(int couleur = -1500)
         fermerPince(true);
         delay(2000);
         tournerBloque(vitesse, sensInitial*(180-45-sensInitial*5));       //tourne vers la ligne du carré
-        avancerDroitBloque(vitesse, distanceSortieCouleur); //sort de la couleur vers la ligne du carré
-        suivreLigneSimpleHuit(distanceLigne, vitesse-0.1);  //suit la ligne jusqu'au milieu
+        avancerDroitBloque(vitesse, distanceSortieCouleur+50); //sort de la couleur vers la ligne du carré
+        // suivreLigneSimpleHuit(distanceLigne, vitesse-0.1);  //suit la ligne jusqu'au milieu
         tournerBloque(vitesse, sensInitial*90);             //tourne face au milieu
         avancerDroitBloque(vitesse, distanceMilieu);        //avance au milieu
         ouvrirPince(true);
@@ -291,8 +291,8 @@ void octogoneAlternatifA(int couleur = -1500)
         fermerPince(true);
         delay(2000);
         tournerBloque(vitesse, sensInitial*(180-40));          //tourne vers la ligne du carré
-        avancerDroitBloque(vitesse, distanceSortieCouleur); //sort de la couleur vers la ligne du carré
-        suivreLigneSimpleHuit(distanceLigne, vitesse-0.1);  //suit la ligne jusqu'au milieu
+        avancerDroitBloque(vitesse, distanceSortieCouleur+50); //sort de la couleur vers la ligne du carré
+        // suivreLigneSimpleHuit(distanceLigne, vitesse-0.1);  //suit la ligne jusqu'au milieu
         tournerBloque(vitesse, sensInitial*90);             //tourne face au milieu
         avancerDroitBloque(vitesse, distanceMilieu);        //avance au milieu
         ouvrirPince(true);

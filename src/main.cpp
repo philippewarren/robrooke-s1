@@ -52,8 +52,15 @@ Fonctions de boucle infini (loop())
 
 void loop()
 {
-  if (arretUrgence) /*loopUrgence()*/;
-  else loopNormal();
+  // if (arretUrgence) /*loopUrgence()*/;
+  // else loopNormal();
   //pour ajouter des fonction à la boucle, veuillez modifier la boucle normale (loop_normal.cpp)
 
+  // debugCapteurCouleur();
+  // changerAngleServo(PINCE, 45, false);
+  // delay(1000);
+  // changerAngleServo(PINCE, 45, false);
+  // delay(1000);
+  // changerAngleServo(PINCE, 0, true);
+  // delay(2000);
 }
