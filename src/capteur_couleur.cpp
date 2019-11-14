@@ -127,7 +127,7 @@ int evaluerCouleur(uint16_t tableauRGB[4], const uint16_t couleursPossibles[] = 
     return couleur;
 }
 
-int obtenirCouleurPlancher()
+int obtenirCouleurLettre()
 {
     uint16_t tableau[4];
     lireCapteurCouleur(0,tableau);

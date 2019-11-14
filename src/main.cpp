@@ -96,7 +96,11 @@ void setup()
   pinMode(OUTPUT,12);
   digitalWrite(12,HIGH);
   poserEtat(0,180);
+<<<<<<< HEAD
   testCouleur();
+=======
+  // testPoste();
+>>>>>>> 649fa1b139307f334107f62eb2aed69239c88f56
 }
 
 /* ****************************************************************************
@@ -106,5 +110,10 @@ Fonctions de boucle infini (loop())
 
 void loop()
 {
+<<<<<<< HEAD
   ;
+=======
+  if(loopEstCliqueEtRelache(0)) ouvrirPince();
+  if(loopEstCliqueEtRelache(1)) fermerPince();
+>>>>>>> 649fa1b139307f334107f62eb2aed69239c88f56
 }
