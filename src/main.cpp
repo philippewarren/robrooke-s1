@@ -29,10 +29,12 @@ Vos propres fonctions sont creees ici
 
 void actionPoste()
 {
-  fermerPince();
+  ouvrirPince();
   avancerDroitBloque(0.3,3);
   traquerLigneBloque(0.3);
-  ouvrirPince();
+  //baisser Bras
+  fermerPince();
+  //monter Bras
   tournerBloque(0.2,180);
   traquerLigneBloque(0.3);
   poserEtat(-1,obtenirOrientation()+180);
@@ -54,10 +56,25 @@ void testPoste()
 {
   for (int i = 3; i<7; i++)
   {
+    fermerPince();
     allerVers(i);
     actionPoste();
     allerVers(0);
+    ouvrirPince();
   }
+}
+
+void testCouleur()
+{
+  int noeud = -1;
+  while (noeud == -1)
+  {
+    noeud = convertirCouleurNoeud(obtenirCouleurLettre());
+  }
+  fermerPince();
+  allerVers(noeud);
+  actionPoste();
+  allerVers(0);
 }
 
 
@@ -79,7 +96,7 @@ void setup()
   pinMode(OUTPUT,12);
   digitalWrite(12,HIGH);
   poserEtat(0,180);
-  testPoste();
+  testCouleur();
 }
 
 /* ****************************************************************************
@@ -88,26 +105,6 @@ Fonctions de boucle infini (loop())
 // -> Se fait appeler perpetuellement suite au "setup"
 
 void loop()
-<<<<<<< HEAD
-{;
-=======
 {
-  // if (arretUrgence) /*loopUrgence()*/;
-  // else loopNormal();
-  //pour ajouter des fonction à la boucle, veuillez modifier la boucle normale (loop_normal.cpp)
-
-  // debugCapteurCouleur();
-  // changerAngleServo(PINCE, 45, false);
-  // delay(1000);
-  // changerAngleServo(PINCE, 45, false);
-  // delay(1000);
-  // changerAngleServo(PINCE, 0, true);
-  // delay(2000);
-
-  // loopAjustementServo(PINCE);
-
-  // if(loopEstCliqueEtRelache(0)) ouvrirPince();
-  // if(loopEstCliqueEtRelache(1)) fermerPince();
-
->>>>>>> 5d304d2c5319a53ad5b7e4a5e869de81a2a4ed11
+  ;
 }

@@ -2,8 +2,9 @@
 #define TRANSFERT_H
 
 #include <Arduino.h>
-#include <mouvement.h>
-#include <suiveur_ligne.h>
+#include "mouvement.h"
+#include "suiveur_ligne.h"
+#include "capteur_couleur.h"
 
 //utilisation de  vector pour pauvre//////////////////////////////////////////////////////////////////////
 
@@ -123,6 +124,12 @@ void afficher_trajet(int trajet[TAILLE_MAX]);
         3---1---4
             |
         5---2---6
+
+        poste
+          |
+    rouge----bleu
+          |
+    jaune----vert
 */
 
 //change l'état du robot (position et orientation)
@@ -136,6 +143,9 @@ bool allerVers(int noeud);
 
 //permet d'obtenir l'orientation
 int obtenirOrientation();
+
+//convertie une couleur en noeud
+int convertirCouleurNoeud(int);
 
 
 

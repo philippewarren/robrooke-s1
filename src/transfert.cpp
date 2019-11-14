@@ -215,3 +215,12 @@ int obtenirOrientation()
 {
     return _orientation;
 }
+
+int convertirCouleurNoeud(int couleur)
+{
+    if (couleur == ROUGE)return 3;
+    else if (couleur  == JAUNE) return 5;
+    else if (couleur == VERT) return 6;
+    else if (couleur == BLEU) return 4;
+    else return -1;
+}
