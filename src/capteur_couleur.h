@@ -4,6 +4,7 @@
 #include <Adafruit_TCS34725.h>
 
 #include "conversions.h"
+#include "del_couleur.h"
 
 //#define TCS34725_ADDRESS (0x29)
 
@@ -17,6 +18,8 @@
 #define BLANC -100
 #define NOIR -1
 #define GRIS -50
+
+extern Adafruit_TCS34725 CapteurCouleur;
 
 extern const uint16_t TOUTES_COULEURS[];
 extern const uint16_t COULEURS_OCTOGONE[];
@@ -39,5 +42,8 @@ int evaluerCouleur(uint16_t tableauRGB[4], const uint16_t couleursPossibles[] = 
 
 //Lit la couleur du plancher et retourne une valeur de couleur
 int obtenirCouleurPlancher();
+
+void debugCapteurCouleur();
+
 
 #endif

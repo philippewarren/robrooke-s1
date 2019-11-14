@@ -248,7 +248,7 @@ void octogoneAlternatifB(int couleur = -1500)
             rotation180Debut = false;
             distanceDebut = 30;
             distanceMilieu = 70;
-            pythagoreDiagonale = 15;
+            pythagoreDiagonale = 0;
             distanceSortieCouleur = 45;
             distanceLigne = 50;
             distanceCoin = -95;
@@ -258,7 +258,7 @@ void octogoneAlternatifB(int couleur = -1500)
             rotation180Debut = false;
             distanceDebut = 30;
             distanceMilieu = 70;
-            pythagoreDiagonale = 15;
+            pythagoreDiagonale = 0;
             distanceSortieCouleur = 48;
             distanceLigne = 50;
             distanceCoin = -95;
@@ -268,7 +268,7 @@ void octogoneAlternatifB(int couleur = -1500)
             rotation180Debut = true;
             distanceDebut = 30;
             distanceMilieu = 70;
-            pythagoreDiagonale = 15;
+            pythagoreDiagonale = 0;
             distanceSortieCouleur = 45;
             distanceLigne = 50;
             distanceCoin = -95;
@@ -278,7 +278,7 @@ void octogoneAlternatifB(int couleur = -1500)
             rotation180Debut = true;
             distanceDebut = 30;
             distanceMilieu = 70;
-            pythagoreDiagonale = 15;
+            pythagoreDiagonale = 1;
             distanceSortieCouleur = 45;
             distanceLigne = 50;
             distanceCoin = -95;
@@ -286,7 +286,7 @@ void octogoneAlternatifB(int couleur = -1500)
     }
     
     
-    delay(61000);                                        //attend 61 secondes
+    delay(68000);                                        //attend 61 secondes
 
     ouvrirPince(true);
     delay(1500);

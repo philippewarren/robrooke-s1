@@ -9,6 +9,7 @@
 #include "interactions.h"
 #include "conversions.h"
 #include "mouvement.h"
+#include "del_couleur.h"
 
 #include "capteur_couleur.h"
 #include "capteur_ir.h"
