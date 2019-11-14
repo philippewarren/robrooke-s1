@@ -128,35 +128,56 @@ void poserEtat(int position = -1, int orientation = -1)
 {
     if (position >= 0) _position = position;
     if (orientation >= 0) _orientation = orientation;
+    Serial.print("Etat poser à ");
+    Serial.print(_position);
+    Serial.print(", ");
+    Serial.print(_orientation);
+    Serial.print('\n');
 }
 
 bool transfer(int noeud)
 {
+    Serial.print("Debut du transfer vers ");
+    Serial.print(noeud);
+    Serial.print("\n");
     int i = 0;
-    int taille = NBR_RELATIONS[noeud];
+    int taille = NBR_RELATIONS[_position];
     bool fin = false;
     int angle = 0;
     int trouve = false;
     while(!fin)
     {
-        if (RELATION[noeud][i][0]== _position)
+        if (RELATION[_position][i][0]== noeud)
         {
             trouve = true;
             fin = true;
-            angle = RELATION[noeud][i][1];
+            angle = RELATION[_position][i][1];
+            Serial.print("angle de transit: ");
+            Serial.println(angle);
         }
-
+        i++;
         if(i >= taille) fin = true;
     }
 
     if (trouve)
     {
-        tournerBloque(0.3,angle - _orientation);
-        traquerLigneBloque(0.5);
+        int rot = angle - _orientation;
+        if (rot > 180)rot = rot - 360;
+        if (rot < -180)rot = rot + 360;
+        delay(200);
+        tournerBloque(0.2,rot);
+        delay(200);
+        avancerDroitBloque(0.2,2);
+        traquerLigneBloque(0.3);
         poserEtat(noeud,angle);
+        Serial.println("transfer reussit");
         return true;
     }
-    else return false;
+    else
+    {
+    Serial.println("transfer echoue");
+    return false;
+    }
 }
 
 bool allerVers(int noeud)
@@ -176,7 +197,7 @@ bool allerVers(int noeud)
     {
         if (trajet[i]== _position)
         {
-            if (i+1 >= 0)
+            if (trajet[i+1] >= 0)
                 reussite = transfer(trajet[i+1]);
             i++;
         }
@@ -188,4 +209,9 @@ bool allerVers(int noeud)
 
     return reussite;
     
+}
+
+int obtenirOrientation()
+{
+    return _orientation;
 }

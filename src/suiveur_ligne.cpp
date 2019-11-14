@@ -34,26 +34,23 @@ void suivreLigne(float vitesse)
     //lecture des données
     int lectureSuiveurDeLigne [8];
     lireSuiveurLigne(lectureSuiveurDeLigne);
+    estLigneHuit(lectureSuiveurDeLigne);
 
     //calcul des différences entre capteurs opposés
-    float delta1 = ((float)lectureSuiveurDeLigne[3]*lectureSuiveurDeLigne[3])-((float)lectureSuiveurDeLigne[4]*lectureSuiveurDeLigne[4]);
-    float delta2 = ((float)lectureSuiveurDeLigne[2]*lectureSuiveurDeLigne[2])-((float)lectureSuiveurDeLigne[5]*lectureSuiveurDeLigne[5]);
-    float delta3 = ((float)lectureSuiveurDeLigne[1]*lectureSuiveurDeLigne[1])-((float)lectureSuiveurDeLigne[6]*lectureSuiveurDeLigne[6]);
-    float delta4 = ((float)lectureSuiveurDeLigne[0]*lectureSuiveurDeLigne[0])-((float)lectureSuiveurDeLigne[7]*lectureSuiveurDeLigne[7]);
+    float delta1 = lectureSuiveurDeLigne[4]-lectureSuiveurDeLigne[3];
+    float delta2 = lectureSuiveurDeLigne[5]-lectureSuiveurDeLigne[2];
+    float delta3 = lectureSuiveurDeLigne[6]-lectureSuiveurDeLigne[1];
+    float delta4 = lectureSuiveurDeLigne[7]-lectureSuiveurDeLigne[0];
+    delta1 *= 0.75;
+    delta2 *= 1.5;
+    delta3 *= 3;
+    delta4 *= 9;
 
     //calcul du facteur de correction
-    float facteur = delta1*0.5 + delta2 * 1+ delta3 * 2+ delta4 * 6;
-    if (facteur > 4*(float)CONTRASTE*(float)CONTRASTE) facteur = 4*(float)CONTRASTE*(float)CONTRASTE;
-    else if (facteur < -4*CONTRASTE*CONTRASTE) facteur = -4*CONTRASTE*CONTRASTE;
-    facteur = facteur / (4 * (float)CONTRASTE*(float)CONTRASTE);
-
-    //modification de la vitesse des roues
-    float factVit = facteur;
-    if(factVit<0)factVit *= -1;
-    factVit = 1 -factVit*0.5;
-    if(vitesse < 0)facteur *= -1;
-    syncroroue(vitesse*factVit,(1+facteur));
-
+    float facteur = max(max(delta1,delta2),max(delta3, delta4));
+    float facteurMin = min(min(delta1,delta2),min(delta3, delta4));
+    if (facteurMin*-1 < facteur)syncroroue(vitesse,1/(1+(facteur/3)));
+    else syncroroue(vitesse,1-(facteurMin/3));
 }
 
 bool detecterLigne()
@@ -92,149 +89,17 @@ bool detecterLigne()
     
 }
 
-bool traquerLigne(float vitesse)
+bool lignePerpendiculaire()
 {
-    //2 static
-    static bool ligne = false;
-    static bool timerLance = false;
-    static bool timer = 0;
-
-    bool retour = false;
-
-    if(detecterLigne())
-    {
-       ligne = true;
-       timerLance = false;
-    }
-    else if(ligne)
-    {
-        if (!timerLance)
-        {
-        timerLance = true;
-        timer = millis();
-        }
-         //si aucune ligne n'est détecter durant 0.300s, arret de la séquence
-        else if ((millis()-timer)>300/vitesse)
-        {
-        timerLance = false;
-        ligne = false;
-        retour = true;
-        syncroroue(0,1,true);
-        }
-    }
-    if (ligne)
-    {
-        suivreLigne(vitesse);
-    }
-    else if(retour == false)
-    {
-        syncroroue(vitesse);
-    }
-
-    
-    
-    return retour;
-  
-}
-
-bool avancerDroitLigne(float vitesse, float distance)
-{
-  static float distanceParcourue = 0;
-  static long timer = millis();
-  static bool reset = true;
-  static bool resetEnc = false;
-  static float ancEnc = 0;
-
-  if (distance == 0)
-    return true;
-  else
+  int tableauLigne[8];
+  lireSuiveurLigne(tableauLigne);
+  estLigneHuit(tableauLigne);
+  bool perp = true;
+  for (int i = 0; i<8;i++)
   {
-    if (vitesse*distance < 0)vitesse *= -1;
-
-    if(Bob == 'A') distance /= 1.175;
-    else distance /= 1.05;
-
-    float enc = clicsEnCm(ENCODER_Read(0));
-
-    if (reset)
-    {
-        distanceParcourue = 0;
-      timer = millis();
-      ancEnc = clicsEnCm(ENCODER_Read(0));
-      reset = false;
-    }
-
-    distanceParcourue += enc - ancEnc;
-
-    if (resetEnc)
-    {
-      distanceParcourue += ancEnc;
-      resetEnc = false;
-    }
-
-    ancEnc = enc;
-
-
-    if ((distanceParcourue >= distance && distance > 0)||(distanceParcourue <= distance && distance < 0))
-    {
-      distanceParcourue = 0;
-      syncroroue(0, 1, true);
-      reset = true;
-      return true;
-    }
-    else
-    {
-      if (millis() - timer > 50)
-      {
-        suivreLigne(vitesse);
-        resetEnc = true;
-        timer = millis();
-      }
-      return false;
-    }
+    if(tableauLigne[i] <= 0)perp = false;
   }
-}
-
-
-
-bool tournerNoir(float vitesse,int nbrLigne)
-{
-    static bool reset = true;
-    static int ligne = 0;
-    static bool sur = false;
-    bool retour = false;
-    if (reset)
-    {
-        syncroroue(vitesse,-0.8,true);
-        ligne = 0;
-        reset = false;
-        sur = false;
-    }
-    else
-    {
-        syncroroue(vitesse,-1);
-        int lecture[8];
-        lireSuiveurLigne(lecture);
-        if (lecture[4]>600 && lecture[5]>600)
-        {
-            if(!sur)
-            {
-                sur = true;
-                ligne += 1;
-                if(ligne >= nbrLigne)
-                {
-                    syncroroue(0,1,true);
-                    reset = true;
-                    retour = true;
-                }
-            }
-        }
-        else sur = false;
-
-    }
-    return retour;
-    
-
+  return perp;
 }
 
 bool avancerDroitLigneBloque(float vitesse, float distance)
@@ -284,18 +149,18 @@ bool tournerBloqueSansArret(float vitesse, float angle)
 
 bool centrerLigne(float angleVue = 30)
 {
-  int nbrValeur =(angleVue * 2) / 5;
+  int nbrValeur =angleVue*2;
   int valeur[nbrValeur];
   int lecture[8];
   int i = 0;
   
-  syncroroue (0.3,-1,true);
-  tournerBloque(0.3,angleVue);
+  syncroroue (0.2,-1,true);
+  tournerBloque(0.2,angleVue);
   while (i< nbrValeur)
   {
     lireSuiveurLigne(lecture);
-    int donnee = lecture[3]+lecture[4]+lecture[2]*0.1+lecture[5]*0.1;
-    tournerBloqueSansArret(0.3,-5);
+    int donnee = lecture[3]+lecture[4]+lecture[2]*0.5+lecture[5]*0.5;
+    tournerBloqueSansArret(0.2,-1);
     valeur[i]=donnee;
     i++;
   }
@@ -312,76 +177,12 @@ bool centrerLigne(float angleVue = 30)
   return true;
 }
 
-void lireSuiveurLigneDeuxCapteurs(int deuxLectures[2])
-{
-  int lectures[8];
-  lireSuiveurLigne(lectures);
-  deuxLectures[0] = lectures[2];
-  deuxLectures[1] = lectures[5];
-}
-
-void estLigne(int lectures[2])
-{
-  lectures[0] = (lectures[0] > 400) ? 1 : (lectures[0] > 250) ? 2 : 0;
-  lectures[1] = (lectures[1] > 400) ? 1 : (lectures[1] > 250) ? 2 : 0;
-}
-
 void estLigneHuit(int lectures[8])
 {
   for (int i=0; i<8; i++)
   {
-    lectures[i] = (lectures[i] >= 400) ? 1 : /*(lectures[i] > 250) ? 2 :*/ 0;//(350 rouge ok; vert ok; problème vert?)
+    lectures[i] = (lectures[i] >= 650) ? 1 : /*(lectures[i] > 250) ? 2 :*/ 0;//(350 rouge ok; vert ok; problème vert?)
   }
-}
-
-void suivreLigneSimple(float DISTANCE, float VITESSE = 0.3)
-{
-  int deuxLectures[2];
-  long long clicsTotaux = cmEnClics(DISTANCE);
-  float vitesseG = VITESSE;
-  float vitesseD = VITESSE;
-  int estFinLigne = 0;
-
-  const int DT = 5; //délais du cycle
-
-  bool ligneAuCentre = false;
-
-  resetDeuxEncodeurs();
-
-  while (ENCODER_Read(0)<clicsTotaux && estFinLigne<3)
-  {
-    lireSuiveurLigneDeuxCapteurs(deuxLectures);
-    estLigne(deuxLectures);
-
-    changerVitesseDeuxMoteurs(vitesseG, vitesseD);
-    delay(DT);
-
-    //Commenter ce if.. pour tourner en rond quand il voit pas de ligne, ce qui facilite leur recherche
-    if (deuxLectures[0]==deuxLectures[1])
-    {
-      changerVitesseDeuxMoteurs(VITESSE, VITESSE);
-    }
-    if (deuxLectures[0] >= 1 && deuxLectures[1] >= 1)
-    {
-      estFinLigne++;
-    }
-    else if (deuxLectures[1]==1) //Capteur de gauche == ligne
-    {
-      changerVitesseDeuxMoteurs(0, 0.2);
-      // vitesseD = vitesseD-0.02;
-      // changerVitesseMoteur(1, vitesseD);
-      // delay(500);
-    }
-    else if (deuxLectures[0]==1)   //Capteur de droite == ligne
-    {
-      changerVitesseDeuxMoteurs(0.2, 0);
-      // vitesseD = vitesseD+0.02;
-      // changerVitesseMoteur(1, vitesseD);
-      // delay(500);
-    }
-  }
-  arreterDeuxMoteurs();
-  resetDeuxEncodeurs();
 }
 
 void suivreLigneSimpleHuit(float DISTANCE, float VITESSE = 0.3)
@@ -524,27 +325,10 @@ void afficherLigne(int ligne[8])
 void traquerLigneBloque(float vitesse)
 {
   syncroroue(vitesse,1,true);
-  bool fin = false;
-  int iteration = 0;
-  while (!fin)
+  while (!lignePerpendiculaire())
   {
-    if (!detecterLigne())iteration = 0;
-    else iteration += 1;
-    if (iteration > 2) fin = true;
-    syncroroue(vitesse,1);
-    delay(10);
-  }
-  fin = false;
-  iteration = 0;
-  centrerLigne(20);
-  while (!fin)
-  {
-    if (detecterLigne())iteration = 0;
-    else iteration += 1;
-    if (iteration > 2) fin = true;
     suivreLigne(vitesse);
-    delay(10);
+    delay(5);
   }
   syncroroue(0,1,true);
-  
 }

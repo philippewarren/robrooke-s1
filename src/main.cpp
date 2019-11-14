@@ -13,6 +13,7 @@ Inclure les librairies de functions que vous voulez utiliser
 #include "init_robot.h"
 #include "loop_normal.h"
 #include "loop_urgence.h"
+#include "transfert.h"
 
 /* ****************************************************************************
 Variables globales et defines
@@ -25,6 +26,40 @@ Variables globales et defines
 /* ****************************************************************************
 Vos propres fonctions sont creees ici
 **************************************************************************** */
+
+void actionPoste()
+{
+  fermerPince();
+  avancerDroitBloque(0.3,3);
+  traquerLigneBloque(0.3);
+  ouvrirPince();
+  tournerBloque(0.2,180);
+  traquerLigneBloque(0.3);
+  poserEtat(-1,obtenirOrientation()+180);
+}
+void testDeplacement()
+{
+  for(int i = 0; i<6;i++)
+  {
+    allerVers(i);
+    for(int j = (i+1);j<7;j++)
+    {
+      allerVers(j);
+      allerVers(i);
+    }
+  }
+  allerVers(0);
+}
+void testPoste()
+{
+  for (int i = 3; i<7; i++)
+  {
+    allerVers(i);
+    actionPoste();
+    allerVers(0);
+  }
+}
+
 
 
 
@@ -43,6 +78,8 @@ void setup()
   initialiserBob();
   pinMode(OUTPUT,12);
   digitalWrite(12,HIGH);
+  poserEtat(0,180);
+  testPoste();
 }
 
 /* ****************************************************************************
@@ -51,9 +88,5 @@ Fonctions de boucle infini (loop())
 // -> Se fait appeler perpetuellement suite au "setup"
 
 void loop()
-{
-  if (arretUrgence) /*loopUrgence()*/;
-  else loopNormal();
-  //pour ajouter des fonction à la boucle, veuillez modifier la boucle normale (loop_normal.cpp)
-
+{;
 }

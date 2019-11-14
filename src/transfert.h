@@ -78,7 +78,7 @@ const int RELATION [NBR_NOEUD][NBR_NOEUD-1][2] =
     {
         {1,0},
         {5,90},
-        {6,180}
+        {6,270}
     },
     /*noeud 3*/
     {
@@ -95,7 +95,7 @@ const int RELATION [NBR_NOEUD][NBR_NOEUD-1][2] =
     },
     /*noeud 6*/
     {
-        {6,90}
+        {2,90}
     }
 };
 
@@ -134,6 +134,8 @@ bool transfer(int noeud);
 //permet de se rendre à un noeud éloignée et adjascent, retourne une réussite (true) ou un échec (false)
 bool allerVers(int noeud);
 
+//permet d'obtenir l'orientation
+int obtenirOrientation();
 
 
 

@@ -233,7 +233,7 @@ bool tournerBloque(float vitesse, float angle)
   float distanceParcourue = 0;
   bool fin = false;
 
-  if(Bob == 'A') angle /= 1.125;
+  if(Bob == 'A') angle /= 1;
   else angle /= 1;
   float distance = cmEnClics((19 * 3.14160) / 360 * angle);
   resetDeuxEncodeurs();
@@ -245,7 +245,7 @@ bool tournerBloque(float vitesse, float angle)
     delay(30);
     distanceParcourue += ENCODER_Read(1);
     syncroroue(vitesse,-1);
-    fin = (distanceParcourue >= distance && distance > 0)||(distanceParcourue <= distance && distance < 0);
+    fin = (distanceParcourue >= distance && distance >= 0)||(distanceParcourue <= distance && distance <= 0);
   }
   syncroroue (0,1,true);
   return true;
