@@ -79,7 +79,7 @@ void setup()
   pinMode(OUTPUT,12);
   digitalWrite(12,HIGH);
   poserEtat(0,180);
-  testPoste();
+  // testPoste();
 }
 
 /* ****************************************************************************
@@ -88,26 +88,7 @@ Fonctions de boucle infini (loop())
 // -> Se fait appeler perpetuellement suite au "setup"
 
 void loop()
-<<<<<<< HEAD
-{;
-=======
 {
-  // if (arretUrgence) /*loopUrgence()*/;
-  // else loopNormal();
-  //pour ajouter des fonction à la boucle, veuillez modifier la boucle normale (loop_normal.cpp)
-
-  // debugCapteurCouleur();
-  // changerAngleServo(PINCE, 45, false);
-  // delay(1000);
-  // changerAngleServo(PINCE, 45, false);
-  // delay(1000);
-  // changerAngleServo(PINCE, 0, true);
-  // delay(2000);
-
-  // loopAjustementServo(PINCE);
-
-  // if(loopEstCliqueEtRelache(0)) ouvrirPince();
-  // if(loopEstCliqueEtRelache(1)) fermerPince();
-
->>>>>>> 5d304d2c5319a53ad5b7e4a5e869de81a2a4ed11
+  if(loopEstCliqueEtRelache(0)) ouvrirPince();
+  if(loopEstCliqueEtRelache(1)) fermerPince();
 }
