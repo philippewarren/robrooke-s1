@@ -66,7 +66,7 @@ void loop()
 
   // loopAjustementServo(PINCE);
 
-  if(loopEstCliqueEtRelache(0)) ouvrirPince();
-  if(loopEstCliqueEtRelache(1)) fermerPince();
+  // if(loopEstCliqueEtRelache(0)) ouvrirPince();
+  // if(loopEstCliqueEtRelache(1)) fermerPince();
 
 }

@@ -16,11 +16,11 @@ void initialiserConstantesServos()
 {
     if (Bob == 'A')
     {
-        POS_PINCE_OUVERTE = 95;
-        POS_PINCE_FERMEE = 39;
+        POS_PINCE_OUVERTE = 60;
+        POS_PINCE_FERMEE = 180;
         POS_BRAS_HAUT = 0;
         POS_BRAS_BAS = 0;
-        ANGLE_INITIAL[PINCE] = 0;
+        ANGLE_INITIAL[PINCE] = 60;
         ANGLE_INITIAL[BRAS] = 0;
     }
     else
@@ -78,7 +78,7 @@ bool changerAngleServo(uint8_t indexDuServomoteur, uint8_t angle, bool estFixe =
     angle = angle>ANGLE_MAXIMAL[indexDuServomoteur] ? ANGLE_MAXIMAL[indexDuServomoteur] : angle;
 
     SERVO_SetAngle(indexDuServomoteur, angle);
-    // delay((indexDuServomoteur==PINCE) ? MS_PAR_ANGLE*max(abs(ANGLE_MAXIMAL[indexDuServomoteur]-angle), abs(ANGLE_MINIMAL[indexDuServomoteur]-angle)) : 3000);
+    delay((indexDuServomoteur==PINCE) ? MS_PAR_ANGLE*max(abs(ANGLE_MAXIMAL[indexDuServomoteur]-angle), abs(ANGLE_MINIMAL[indexDuServomoteur]-angle)) : 3000);
     if (estFixe==false)
     {
         desactiverServo(indexDuServomoteur);
