@@ -22,7 +22,6 @@ void initialiserCapteurCouleur()
     {
         Serial.println("Pas de capteur couleur ... verifiez la connection");
     }
-    
     return;
 }
 
@@ -150,6 +149,7 @@ void debugCapteurCouleur()
     Serial.print("\tC: ");
     Serial.print(tableau[3]);
     Serial.print("\tCouleur: ");
+    allumerDELCouleur(evaluerCouleur(tableau, COULEURS_OCTOGONE));
     switch (evaluerCouleur(tableau, COULEURS_OCTOGONE))
     {
         case ROUGE:
@@ -166,5 +166,7 @@ void debugCapteurCouleur()
             break;
     }
     Serial.println(nomCouleur);
-    delay(1000);
+    delay(500);
+    // eteindreDELCouleur();
+    delay(500);
 }

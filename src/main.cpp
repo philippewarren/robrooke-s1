@@ -63,4 +63,10 @@ void loop()
   // delay(1000);
   // changerAngleServo(PINCE, 0, true);
   // delay(2000);
+
+  // loopAjustementServo(PINCE);
+
+  if(loopEstCliqueEtRelache(0)) ouvrirPince();
+  if(loopEstCliqueEtRelache(1)) fermerPince();
+
 }
