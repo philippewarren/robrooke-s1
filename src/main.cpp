@@ -27,6 +27,43 @@ Variables globales et defines
 Vos propres fonctions sont creees ici
 **************************************************************************** */
 
+bool deposerLettre()
+{
+  bool suivant = false;
+  baisserBras();
+  ouvrirPince();
+  suivant = estLettreSuivant();
+  leverBras();
+
+  return suivant;
+}
+
+int ramasserLettre()
+{
+  baisserBras();
+  if(estLettrePince()) fermerPince();
+  else
+  {
+    leverBras();
+    ramasserLettre();
+  }
+  leverBras();
+
+  return obtenirCouleurLettre();
+}
+
+int verifierEtRamasserLettre()
+{
+  bool aLettre = false;
+
+  baisserBras();
+  aLettre = estLettrePince();
+  if (aLettre) fermerPince();
+  leverBras();
+
+  return (aLettre) ? obtenirCouleurLettre() : -1;
+}
+
 void actionPoste()
 {
   ouvrirPince();
@@ -105,4 +142,5 @@ Fonctions de boucle infini (loop())
 
 void loop()
 {
+  debugCapteurCouleur();
 }

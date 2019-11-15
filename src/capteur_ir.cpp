@@ -17,3 +17,25 @@ float lireDistanceIR(uint8_t capteur, uint8_t amplitude = 3)
 
     return distance;
 }
+
+bool estLettre(uint8_t capteur)
+{
+    float seuil;
+    float distance = lireDistanceIR(capteur, 5);
+
+    if (capteur == INTERNE) seuil = SEUIL_LETTRE_INTERNE;
+    else seuil = SEUIL_LETTRE_EXTERNE;
+
+    if (distance < seuil) return true;
+    else return false;
+}
+
+bool estLettrePince()
+{
+    return estLettre(INTERNE);
+}
+
+bool estLettreSuivant()
+{
+    return estLettre(EXTERNE);
+}

@@ -40,7 +40,7 @@ void lireCapteurCouleur(uint8_t numeroDeCapteur, uint16_t tableauVide[4]);
 //Transforme une couleur rgb dans un tableau en nom de couleur
 int evaluerCouleur(uint16_t tableauRGB[4], const uint16_t couleursPossibles[] = TOUTES_COULEURS);
 
-//Lit la couleur du plancher et retourne une valeur de couleur
+//Lit la couleur de la lettre et retourne une valeur de couleur
 int obtenirCouleurLettre();
 
 void debugCapteurCouleur();
