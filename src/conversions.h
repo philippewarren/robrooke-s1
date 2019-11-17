@@ -3,6 +3,7 @@
 #include <LibRobus.h>
 
 #include "capteur_couleur.h"
+#include "capteur_ir.h"
 
 extern const double CLICS_PAR_CM;
 //diametre de la roue en cm

@@ -6,6 +6,13 @@ const uint16_t entreeAnalogiqueMax = 1023;
 const float diaRoue = 7.6;
 float largeurEss;
 
+//De la fiche technique, tension à 9cm, ajustée par la pratique
+const float TENSION_9_CM = 2.6;
+
+//Possibilités: < 8cm; < 4cm; < 2cm; IDÉEAL: entre 8 et 6 cm
+const float TENSION_PAS_LETTRE_INTERNE = 1;
+const float TENSION_PAS_LETTRE_EXTERNE = 1;
+
 extern const uint16_t BORNES_COULEUR[];
 
 double clicsEnCm(long nbClics)
@@ -30,6 +37,20 @@ float tensionEnDistance(float tension)
   if (tension<=0.3) return 0;
   float distanceEnCM = 29.988 * pow(tension, -1.173);
   return distanceEnCM;
+}
+
+bool tensionEnLettre(uint8_t capteur, float tension)
+{
+  if (capteur == INTERNE)
+  {
+    if (tension < 1) return true;
+  }
+  else if (capteur == EXTERNE)
+  {
+    if (false);
+  }
+
+  return false;
 }
 
 void rgbEnHsl(uint16_t tableauRGB[4])

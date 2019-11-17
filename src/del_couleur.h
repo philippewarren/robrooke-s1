@@ -7,14 +7,15 @@
 #define PORT_ROUGE 38
 #define PORT_VERT 40
 #define PORT_BLEU 42
+#define PORT_JAUNE 44
 
 //Initialise les ports utilisés par les canaux de couleur de la DEL couleurée
 void initialiserPortsDELCouleur();
 
-//Allume la DEL couleurée et retourne la couleur
+//Allume la DEL couleurée correspondante et retourne la couleur, -1 éteint toutes les DEL
 int allumerDELCouleur(int couleur);
 
-//Eteint la DEL couleurée
+//Eteint les DEL couleurées
 void eteindreDELCouleur();
 
 

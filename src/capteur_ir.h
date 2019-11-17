@@ -17,13 +17,17 @@
 float lireDistanceIR(uint8_t capteur, uint8_t amplitude = 3);
 
 //Retourne vrai si le capteur détecte une lettre
-bool estLettre(uint8_t capteur);
+bool estLettre(uint8_t capteur, uint8_t amplitude = 5);
 
 //Retourne vrai si une lettre est dans la pince
 bool estLettrePince();
 
 //Retourne vrai si une lettre est dans le bac suivant
 bool estLettreSuivant();
+
+void debugCapteurIR();
+
+void debugEstLettre();
 
 
 #endif

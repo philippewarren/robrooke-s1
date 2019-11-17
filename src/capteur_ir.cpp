@@ -1,14 +1,28 @@
 #include "capteur_ir.h"
 
-float lireDistanceIR(uint8_t capteur, uint8_t amplitude = 3)
+#define TEST 0
+
+int lireCapteurIR(uint8_t capteur, uint8_t amplitude = 3)
 {
     int nombreDeLectures = (amplitude*2)-1;
     uint16_t lectures[nombreDeLectures];
-    float distance;
     for (int i=0; i<nombreDeLectures; i++)
     {
         lectures[i] = ROBUS_ReadIR(capteur);
     }
+
+    return nombreDeLectures;
+}
+
+float lireDistanceIR(uint8_t capteur, uint8_t amplitude = 3)
+{
+    int nombreDeLectures = (amplitude*2)-1;
+    uint16_t lectures[nombreDeLectures];
+    for (int i=0; i<nombreDeLectures; i++)
+    {
+        lectures[i] = ROBUS_ReadIR(capteur);
+    }
+    float distance;
     distance = entreeAnalogiqueEnTension(calculerMediane(lectures, nombreDeLectures));
     distance = tensionEnDistance(distance);
 
@@ -18,15 +32,15 @@ float lireDistanceIR(uint8_t capteur, uint8_t amplitude = 3)
     return distance;
 }
 
-bool estLettre(uint8_t capteur)
+bool estLettre(uint8_t capteur, uint8_t amplitude = 5)
 {
-    float seuil;
-    float distance = lireDistanceIR(capteur, 5);
-
-    if (capteur == INTERNE) seuil = SEUIL_LETTRE_INTERNE;
-    else seuil = SEUIL_LETTRE_EXTERNE;
-
-    if (distance < seuil) return true;
+    int nombreDeLectures = (amplitude*2)-1;
+    uint16_t lectures[nombreDeLectures];
+    for (int i=0; i<nombreDeLectures; i++)
+    {
+        lectures[i] = ROBUS_ReadIR(capteur);
+    }
+    if (calculerMediane(lectures, nombreDeLectures) >= 100) return true;
     else return false;
 }
 
@@ -38,4 +52,22 @@ bool estLettrePince()
 bool estLettreSuivant()
 {
     return estLettre(EXTERNE);
+}
+
+void debugCapteurIR()
+{
+    Serial.print("Distance interne: ");
+    Serial.println(lireDistanceIR(INTERNE, 5));
+    Serial.print("Nombre interne: ");
+    Serial.println(ROBUS_ReadIR(INTERNE));
+    delay(1000);
+}
+
+void debugEstLettre()
+{
+    Serial.print("Présence pince: ");
+    Serial.print(estLettrePince());
+    Serial.print("\tPrésence suivant: ");
+    Serial.println(estLettreSuivant());
+    delay(1000);
 }
