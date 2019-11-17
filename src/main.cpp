@@ -19,8 +19,11 @@ Inclure les librairies de functions que vous voulez utiliser
 Variables globales et defines
 **************************************************************************** */
 // -> defines...
-// L'ensemble des fonctions y ont acces
-
+bool posteRouge = false;
+bool posteBleu = false;
+bool posteJaune = false;
+bool posteVert = false;
+int lettreEnMain = -1; //-1 si vide ou couleur
 
 
 /* ****************************************************************************
@@ -68,16 +71,119 @@ int deposerEtReprendreLettre()
 
 void actionPoste()
 {
-  ouvrirPince();
-  avancerDroitBloque(0.3,3);
-  traquerLigneBloque(0.3);
-  //baisser Bras
-  fermerPince();
-  //monter Bras
-  tournerBloque(0.2,180);
-  traquerLigneBloque(0.3);
-  poserEtat(-1,obtenirOrientation()+180);
+  if(deposerLettrePoste())
+  {
+    avancerDroitBloque(0.2,3);
+    traquerLigneBloque(0.2);
+    lettreEnMain = ramasserLettre();
+    if(lettreEnMain == -2)lettreEnMain = ramasserLettre();
+    tournerBloque(0.2,180);
+    traquerLigneBloque(0.3);
+    poserEtat(-1,obtenirOrientation()+180);
+  }
+  else
+  {
+    lettreEnMain = -1;
+  }
+  
 }
+
+void routineDistribution()
+{
+  allerVers(0);
+  if(obtenirOrientation() == 180)tournerBloque(0.2,180);
+  if (lettreEnMain >= 0)
+  {
+    if (lettreEnMain == VERT)
+    {
+      tournerBloque(0.2,180);
+      lettreEnMain = deposerEtReprendreLettre();
+      posteVert = true;
+    }
+    else
+    {
+      if(lettreEnMain == JAUNE)
+      {
+        Serial.println("jaune special");
+        lettreEnMain = deposerEtReprendreLettre();
+        posteJaune = true;
+      }
+      avancerDroitBloque(0.2,3);
+      traquerLigneBloque(0.3);
+      if(lettreEnMain == ROUGE)
+      {
+        Serial.println("rouge special");
+        lettreEnMain = deposerEtReprendreLettre();
+        posteRouge = true;
+      }
+      tournerBloque(0.2,180);
+      if(lettreEnMain == BLEU)
+      {
+        Serial.println("bleu special");
+        lettreEnMain = deposerEtReprendreLettre();
+        posteBleu = true;
+      }
+      avancerDroitBloque(0.2,3);
+      traquerLigneBloque(0.3);
+    }
+  }
+  else
+  {
+    if(posteJaune && posteRouge && posteVert && posteBleu)
+    {
+      Serial.println("reset poste");
+      posteBleu = false;
+      posteJaune = false;
+      posteVert = false;
+      posteRouge = false;
+    }
+    bool fin = false;
+    if(!posteJaune)
+    {
+      Serial.println("jaune normal");
+      lettreEnMain = ramasserLettre();
+      if (lettreEnMain == -2)ramasserLettre();
+      if (lettreEnMain >= 0)
+      {
+        fin = true;
+        tournerBloque(0.2,180);
+      }
+      posteJaune = true;
+    }
+    if(!fin)
+    {
+      avancerDroitBloque(0.2,3);
+      traquerLigneBloque(0.3);
+      if(lettreEnMain < 0 && !posteRouge)
+      {
+        Serial.println("rouge normal");
+        lettreEnMain = ramasserLettre();
+        if (lettreEnMain == -2)ramasserLettre();
+        posteRouge = true;
+      }
+      tournerBloque(0.2,180);
+      if(lettreEnMain < 0 && !posteBleu)
+      {
+        Serial.println("rouge normal");
+        lettreEnMain = ramasserLettre();
+        if (lettreEnMain == -2)ramasserLettre();
+        posteBleu = true;
+      }
+      avancerDroitBloque(0.2,3);
+      traquerLigneBloque(0.3);
+      if(lettreEnMain < 0 && !posteVert)
+      {
+        Serial.println("vert normal");
+        lettreEnMain = ramasserLettre();
+        if (lettreEnMain == -2)ramasserLettre();
+        posteVert = true;
+      }
+    }
+    
+  }
+  poserEtat(0,180);
+}
+
 void testDeplacement()
 {
   for(int i = 0; i<6;i++)
@@ -145,12 +251,15 @@ Fonctions de boucle infini (loop())
 
 void loop()
 {
-  // debugCapteurCouleur();
-  // loopAjustementServo(BRAS);
- ramasserLettre();
- delay(1000);
- deposerLettrePoste();
- delay(1000);
-// debugCapteurIR();
-  // debugEstLettre();
+  routineDistribution();
+  if(lettreEnMain >= 0)
+  {
+    allerVers(convertirCouleurNoeud(lettreEnMain));
+    actionPoste();
+  }
+  else
+  {
+    delay(10000);
+  }
+  
 }
