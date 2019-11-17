@@ -11,8 +11,7 @@ Inclure les librairies de functions que vous voulez utiliser
 **************************************************************************** */
 
 #include "init_robot.h"
-#include "loop_normal.h"
-#include "loop_urgence.h"
+#include "servomoteur.h"
 #include "transfert.h"
 
 /* ****************************************************************************
@@ -105,7 +104,6 @@ void routineDistribution()
     {
       if(lettreEnMain == JAUNE)
       {
-        Serial.println("jaune special");
         lettreEnMain = deposerEtReprendreLettre();
         posteJaune = true;
       }
@@ -113,14 +111,12 @@ void routineDistribution()
       traquerLigneBloque(0.3);
       if(lettreEnMain == ROUGE)
       {
-        Serial.println("rouge special");
         lettreEnMain = deposerEtReprendreLettre();
         posteRouge = true;
       }
       tournerBloque(0.2,180);
       if(lettreEnMain == BLEU)
       {
-        Serial.println("bleu special");
         lettreEnMain = deposerEtReprendreLettre();
         posteBleu = true;
       }
@@ -132,7 +128,6 @@ void routineDistribution()
   {
     if(posteJaune && posteRouge && posteVert && posteBleu)
     {
-      Serial.println("reset poste");
       posteBleu = false;
       posteJaune = false;
       posteVert = false;
@@ -141,7 +136,6 @@ void routineDistribution()
     bool fin = false;
     if(!posteJaune)
     {
-      Serial.println("jaune normal");
       lettreEnMain = ramasserLettre();
       if (lettreEnMain == -2)ramasserLettre();
       if (lettreEnMain >= 0)
@@ -157,7 +151,6 @@ void routineDistribution()
       traquerLigneBloque(0.3);
       if(lettreEnMain < 0 && !posteRouge)
       {
-        Serial.println("rouge normal");
         lettreEnMain = ramasserLettre();
         if (lettreEnMain == -2)ramasserLettre();
         posteRouge = true;
@@ -165,7 +158,6 @@ void routineDistribution()
       tournerBloque(0.2,180);
       if(lettreEnMain < 0 && !posteBleu)
       {
-        Serial.println("rouge normal");
         lettreEnMain = ramasserLettre();
         if (lettreEnMain == -2)ramasserLettre();
         posteBleu = true;
@@ -174,7 +166,6 @@ void routineDistribution()
       traquerLigneBloque(0.3);
       if(lettreEnMain < 0 && !posteVert)
       {
-        Serial.println("vert normal");
         lettreEnMain = ramasserLettre();
         if (lettreEnMain == -2)ramasserLettre();
         posteVert = true;
@@ -241,8 +232,9 @@ void setup()
   initialiserBob();
   pinMode(OUTPUT,12);
   digitalWrite(12,HIGH);
+  leverBrasDeplacement();
+  traquerLigneBloque(0.2);
   poserEtat(0,180);
-  // testDeplacement();
 }
 
 /* ****************************************************************************
@@ -252,15 +244,14 @@ Fonctions de boucle infini (loop())
 
 void loop()
 {
-  routineDistribution();
-  if(lettreEnMain >= 0)
+  if(lettreEnMain)
   {
     allerVers(convertirCouleurNoeud(lettreEnMain));
     actionPoste();
   }
   else
   {
-    delay(10000);
+    routineDistribution();
   }
   
 }
