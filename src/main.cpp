@@ -50,7 +50,7 @@ int ramasserLettre()
     fermerPince();
     leverBras();
     if(estLettrePince())  return allumerDELCouleur(obtenirCouleurLettre());
-    else allumerDELCouleur(-2);
+    else return allumerDELCouleur(-2);
   }
   else
   {
