@@ -92,84 +92,50 @@ void routineDistribution()
 {
   allerVers(0);
   if(obtenirOrientation() == 180)tournerBloque(0.2,180);
-  if (lettreEnMain >= 0)
+  
+  if(posteJaune && posteRouge && posteVert && posteBleu)
   {
-    if (lettreEnMain == VERT)
-    {
-      tournerBloque(0.2,180);
-      lettreEnMain = deposerEtReprendreLettre();
-      posteVert = true;
-    }
-    else
-    {
-      if(lettreEnMain == JAUNE)
-      {
-        lettreEnMain = deposerEtReprendreLettre();
-        posteJaune = true;
-      }
-      avancerDroitBloque(0.2,3);
-      traquerLigneBloque(0.3);
-      if(lettreEnMain == ROUGE)
-      {
-        lettreEnMain = deposerEtReprendreLettre();
-        posteRouge = true;
-      }
-      tournerBloque(0.2,180);
-      if(lettreEnMain == BLEU)
-      {
-        lettreEnMain = deposerEtReprendreLettre();
-        posteBleu = true;
-      }
-      avancerDroitBloque(0.2,3);
-      traquerLigneBloque(0.3);
-    }
+    posteBleu = false;
+    posteJaune = false;
+    posteVert = false;
+    posteRouge = false;
   }
-  else
+  bool fin = false;
+  if(!posteJaune)
   {
-    if(posteJaune && posteRouge && posteVert && posteBleu)
+    lettreEnMain = ramasserLettre();
+    if (lettreEnMain == -2)lettreEnMain ==ramasserLettre();
+    if (lettreEnMain >= 0)
     {
-      posteBleu = false;
-      posteJaune = false;
-      posteVert = false;
-      posteRouge = false;
+      fin = true;
+      tournerBloque(0.2,180);
     }
-    bool fin = false;
-    if(!posteJaune)
+    posteJaune = true;
+  }
+  if(!fin)
+  {
+    avancerDroitBloque(0.2,3);
+    traquerLigneBloque(0.3);
+    if(lettreEnMain < 0 && !posteRouge)
     {
       lettreEnMain = ramasserLettre();
-      if (lettreEnMain == -2)ramasserLettre();
-      if (lettreEnMain >= 0)
-      {
-        fin = true;
-        tournerBloque(0.2,180);
-      }
-      posteJaune = true;
+      if (lettreEnMain == -2)lettreEnMain ==ramasserLettre();
+      posteRouge = true;
     }
-    if(!fin)
+    tournerBloque(0.2,180);
+    if(lettreEnMain < 0 && !posteBleu)
     {
-      avancerDroitBloque(0.2,3);
-      traquerLigneBloque(0.3);
-      if(lettreEnMain < 0 && !posteRouge)
-      {
-        lettreEnMain = ramasserLettre();
-        if (lettreEnMain == -2)ramasserLettre();
-        posteRouge = true;
-      }
-      tournerBloque(0.2,180);
-      if(lettreEnMain < 0 && !posteBleu)
-      {
-        lettreEnMain = ramasserLettre();
-        if (lettreEnMain == -2)ramasserLettre();
-        posteBleu = true;
-      }
-      avancerDroitBloque(0.2,3);
-      traquerLigneBloque(0.3);
-      if(lettreEnMain < 0 && !posteVert)
-      {
-        lettreEnMain = ramasserLettre();
-        if (lettreEnMain == -2)ramasserLettre();
-        posteVert = true;
-      }
+      lettreEnMain = ramasserLettre();
+      if (lettreEnMain == -2)lettreEnMain ==ramasserLettre();        
+      posteBleu = true;
+    }
+    avancerDroitBloque(0.2,3);
+    traquerLigneBloque(0.3);
+    if(lettreEnMain < 0 && !posteVert)
+    {
+      lettreEnMain = ramasserLettre();
+      if (lettreEnMain == -2)lettreEnMain ==ramasserLettre();
+      posteVert = true;
     }
     
   }
@@ -244,13 +210,15 @@ Fonctions de boucle infini (loop())
 
 void loop()
 {
-  if(lettreEnMain)
+  if(lettreEnMain>=0)
   {
+    Serial.println(lettreEnMain);
     allerVers(convertirCouleurNoeud(lettreEnMain));
     actionPoste();
   }
   else
   {
+    Serial.println("distribution");
     routineDistribution();
   }
   
