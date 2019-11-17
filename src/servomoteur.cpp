@@ -11,6 +11,7 @@ int POS_PINCE_OUVERTE;
 int POS_PINCE_FERMEE;
 int POS_BRAS_HAUT;
 int POS_BRAS_BAS;
+int POS_BRAS_DEPLACEMENT;
 
 void initialiserConstantesServos()
 {
@@ -22,6 +23,7 @@ void initialiserConstantesServos()
         POS_BRAS_BAS = 0;
         ANGLE_INITIAL[PINCE] = 60;
         ANGLE_INITIAL[BRAS] = 0;
+        POS_BRAS_DEPLACEMENT = 135;
     }
     else
     {
@@ -31,6 +33,7 @@ void initialiserConstantesServos()
         POS_BRAS_BAS = 75;
         ANGLE_INITIAL[PINCE] = 60;
         ANGLE_INITIAL[BRAS] = 115;
+        POS_BRAS_DEPLACEMENT = 135;
     }
     return;
 }
@@ -104,6 +107,12 @@ bool fermerPince(bool estFixe = true)
 bool leverBras(bool estFixe = true)
 {
     changerAngleServo(BRAS,POS_BRAS_HAUT, estFixe);
+    return estFixe;
+}
+
+bool leverBrasDeplacement(bool estFixe = true)
+{
+    changerAngleServo(BRAS, POS_BRAS_DEPLACEMENT, estFixe);
     return estFixe;
 }
 

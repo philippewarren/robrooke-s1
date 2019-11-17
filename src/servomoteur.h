@@ -32,6 +32,8 @@ bool fermerPince(bool estFixe = true);
 bool leverBras(bool estFixe = true);
 //Baisse le bras et le maintiens baissé par défaut
 bool baisserBras(bool estFixe = true);
+//Lève le bras verticalement et le maintiens levé par défaut
+bool leverBrasDeplacement(bool estFixe = true);
 
 //Ouvre la pince et attend un délais non-bloquant, puis retourne true
 bool ouvrirPinceOctogone(bool estFixe = true);
