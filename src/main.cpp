@@ -66,7 +66,7 @@ int ramasserLettre()
 //Ouvre la pince, puis ramasse les lettres, retourne le resultat de ramasserLettre()
 int deposerEtReprendreLettre()
 {
-  ouvrirPince();
+  // ouvrirPince();
   return ramasserLettre();
 }
 
