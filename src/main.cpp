@@ -38,7 +38,7 @@ bool deposerLettrePoste()
   ouvrirPince();
   eteindreDELCouleur();
   suivant = estLettreSuivant();
-  leverBras();
+  leverBrasDeplacement();
 
   return suivant;
 }
@@ -47,18 +47,19 @@ bool deposerLettrePoste()
 //renvoie -2 et éteint les DEL. Sinon, renvoie la couleur de la lettre et allume la DEL de la couleur correspondante.
 int ramasserLettre()
 {
+  leverBras();
   ouvrirPince();
   baisserBras();
   if(estLettrePince())
   {
     fermerPince();
-    leverBras();
+    leverBrasDeplacement();
     if(estLettrePince())  return allumerDELCouleur(obtenirCouleurLettre());
     else return allumerDELCouleur(-2);
   }
   else
   {
-    leverBras();
+    leverBrasDeplacement();
     return allumerDELCouleur(-1);
   }
 }
@@ -66,7 +67,6 @@ int ramasserLettre()
 //Ouvre la pince, puis ramasse les lettres, retourne le resultat de ramasserLettre()
 int deposerEtReprendreLettre()
 {
-  // ouvrirPince();
   return ramasserLettre();
 }
 
