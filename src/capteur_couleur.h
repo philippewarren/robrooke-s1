@@ -16,7 +16,7 @@
 #define MAUVE 300
 
 #define BLANC -100
-#define NOIR -1
+#define NOIR -10
 #define GRIS -50
 
 extern Adafruit_TCS34725 CapteurCouleur;
