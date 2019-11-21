@@ -255,6 +255,7 @@ void setup()
   pinMode(2,INPUT);
   attachInterrupt(digitalPinToInterrupt(2),fctBouton,HIGH);
   Serial.println("reset");
+  baisserBras();
 }
 
 /* ****************************************************************************
@@ -264,22 +265,25 @@ Fonctions de boucle infini (loop())
 int tableau3[8];
 void loop()
 {
-  if (bouton==2 || bouton == 1)
-  {
-   allumerDELCouleur(BLEU);
-    demoAudit2();
-    // analogRead(A2);
-  }
-  else if (bouton == 3)
-  {
-    bouton = 0;
-    allumerDELCouleur(JAUNE);
-  }
-  else
-  {
-    allumerDELCouleur(ROUGE);
-  }
+  // if (bouton==2 || bouton == 1)
+  // {
+  //  allumerDELCouleur(BLEU);
+  //   demoAudit2();
+  //   // analogRead(A2);
+  // }
+  // else if (bouton == 3)
+  // {
+  //   bouton = 0;
+  //   allumerDELCouleur(JAUNE);
+  // }
+  // else
+  // {
+  //   allumerDELCouleur(ROUGE);
+  // }
   
+  // debugCapteurIR(EXTERNE);
+  debugEstLettre();
+
   // if(bouton == 1)
   // {
   //   traquerLigneBloque(0.2);

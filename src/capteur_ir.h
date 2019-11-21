@@ -16,8 +16,8 @@
 //Utilisée pour lire une valeur de distance en cm du capteur IR (index entre 0 et 3), en prenant amplitude*2-1 mesures
 float lireDistanceIR(uint8_t capteur, uint8_t amplitude = 3);
 
-//Retourne vrai si le capteur détecte une lettre
-bool estLettre(uint8_t capteur, uint8_t amplitude = 5);
+//Utilisée pour lire directement une valeur entre 0 et 1023 du capteur IR (index entre 0 et 3), en prenant amplitude*2-1 mesures
+uint16_t lireValeurIR(uint8_t capteur, uint8_t amplitude = 5);
 
 //Retourne vrai si une lettre est dans la pince
 bool estLettrePince();
@@ -25,7 +25,7 @@ bool estLettrePince();
 //Retourne vrai si une lettre est dans le bac suivant
 bool estLettreSuivant();
 
-void debugCapteurIR();
+void debugCapteurIR(uint8_t capteur);
 
 void debugEstLettre();
 
