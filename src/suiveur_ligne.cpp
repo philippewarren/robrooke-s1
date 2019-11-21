@@ -67,7 +67,12 @@ bool suivreLigne(float vitesse)
     if (pasLigne) aPerduLigne++; 
   }
 
-  if (aPerduLigne>SEUIL_PERTE_LIGNE) return false;
+  if (aPerduLigne>SEUIL_PERTE_LIGNE)
+  {
+    avaitUneLigne=0;
+    aPerduLigne=0;
+    return false;
+  }
 
   //calcul des différences entre capteurs opposés
   float delta1 = lectureSuiveurDeLigne[4]-lectureSuiveurDeLigne[3];
@@ -362,7 +367,7 @@ void traquerLigneBloque(float vitesse)
   syncroroue(vitesse,1,true);
   while (!lignePerpendiculaire())
   {
-    if (!suivreLigne(vitesse)) break;
+    if (!suivreLigne(vitesse)) while(true){}
     delay(5);
   }
   syncroroue(0,1,true);
