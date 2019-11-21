@@ -198,9 +198,10 @@ void setup()
   initialiserBob();
   pinMode(OUTPUT,12);
   digitalWrite(12,HIGH);
-  leverBrasDeplacement();
-  traquerLigneBloque(0.2);
+  // leverBrasDeplacement();
+  // traquerLigneBloque(0.2);
   poserEtat(0,180);
+  leverBras();
 }
 
 /* ****************************************************************************
@@ -221,5 +222,9 @@ void loop()
     Serial.println("distribution");
     routineDistribution();
   }
+
+  // if (ROBUS_IsBumper(0)) ouvrirPince();
+  // if (ROBUS_IsBumper(3)) fermerPince();
+  // debugCapteurCouleur();
   
 }

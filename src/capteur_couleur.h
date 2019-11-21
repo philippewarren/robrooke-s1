@@ -19,6 +19,8 @@
 #define NOIR -10
 #define GRIS -50
 
+#define AUCUNE -2
+
 extern Adafruit_TCS34725 CapteurCouleur;
 
 extern const uint16_t TOUTES_COULEURS[];
@@ -34,11 +36,11 @@ extern const int SEUIL_GRIS;
 //Initialise le capteur couleurs
 void initialiserCapteurCouleur();
 
-//Lit les valeurs du capteur couleur et retourne les valeurs dans le tableau dans cet ordre: {rouge, vert, bleu, sansCouleur}
+//Lit les valeurs du capteur couleur et retourne les valeurs dans le tableau dans cet ordre: {hue, saturation, luminosité, sansCouleur}
 void lireCapteurCouleur(uint8_t numeroDeCapteur, uint16_t tableauVide[4]);
 
 //Transforme une couleur rgb dans un tableau en nom de couleur
-int evaluerCouleur(uint16_t tableauRGB[4], const uint16_t couleursPossibles[] = TOUTES_COULEURS);
+int evaluerCouleur(uint16_t tableauRGB[4]);
 
 //Lit la couleur de la lettre et retourne une valeur de couleur
 int obtenirCouleurLettre();
