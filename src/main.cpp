@@ -231,8 +231,15 @@ void demoAudit2()
 
 void fctBouton()
 {
+<<<<<<< HEAD
+  if(bouton == 0)
+    bouton = 1;
+  if(bouton == 2)
+    bouton = 3;
+=======
   if(bouton == 0) bouton = 1;
   if(bouton == 2) bouton = 3;
+>>>>>>> 26fd512279b4f61ff8d427cb71a84e5f00a8ed91
 }
 
 
@@ -255,7 +262,10 @@ void setup()
   pinMode(2,INPUT);
   attachInterrupt(digitalPinToInterrupt(2),fctBouton,HIGH);
   Serial.println("reset");
+<<<<<<< HEAD
+=======
   baisserBras();
+>>>>>>> 26fd512279b4f61ff8d427cb71a84e5f00a8ed91
 }
 
 /* ****************************************************************************
@@ -265,6 +275,69 @@ Fonctions de boucle infini (loop())
 int tableau3[8];
 void loop()
 {
+<<<<<<< HEAD
+  if(bouton == 1)
+  {
+    traquerLigneBloque(0.2);
+    poserEtat(0,180);
+    bouton = 2;
+  }
+  else if (bouton == 3)
+  {
+    arreterDeuxMoteurs();
+    bouton = 0;
+  }
+  else if (bouton == 2)
+  {
+  if(lettreEnMain>=0)
+  {
+    essaiDist = 0;
+    allerVers(convertirCouleurNoeud(lettreEnMain));
+    actionPoste();
+  }
+  else if(essaiDist < 2)
+  {
+    essaiDist ++;
+    Serial.println("distribution");
+    routineDistribution();
+  }
+  else
+  {
+    if (!posteRouge2)
+    {
+      allerVers(convertirCouleurNoeud(ROUGE));
+      actionPoste();
+      posteRouge2 = true;
+    }
+    else if(!posteBleu2)
+    {
+      allerVers(convertirCouleurNoeud(BLEU));
+      actionPoste();
+      posteBleu2 = true;
+    }
+    else if(!posteJaune2)
+    {
+      allerVers(convertirCouleurNoeud(JAUNE));
+      actionPoste();        
+      posteJaune2 = true;
+    }
+    else if(!posteVert2)
+    {
+      allerVers(convertirCouleurNoeud(VERT));
+      actionPoste();
+      posteVert2 = true;
+    }
+    else
+    {
+      posteVert2 = false;
+      posteJaune2 = false;
+      posteRouge2 = false;
+      posteJaune2 = false;
+      essaiDist = 0;
+    }
+  }
+  }
+=======
   // if (bouton==2 || bouton == 1)
   // {
   //  allumerDELCouleur(BLEU);
@@ -345,4 +418,5 @@ void loop()
   //     }
   //   }
   // }
+>>>>>>> 26fd512279b4f61ff8d427cb71a84e5f00a8ed91
 }
