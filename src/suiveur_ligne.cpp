@@ -27,52 +27,13 @@ void lireSuiveurLigne(int output [8])
 
 }
 
-bool suivreLigne(float vitesse)
+void suivreLigne(float vitesse)
 {
 
     //lecture des données
     int lectureSuiveurDeLigne [8];
     lireSuiveurLigne(lectureSuiveurDeLigne);
     estLigneHuit(lectureSuiveurDeLigne);
-
-    //Arrête s'il sort des lignes
-    const int SEUIL_AVOIR_LIGNE = 5;
-    const int SEUIL_PERTE_LIGNE = 200;
-
-    static int avaitUneLigne = 0;
-    static int aPerduLigne = 0;
-    bool pasLigne = false;
-    if (avaitUneLigne<SEUIL_AVOIR_LIGNE) 
-    {
-      for (int ligne: lectureSuiveurDeLigne)
-      {
-        if (ligne>=1)
-        {
-          avaitUneLigne++;
-        }
-      }
-      if (avaitUneLigne>SEUIL_AVOIR_LIGNE) avaitUneLigne=SEUIL_AVOIR_LIGNE;
-    }
-
-  if (avaitUneLigne==SEUIL_AVOIR_LIGNE)
-  {
-    pasLigne = true;
-    for (int ligne: lectureSuiveurDeLigne)
-    {
-      if (ligne>=0)
-      {
-        pasLigne = false;
-      }
-    }
-    if (pasLigne) aPerduLigne++; 
-  }
-
-  if (aPerduLigne>SEUIL_PERTE_LIGNE)
-  {
-    avaitUneLigne=0;
-    aPerduLigne=0;
-    return false;
-  }
 
   //calcul des différences entre capteurs opposés
   float delta1 = lectureSuiveurDeLigne[4]-lectureSuiveurDeLigne[3];
@@ -89,8 +50,6 @@ bool suivreLigne(float vitesse)
   float facteurMin = min(min(delta1,delta2),min(delta3, delta4));
   if (facteurMin*-1 < facteur)syncroroue(vitesse,1/(1+(facteur/3)));
   else syncroroue(vitesse,1-(facteurMin/3));
-
-  return true;
 }
 
 bool detecterLigne()
@@ -362,12 +321,60 @@ void afficherLigne(int ligne[8])
   Serial.print('\n');
 }
 
+bool estSorti()
+{
+  //lecture des données
+    int lectureSuiveurDeLigne [8];
+    lireSuiveurLigne(lectureSuiveurDeLigne);
+    estLigneHuit(lectureSuiveurDeLigne);
+
+    //Arrête s'il sort des lignes
+    const int SEUIL_AVOIR_LIGNE = 5;
+    const int SEUIL_PERTE_LIGNE = 200;
+
+    static int avaitUneLigne = 0;
+    static int aPerduLigne = 0;
+    bool pasLigne = false;
+    if (avaitUneLigne<SEUIL_AVOIR_LIGNE) 
+    {
+      for (int ligne: lectureSuiveurDeLigne)
+      {
+        if (ligne>=1)
+        {
+          avaitUneLigne++;
+        }
+      }
+      if (avaitUneLigne>SEUIL_AVOIR_LIGNE) avaitUneLigne=SEUIL_AVOIR_LIGNE;
+    }
+
+  if (avaitUneLigne==SEUIL_AVOIR_LIGNE)
+  {
+    pasLigne = true;
+    for (int ligne: lectureSuiveurDeLigne)
+    {
+      if (ligne>=0)
+      {
+        pasLigne = false;
+      }
+    }
+    if (pasLigne) aPerduLigne++; 
+  }
+
+  if (aPerduLigne>SEUIL_PERTE_LIGNE)
+  {
+    avaitUneLigne=0;
+    aPerduLigne=0;
+    return false;
+  }
+
+}
+
 void traquerLigneBloque(float vitesse)
 {
   syncroroue(vitesse,1,true);
   while (!lignePerpendiculaire())
   {
-    if (!suivreLigne(vitesse)) while(true){}
+    suivreLigne(vitesse);
     delay(5);
   }
   syncroroue(0,1,true);
