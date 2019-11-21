@@ -56,7 +56,7 @@ bool deposerLettrePoste()
 //renvoie -2 et éteint les DEL. Sinon, renvoie la couleur de la lettre et allume la DEL de la couleur correspondante.
 int ramasserLettre()
 {
-  leverBras();
+  // leverBras();
   ouvrirPince();
   baisserBras();
   if(estLettrePince())
