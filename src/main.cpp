@@ -232,7 +232,7 @@ void fctBouton()
   if(bouton == 0)
     bouton = 1;
   if(bouton == 2)
-    bouton = 4;
+    bouton = 3;
 }
 
 
@@ -251,17 +251,10 @@ void setup()
   initialiserBob();
   pinMode(OUTPUT,12);
   digitalWrite(12,HIGH);
-<<<<<<< HEAD
   leverBrasDeplacement();
   pinMode(2,INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(2),fctBouton,LOW);
   Serial.println("reset");
-=======
-  // leverBrasDeplacement();
-  // traquerLigneBloque(0.2);
-  poserEtat(0,180);
-  leverBras();
->>>>>>> 1e5028df5a754f2ee961643cc1b9ec879612238d
 }
 
 /* ****************************************************************************
@@ -277,7 +270,7 @@ void loop()
     poserEtat(0,180);
     bouton = 2;
   }
-  else if (bouton == 4)
+  else if (bouton == 3)
   {
     arreterDeuxMoteurs();
     bouton = 0;
@@ -296,7 +289,6 @@ void loop()
     Serial.println("distribution");
     routineDistribution();
   }
-<<<<<<< HEAD
   else
   {
     if (!posteRouge2)
@@ -333,11 +325,4 @@ void loop()
     }
   }
   }
-=======
-
-  // if (ROBUS_IsBumper(0)) ouvrirPince();
-  // if (ROBUS_IsBumper(3)) fermerPince();
-  // debugCapteurCouleur();
-  
->>>>>>> 1e5028df5a754f2ee961643cc1b9ec879612238d
 }
