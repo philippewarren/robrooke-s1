@@ -3,7 +3,7 @@
 const byte PORT_DEL[] = {0, 45, 47, 49, 48};
 const byte PORT_BOUTON[] = {40, 41, 42, 43, 44};
 
-const byte PORT_INTERRUPT = 18;
+const byte PORT_INTERRUPT = 2;
 const byte PORT_RESTART = PORT_BOUTON[BOUTON_RESTART];
 
 bool loopEstCliqueEtRelache(uint8_t bumper)
