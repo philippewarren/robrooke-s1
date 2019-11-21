@@ -164,9 +164,7 @@ bool transfer(int noeud)
         int rot = angle - _orientation;
         if (rot > 180)rot = rot - 360;
         if (rot < -180)rot = rot + 360;
-        delay(200);
         tournerBloque(0.2,rot);
-        delay(200);
         avancerDroitBloque(0.2,2);
         traquerLigneBloque(0.3);
         poserEtat(noeud,angle);
