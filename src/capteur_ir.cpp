@@ -32,34 +32,39 @@ float lireDistanceIR(uint8_t capteur, uint8_t amplitude = 3)
     return distance;
 }
 
-bool estLettre(uint8_t capteur, uint8_t amplitude = 5)
+uint16_t lireValeurIR(uint8_t capteur, uint8_t amplitude = 5)
 {
     int nombreDeLectures = (amplitude*2)-1;
     uint16_t lectures[nombreDeLectures];
+
     for (int i=0; i<nombreDeLectures; i++)
     {
         lectures[i] = ROBUS_ReadIR(capteur);
     }
-    if (calculerMediane(lectures, nombreDeLectures) >= 100) return true;
-    else return false;
+    return calculerMediane(lectures, nombreDeLectures);
 }
 
 bool estLettrePince()
 {
-    return estLettre(INTERNE);
+    int valeur = lireValeurIR(INTERNE);
+    Serial.println(valeur);
+    if (valeur<500 && valeur > 100) return true;
+    else return false;
 }
 
 bool estLettreSuivant()
 {
-    return estLettre(EXTERNE);
+    int valeur = lireValeurIR(EXTERNE);
+    if (valeur>100) return true;
+    else return false;
 }
 
-void debugCapteurIR()
+void debugCapteurIR(uint8_t capteur)
 {
-    Serial.print("Distance interne: ");
-    Serial.println(lireDistanceIR(INTERNE, 5));
-    Serial.print("Nombre interne: ");
-    Serial.println(ROBUS_ReadIR(INTERNE));
+    Serial.print("Distance: ");
+    Serial.println(lireDistanceIR(capteur, 5));
+    Serial.print("Nombre: ");
+    Serial.println(ROBUS_ReadIR(capteur));
     delay(1000);
 }
 
