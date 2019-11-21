@@ -40,8 +40,8 @@ void initialiserPortsBoutons()
 
 void initialiserPortsInterrupt()
 {
-    pinMode(PORT_INTERRUPT, INPUT);
-    attachInterrupt(digitalPinToInterrupt(PORT_INTERRUPT), isrARRET, FALLING);
+    pinMode(PORT_INTERRUPT, INPUT_PULLUP);
+    attachInterrupt(digitalPinToInterrupt(PORT_INTERRUPT), isrARRET, RISING);
 }
 
 void isrARRET()
