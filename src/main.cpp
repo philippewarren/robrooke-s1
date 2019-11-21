@@ -22,7 +22,17 @@ bool posteRouge = false;
 bool posteBleu = false;
 bool posteJaune = false;
 bool posteVert = false;
+bool posteRouge2 = false;
+bool posteBleu2 = false;
+bool posteJaune2 = false;
+bool posteVert2 = false;
 int lettreEnMain = -1; //-1 si vide ou couleur
+int essaiDist = 0;
+volatile int bouton = 0;
+volatile int itBouton = 0;
+
+
+
 
 
 /* ****************************************************************************
@@ -101,10 +111,18 @@ void routineDistribution()
     posteRouge = false;
   }
   bool fin = false;
+  if(!posteVert && posteBleu && posteRouge && posteJaune)
+  {
+    tournerBloque(0.2,180);
+    lettreEnMain = ramasserLettre();
+    if (lettreEnMain == -2)lettreEnMain =ramasserLettre();
+    posteVert = true;
+    fin = true;
+  }
   if(!posteJaune)
   {
     lettreEnMain = ramasserLettre();
-    if (lettreEnMain == -2)lettreEnMain ==ramasserLettre();
+    if (lettreEnMain == -2)lettreEnMain =ramasserLettre();
     if (lettreEnMain >= 0)
     {
       fin = true;
@@ -119,14 +137,14 @@ void routineDistribution()
     if(lettreEnMain < 0 && !posteRouge)
     {
       lettreEnMain = ramasserLettre();
-      if (lettreEnMain == -2)lettreEnMain ==ramasserLettre();
+      if (lettreEnMain == -2)lettreEnMain =ramasserLettre();
       posteRouge = true;
     }
     tournerBloque(0.2,180);
     if(lettreEnMain < 0 && !posteBleu)
     {
       lettreEnMain = ramasserLettre();
-      if (lettreEnMain == -2)lettreEnMain ==ramasserLettre();        
+      if (lettreEnMain == -2)lettreEnMain =ramasserLettre();        
       posteBleu = true;
     }
     avancerDroitBloque(0.2,3);
@@ -134,7 +152,7 @@ void routineDistribution()
     if(lettreEnMain < 0 && !posteVert)
     {
       lettreEnMain = ramasserLettre();
-      if (lettreEnMain == -2)lettreEnMain ==ramasserLettre();
+      if (lettreEnMain == -2)lettreEnMain =ramasserLettre();
       posteVert = true;
     }
     
@@ -180,7 +198,42 @@ void testCouleur()
   allerVers(0);
 }
 
+void demoAudit2()
+{
+  traquerLigneBloque(0.2);
+  while (lettreEnMain < 0)
+  {
+    lettreEnMain = ramasserLettre();
+  }
+  avancerDroitBloque(0.2,3);
+  traquerLigneBloque(0.3);
+  if (lettreEnMain == ROUGE)
+  {
+    deposerLettrePoste();
+    tournerBloque(0.2,180);
+  }
+  else
+  {
+    avancerDroitBloque(0.2,3);
+    traquerLigneBloque(0.2);
+    deposerLettrePoste();
+    tournerBloque(0.2,180);
+    avancerDroitBloque(0.2,3);
+    traquerLigneBloque(0.2);
+  }
+  avancerDroitBloque(0.2,3);
+  traquerLigneBloque(0.2);
+  avancerDroitBloque(0.2,10);
+  tournerBloque(0.2,180);
+}
 
+void fctBouton()
+{
+  if(bouton == 0)
+    bouton = 1;
+  if(bouton == 2)
+    bouton = 4;
+}
 
 
 
@@ -199,8 +252,9 @@ void setup()
   pinMode(OUTPUT,12);
   digitalWrite(12,HIGH);
   leverBrasDeplacement();
-  traquerLigneBloque(0.2);
-  poserEtat(0,180);
+  pinMode(2,INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(2),fctBouton,LOW);
+  Serial.println("reset");
 }
 
 /* ****************************************************************************
@@ -210,16 +264,65 @@ Fonctions de boucle infini (loop())
 
 void loop()
 {
+  if(bouton == 1)
+  {
+    traquerLigneBloque(0.2);
+    poserEtat(0,180);
+    bouton = 2;
+  }
+  else if (bouton == 4)
+  {
+    arreterDeuxMoteurs();
+    bouton = 0;
+  }
+  else if (bouton == 2)
+  {
   if(lettreEnMain>=0)
   {
-    Serial.println(lettreEnMain);
+    essaiDist = 0;
     allerVers(convertirCouleurNoeud(lettreEnMain));
     actionPoste();
   }
-  else
+  else if(essaiDist < 2)
   {
+    essaiDist ++;
     Serial.println("distribution");
     routineDistribution();
   }
-  
+  else
+  {
+    if (!posteRouge2)
+    {
+      allerVers(convertirCouleurNoeud(ROUGE));
+      actionPoste();
+      posteRouge2 = true;
+    }
+    else if(!posteBleu2)
+    {
+      allerVers(convertirCouleurNoeud(BLEU));
+      actionPoste();
+      posteBleu2 = true;
+    }
+    else if(!posteJaune2)
+    {
+      allerVers(convertirCouleurNoeud(JAUNE));
+      actionPoste();        
+      posteJaune2 = true;
+    }
+    else if(!posteVert2)
+    {
+      allerVers(convertirCouleurNoeud(VERT));
+      actionPoste();
+      posteVert2 = true;
+    }
+    else
+    {
+      posteVert2 = false;
+      posteJaune2 = false;
+      posteRouge2 = false;
+      posteJaune2 = false;
+      essaiDist = 0;
+    }
+  }
+  }
 }
