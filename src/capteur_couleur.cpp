@@ -2,10 +2,6 @@
 
 Adafruit_TCS34725 CapteurCouleur = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_1X);
 
-const uint16_t TOUTES_COULEURS[] = {ROUGE, JAUNE, VERT, TURQUOISE, BLEU, MAUVE};
-const uint16_t COULEURS_OCTOGONE[] = {ROUGE, JAUNE, VERT, BLEU};
-const uint16_t COULEURS_LETTRES[] = {ROUGE, VERT, BLEU};
-
 const uint16_t BORNES_COULEUR[] = {15, 165};
 
     const int SEUIL_NOIR = 35;
@@ -52,10 +48,8 @@ void lireCapteurCouleur(uint8_t numeroDeCapteur, uint16_t tableauVide[4])
     return;
 }
 
-int evaluerCouleur(uint16_t tableauRGB[4], const uint16_t couleursPossibles[] = TOUTES_COULEURS)
+int evaluerCouleur(uint16_t tableauRGB[4])
 {
-    // rgbEnHsl(tableauRGB);
-
     int couleur = 0;
 
     //Blanc, noir, gris
@@ -75,53 +69,25 @@ int evaluerCouleur(uint16_t tableauRGB[4], const uint16_t couleursPossibles[] = 
     }
     else
     {
-        // 6 couleurs
-        if (couleursPossibles == TOUTES_COULEURS)
-        {
-            //Rouge?
-            if (tableauRGB[0]>=330 || tableauRGB[0]<30)
-                couleur = ROUGE;
+        //Rouge?
+        if (tableauRGB[0]>=345 || tableauRGB[0]<45)
+            couleur = ROUGE;
 
-            //Jaune?
-            else if (tableauRGB[0]>=30 && tableauRGB[0]<90)
-                couleur = JAUNE;
+        //Jaune?
+        else if (tableauRGB[0]>=45 && tableauRGB[0]<90)
+            couleur = JAUNE;
 
-            //Vert?
-            else if (tableauRGB[0]>=90 && tableauRGB[0]<150)
-                couleur = VERT;
+        //Vert?
+        else if (tableauRGB[0]>=120 && tableauRGB[0]<155)
+            couleur = VERT;
 
-            //Turquoise?
-            else if (tableauRGB[0]>=150 && tableauRGB[0]<210)
-                couleur = TURQUOISE;
-
-            //Bleu?
-            else if (tableauRGB[0]>=210 && tableauRGB[0]<270)
-                couleur = BLEU;
-
-            //Mauve?
-            else if (tableauRGB[0]>=270 && tableauRGB[0]<330)
-                couleur = MAUVE;
-        }
-
-        // 4 couleurs
-        else if (couleursPossibles == COULEURS_OCTOGONE)
-        {
-            //Rouge?
-            if (tableauRGB[0]>=285 || tableauRGB[0]<45)
-                couleur = ROUGE;
-
-            //Jaune?
-            else if (tableauRGB[0]>=40 && tableauRGB[0]<90)
-                couleur = JAUNE;
-
-            //Vert?
-            else if (tableauRGB[0]>=90 && tableauRGB[0]<155)
-                couleur = VERT;
-
-            //Bleu?
-            else if (tableauRGB[0]>=155 && tableauRGB[0]<285)
-                couleur = BLEU;
-        }
+        //Bleu?
+        else if (tableauRGB[0]>=155 && tableauRGB[0]<190)
+            couleur = BLEU;
+        
+        //Aucune couleur reconnue
+        else
+            couleur = AUCUNE;
     }
 
     return couleur;
@@ -131,7 +97,7 @@ int obtenirCouleurLettre()
 {
     uint16_t tableau[4];
     lireCapteurCouleur(0,tableau);
-    return evaluerCouleur(tableau,COULEURS_OCTOGONE);
+    return evaluerCouleur(tableau);
 }
 
 void debugCapteurCouleur()
@@ -140,17 +106,17 @@ void debugCapteurCouleur()
     static String nomCouleur;
     lireCapteurCouleur(0, tableau);
     
-    Serial.print("R: ");
+    Serial.print("H: ");
     Serial.print(tableau[0]);
-    Serial.print("\tV: ");
+    Serial.print("\tS: ");
     Serial.print(tableau[1]);
-    Serial.print("\tB: ");
+    Serial.print("\tL: ");
     Serial.print(tableau[2]);
     Serial.print("\tC: ");
     Serial.print(tableau[3]);
     Serial.print("\tCouleur: ");
-    allumerDELCouleur(evaluerCouleur(tableau, COULEURS_OCTOGONE));
-    switch (evaluerCouleur(tableau, COULEURS_OCTOGONE))
+    allumerDELCouleur(evaluerCouleur(tableau));
+    switch (evaluerCouleur(tableau))
     {
         case ROUGE:
             nomCouleur = "ROUGE";
