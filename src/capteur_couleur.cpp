@@ -78,11 +78,11 @@ int evaluerCouleur(uint16_t tableauRGB[4])
             couleur = JAUNE;
 
         //Vert?
-        else if (tableauRGB[0]>=120 && tableauRGB[0]<155)
+        else if (tableauRGB[0]>=120 && tableauRGB[0]<150)
             couleur = VERT;
 
         //Bleu?
-        else if (tableauRGB[0]>=155 && tableauRGB[0]<190)
+        else if (tableauRGB[0]>=150 && tableauRGB[0]<190)
             couleur = BLEU;
         
         //Aucune couleur reconnue
