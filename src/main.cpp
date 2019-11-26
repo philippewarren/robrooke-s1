@@ -231,8 +231,10 @@ void demoAudit2()
 
 void fctBouton()
 {
-  if(bouton == 0) bouton = 1;
-  if(bouton == 2) bouton = 3;
+  if(bouton == 0)
+    bouton = 1;
+  if(bouton == 2)
+    bouton = 3;
 }
 
 void initialiserInterrupt()
@@ -268,20 +270,30 @@ void loop()
 {
   if(bouton == 1)
   {
+    eteindreDEL(0);
+    allumerDEL(1);
     traquerLigneBloque(0.2);
     poserEtat(0,180);
     bouton = 2;
   }
   else if (bouton == 3)
   {
+    eteindreDEL(0);
+    allumerDEL(2);
     arreterDeuxMoteurs();
     bouton = 0;
   }
   else if (bouton == 2)
   {
+    eteindreDEL(0);
+    allumerDEL(3);
     if(lettreEnMain>=0)
     {
       essaiDist = 0;
+      if (lettreEnMain == ROUGE) posteRouge2 = true;
+      if (lettreEnMain == JAUNE) posteJaune2 = true;
+      if (lettreEnMain == VERT) posteVert2 = true;
+      if (lettreEnMain == BLEU) posteBleu2 = true;
       allerVers(convertirCouleurNoeud(lettreEnMain));
       actionPoste();
     }
@@ -327,4 +339,11 @@ void loop()
       }
     }
   }
+  else
+  {
+    eteindreDEL(0);
+    allumerDEL(4);
+    delay(1000);
+  }
+  
 }
