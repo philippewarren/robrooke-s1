@@ -36,6 +36,9 @@ extern const int SEUIL_GRIS;
 //Initialise le capteur couleurs
 void initialiserCapteurCouleur();
 
+//Convertit les 3 premiers nombres d'un tableau de 4 (r,g,b) en (h,s,l) dans le meme tableau, sans toucher la valeur 4 (sansCouleur)
+void rgbEnHsl(uint16_t tableauRGB[4]);
+
 //Lit les valeurs du capteur couleur et retourne les valeurs dans le tableau dans cet ordre: {hue, saturation, luminosité, sansCouleur}
 void lireCapteurCouleur(uint8_t numeroDeCapteur, uint16_t tableauVide[4]);
 

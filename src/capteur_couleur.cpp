@@ -12,13 +12,61 @@ void initialiserCapteurCouleur()
 {
     if (CapteurCouleur.begin())
     {
-        Serial.println("Capteur couleur branché");
+        Serial.println("##Capteur couleur branché.##");
     }
     else
     {
-        Serial.println("Pas de capteur couleur ... verifiez la connection");
+        Serial.println("##Pas de capteur couleur... Verifiez la connection.##");
     }
     return;
+}
+
+void rgbEnHsl(uint16_t tableauRGB[4])
+{
+  uint16_t etendue = BORNES_COULEUR[1]-BORNES_COULEUR[0];
+  
+  // float rouge = tableauRGB[0]/255.0;
+  // float vert = tableauRGB[1]/255.0;
+  // float bleu = tableauRGB[2]/255.0;
+  float rouge = ((float)tableauRGB[0]-BORNES_COULEUR[0])/(etendue);
+  float vert = ((float)tableauRGB[1]-BORNES_COULEUR[0])/(etendue);
+  float bleu = ((float)tableauRGB[2]-BORNES_COULEUR[0])/(etendue);
+  // float sansCouleur = tableauRGB[3];
+  
+  // {
+  //   Serial.print(255*rouge);
+  //   Serial.print('\t');
+  //   Serial.print(255*vert);
+  //   Serial.print('\t');
+  //   Serial.print(255*bleu);
+  //   Serial.print('\t');
+  //   Serial.println();
+  // }
+
+  float Cmax = max(rouge, max(vert, bleu));
+  float Cmin = min(rouge, min(vert, bleu));
+  float delta = Cmax-Cmin;
+  float preS;
+
+  uint16_t H, S, L;
+
+  if (delta==0) H = 0;
+  else if (Cmax==rouge) H = (uint16_t)(60*(((vert-bleu)/delta) + (vert<bleu ? 6 : 0)));
+  else if (Cmax==vert) H = (uint16_t)(60*(((bleu-rouge)/delta) + 2));
+  else if (Cmax==bleu) H = (uint16_t)(60*(((rouge-vert)/delta) + 4));
+
+  preS = (delta==0) ? 0 : delta/(1-fabs(2*((Cmax+Cmin)/2)-1));
+  S = /*(100*preS>SEUIL_NOIR) ? */(uint16_t)(100*pow(preS, 0.5)) /*: (uint16_t)(100*preS)*/;
+
+  L = (uint16_t)(100*(Cmax+Cmin)/2);
+  // L = (uint16_t)(100*((sansCouleur-3*BORNES_COULEUR[0])/(3.0*etendue)));
+ 
+
+  tableauRGB[0] = H;
+  tableauRGB[1] = S;
+  tableauRGB[2] = L;
+   
+  return;
 }
 
 void lireCapteurCouleur(uint8_t numeroDeCapteur, uint16_t tableauVide[4])

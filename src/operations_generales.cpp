@@ -31,8 +31,8 @@ uint16_t calculerMediane(uint16_t tableau[], const int NB_ELEMENTS)
     return mediane;
 }
 
-int sensRotationAngle(float angle)
-{
-    if (angle>=0) return 1;
-    else return 0;
-}
+// int sensRotationAngle(float angle)
+// {
+//     if (angle>=0) return 1;
+//     else return 0;
+// }

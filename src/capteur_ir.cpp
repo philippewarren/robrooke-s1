@@ -2,18 +2,6 @@
 
 #define TEST 0
 
-int lireCapteurIR(uint8_t capteur, uint8_t amplitude = 3)
-{
-    int nombreDeLectures = (amplitude*2)-1;
-    uint16_t lectures[nombreDeLectures];
-    for (int i=0; i<nombreDeLectures; i++)
-    {
-        lectures[i] = ROBUS_ReadIR(capteur);
-    }
-
-    return nombreDeLectures;
-}
-
 float lireDistanceIR(uint8_t capteur, uint8_t amplitude = 3)
 {
     int nombreDeLectures = (amplitude*2)-1;

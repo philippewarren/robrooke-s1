@@ -17,7 +17,6 @@
 #include "servomoteur.h"
 
 #include "loop_normal.h"
-#include "loop_urgence.h"
 #include "loop_A.h"
 #include "loop_B.h"
 
@@ -28,23 +27,20 @@ extern const int COULEURS_BOB[];
 //Bob-A ou Bob-B ('A' ou 'B', 'I' avant d'être initialisé)
 extern char Bob;
 
-//Utilisée pour signifier que l'interrupt est activé
-extern volatile bool arretUrgence;
-
 //Appelle BoardInit() et cie, et initialise nos fonctions et variables
 void initialiserBob();
 
 //Initialise les ports pour les DEL
 void initialiserPortsDEL();
+//Initialise les ports pour les DEL de couleur
+void initialiserPortsDELCouleur();
 //Initialise les ports pour les boutons
 void initialiserPortsBoutons();
-//Initialise les ports pour l'ISR d'arrêt d'urgence
-void initialiserPortsInterrupt();
-//Initialise les lecteurs de catpeur IR lisant des distances
-void initialiserCapteursIR();
+//Initialise les ports du suiveur de ligne 
+void initialiserPortSuiveurLigne();
 
-//ISR d'arrêt d'urgence
-void isrARRET();
+//Initialise le port pour l'interrupt et l'attache
+void initialiserInterrupt();
 
 
 

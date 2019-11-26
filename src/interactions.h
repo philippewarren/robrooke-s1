@@ -19,8 +19,6 @@ extern const byte PORT_DEL[];
 //BOUTON_DROIT=1; BOUTON_AVANT=2; BOUTON_ARRIERE=3; BOUTON_RESTART=4;)
 extern const byte PORT_BOUTON[];
 
-//Utilisé pour l'arrêt d'urgence
-extern const byte PORT_INTERRUPT;
 //Utilisé pour réactiver le robot après un arrêt d'urgence
 extern const byte PORT_RESTART;
 
