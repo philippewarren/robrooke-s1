@@ -3,7 +3,6 @@
 
 #include <Adafruit_TCS34725.h>
 
-#include "conversions.h"
 #include "del_couleur.h"
 
 //#define TCS34725_ADDRESS (0x29)
@@ -22,10 +21,6 @@
 #define AUCUNE -2
 
 extern Adafruit_TCS34725 CapteurCouleur;
-
-extern const uint16_t TOUTES_COULEURS[];
-extern const uint16_t COULEURS_OCTOGONE[];
-extern const uint16_t COULEURS_LETTRES[];
 
 extern const uint16_t BORNES_COULEUR[];
 

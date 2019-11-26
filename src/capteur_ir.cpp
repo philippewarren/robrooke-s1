@@ -1,6 +1,52 @@
 #include "capteur_ir.h"
 
-#define TEST 0
+const float TENSION_ARDUINO = 5.0;
+const uint16_t ENTREE_ANALOGIQUE_MAX = 1023;
+
+float entreeAnalogiqueEnTension(uint16_t entreeAnalogique)
+{
+  float tension = (float)((TENSION_ARDUINO/ENTREE_ANALOGIQUE_MAX)*(entreeAnalogique));
+
+  return tension;
+}
+
+float tensionEnDistance(float tension)
+{
+  if (tension<=0.3) return 0;
+  float distanceEnCM = 29.988 * pow(tension, -1.173);
+  return distanceEnCM;
+}
+
+void classerTableauCroissant(uint16_t tableau[], const int NB_ELEMENTS)
+{
+    uint16_t temp;
+    
+    for (int i=0; i<NB_ELEMENTS-1; i++)
+    {
+        for (int j=i+1; j<NB_ELEMENTS-1; j++)
+        {
+            if(tableau[i]>tableau[j])
+            {
+                temp = tableau[i];
+                tableau[i] = tableau[j];
+                tableau[j] = temp;
+            }
+        }
+    }
+    return;
+}
+
+uint16_t calculerMediane(uint16_t tableau[], const int NB_ELEMENTS)
+{
+    int position;
+    uint16_t mediane;
+
+    classerTableauCroissant(tableau, NB_ELEMENTS);
+    position = ((NB_ELEMENTS-1)/2);
+    mediane = tableau[position];
+
+    return mediane;
+}
 
 float lireDistanceIR(uint8_t capteur, uint8_t amplitude = 3)
 {

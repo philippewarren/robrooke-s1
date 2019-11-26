@@ -4,9 +4,9 @@ Adafruit_TCS34725 CapteurCouleur = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50
 
 const uint16_t BORNES_COULEUR[] = {15, 165};
 
-    const int SEUIL_NOIR = 35;
-    const int SEUIL_BLANC = 85;
-    const int SEUIL_GRIS = 15;
+const int SEUIL_NOIR = 35;
+const int SEUIL_BLANC = 85;
+const int SEUIL_GRIS = 15;
 
 void initialiserCapteurCouleur()
 {
@@ -25,23 +25,9 @@ void rgbEnHsl(uint16_t tableauRGB[4])
 {
   uint16_t etendue = BORNES_COULEUR[1]-BORNES_COULEUR[0];
   
-  // float rouge = tableauRGB[0]/255.0;
-  // float vert = tableauRGB[1]/255.0;
-  // float bleu = tableauRGB[2]/255.0;
   float rouge = ((float)tableauRGB[0]-BORNES_COULEUR[0])/(etendue);
   float vert = ((float)tableauRGB[1]-BORNES_COULEUR[0])/(etendue);
   float bleu = ((float)tableauRGB[2]-BORNES_COULEUR[0])/(etendue);
-  // float sansCouleur = tableauRGB[3];
-  
-  // {
-  //   Serial.print(255*rouge);
-  //   Serial.print('\t');
-  //   Serial.print(255*vert);
-  //   Serial.print('\t');
-  //   Serial.print(255*bleu);
-  //   Serial.print('\t');
-  //   Serial.println();
-  // }
 
   float Cmax = max(rouge, max(vert, bleu));
   float Cmin = min(rouge, min(vert, bleu));
@@ -56,11 +42,9 @@ void rgbEnHsl(uint16_t tableauRGB[4])
   else if (Cmax==bleu) H = (uint16_t)(60*(((rouge-vert)/delta) + 4));
 
   preS = (delta==0) ? 0 : delta/(1-fabs(2*((Cmax+Cmin)/2)-1));
-  S = /*(100*preS>SEUIL_NOIR) ? */(uint16_t)(100*pow(preS, 0.5)) /*: (uint16_t)(100*preS)*/;
+  S = (uint16_t)(100*pow(preS, 0.5));
 
-  L = (uint16_t)(100*(Cmax+Cmin)/2);
-  // L = (uint16_t)(100*((sansCouleur-3*BORNES_COULEUR[0])/(3.0*etendue)));
- 
+  L = (uint16_t)(100*(Cmax+Cmin)/2); 
 
   tableauRGB[0] = H;
   tableauRGB[1] = S;
@@ -71,20 +55,9 @@ void rgbEnHsl(uint16_t tableauRGB[4])
 
 void lireCapteurCouleur(uint8_t numeroDeCapteur, uint16_t tableauVide[4])
 {    
-    uint16_t rouge;
-    uint16_t vert;
-    uint16_t bleu;
-    uint16_t sansCouleur;
+    uint16_t rouge, vert, bleu, sansCouleur;
 
     CapteurCouleur.getRawData(&rouge, &vert, &bleu, &sansCouleur);
-
-    Serial.print(rouge);
-    Serial.print("\t");
-    Serial.print(vert);
-    Serial.print("\t");
-    Serial.print(bleu);
-    Serial.print("\t");
-    Serial.println(sansCouleur);
     
     tableauVide[0] = (uint16_t)(256*(float)rouge/sansCouleur);
     tableauVide[1] = (uint16_t)(256*(float)vert/sansCouleur);
@@ -92,7 +65,7 @@ void lireCapteurCouleur(uint8_t numeroDeCapteur, uint16_t tableauVide[4])
     tableauVide[3] = sansCouleur;
 
     rgbEnHsl(tableauVide);
-
+   
     return;
 }
 
@@ -180,7 +153,5 @@ void debugCapteurCouleur()
             break;
     }
     Serial.println(nomCouleur);
-    delay(500);
-    // eteindreDELCouleur();
-    delay(500);
+    delay(1000);
 }

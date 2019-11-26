@@ -34,11 +34,6 @@ bool avancerDroitLigneBloque(float vitesse, float distance);
 //bloquante centre sur une ligne
 bool centrerLigne(float angleVue = 30);
 
-//Suiveur de ligne de PW
-void suivreLigneSimple(float distance, float vitesse);
-
-void suivreLigneSimpleHuit(float distance, float vitesse);
-
 //Trouve une ligne
 //Sens de rotation horaire = 0, anti-horaire=1
 void trouverLigne(int sensDeRotation);
