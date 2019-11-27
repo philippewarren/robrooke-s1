@@ -24,6 +24,7 @@ extern const int COULEURS_BOB[];
 extern char Bob;
 
 //Appelle BoardInit() et cie, et initialise nos fonctions et variables
+//Utilisée directement dans le main()
 void initialiserBob();
 
 //Initialise les ports pour les DEL
@@ -36,6 +37,7 @@ void initialiserPortsBoutons();
 void initialiserPortSuiveurLigne();
 
 //Initialise le port pour l'interrupt et l'attache
+//Utilisée directement dans le main()
 void initialiserInterrupt();
 
 

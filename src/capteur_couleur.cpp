@@ -77,40 +77,25 @@ int evaluerCouleur(uint16_t tableauRGB[4])
     if (tableauRGB[1]<=SEUIL_GRIS || (tableauRGB[2]<=SEUIL_NOIR || tableauRGB[2]>=SEUIL_BLANC))
     {
         // Blanc?
-        if (tableauRGB[2]>=SEUIL_BLANC)
-            couleur = BLANC;
-
+        if (tableauRGB[2]>=SEUIL_BLANC) couleur = BLANC;
         //Noir?
-        else if (tableauRGB[2]<=SEUIL_NOIR)
-            couleur = NOIR;
-
+        else if (tableauRGB[2]<=SEUIL_NOIR) couleur = NOIR;
         //Gris?
-        else
-            couleur = GRIS;
+        else couleur = GRIS;
     }
     else
     {
         //Rouge?
-        if (tableauRGB[0]>=345 || tableauRGB[0]<45)
-            couleur = ROUGE;
-
+        if (tableauRGB[0]>=345 || tableauRGB[0]<45) couleur = ROUGE;
         //Jaune?
-        else if (tableauRGB[0]>=45 && tableauRGB[0]<90)
-            couleur = JAUNE;
-
+        else if (tableauRGB[0]>=45 && tableauRGB[0]<90) couleur = JAUNE;
         //Vert?
-        else if (tableauRGB[0]>=120 && tableauRGB[0]<150)
-            couleur = VERT;
-
+        else if (tableauRGB[0]>=120 && tableauRGB[0]<150) couleur = VERT;
         //Bleu?
-        else if (tableauRGB[0]>=150 && tableauRGB[0]<190)
-            couleur = BLEU;
-        
+        else if (tableauRGB[0]>=150 && tableauRGB[0]<190) couleur = BLEU;
         //Aucune couleur reconnue
-        else
-            couleur = AUCUNE;
+        else couleur = AUCUNE;
     }
-
     return couleur;
 }
 

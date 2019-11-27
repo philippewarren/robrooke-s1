@@ -81,7 +81,7 @@ bool changerAngleServo(uint8_t indexDuServomoteur, uint8_t angle, bool estFixe =
     angle = angle>ANGLE_MAXIMAL[indexDuServomoteur] ? ANGLE_MAXIMAL[indexDuServomoteur] : angle;
 
     SERVO_SetAngle(indexDuServomoteur, angle);
-    delay(/*(indexDuServomoteur==PINCE) ?*/ MS_PAR_ANGLE*max(abs(ANGLE_MAXIMAL[indexDuServomoteur]-angle), abs(ANGLE_MINIMAL[indexDuServomoteur]-angle)) /*: 3000*/);
+    delay(MS_PAR_ANGLE*max(abs(ANGLE_MAXIMAL[indexDuServomoteur]-angle), abs(ANGLE_MINIMAL[indexDuServomoteur]-angle)));
     // delay(2000);
     if (estFixe==false)
     {
@@ -119,58 +119,6 @@ bool baisserBras(bool estFixe = true)
 {
     changerAngleServo(BRAS,POS_BRAS_BAS, estFixe);
     return estFixe;
-}
-
-bool ouvrirPinceOctogone(bool estFixe = true)
-{
-    bool retour = false;
-    static bool ouverte = false;
-    static long tempsInitial = 0;
-    long delais = 0;
-    if (tempsInitial==0) tempsInitial = millis();
-
-    if (!ouverte)
-    {
-        ouvrirPince(estFixe);
-        ouverte = true;
-    }
-
-    delais = millis()-tempsInitial;
-
-    if (delais>=DELAIS_OCTOGONE)
-    {
-        tempsInitial=0;
-        ouverte = false;
-        retour = true;
-    }
-    
-    return retour;
-}
-
-bool fermerPinceOctogone(bool estFixe = true)
-{
-    bool retour = false;
-    static bool fermee = false;
-    static long tempsInitial = 0;
-    long delais = 0;
-    if (tempsInitial==0) tempsInitial = millis();
-
-    if (!fermee)
-    {
-        fermerPince(estFixe);
-        fermee = true;
-    }
-
-    delais = millis()-tempsInitial;
-
-    if (delais>=DELAIS_OCTOGONE)
-    {
-        tempsInitial=0;
-        fermee = false;
-        retour = true;
-    }
-    
-    return retour;
 }
 
 void loopAjustementServo(uint8_t indexDuServomoteur)

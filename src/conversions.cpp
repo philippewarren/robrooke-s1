@@ -13,6 +13,3 @@ long long cmEnClics(float nbCm)
 {
   return (long long)(nbCm*CLICS_PAR_CM);
 }
-
-
-
