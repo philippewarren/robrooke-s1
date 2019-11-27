@@ -6,7 +6,7 @@ extern float largeurEss;
 
 const int COULEURS_BOB[] = {VERT, JAUNE};
 
-void initialiserBob()
+void initialiserRobot()
 {
     BoardInit();
     Bob = EEPROM.read(0);

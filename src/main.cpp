@@ -251,7 +251,7 @@ Fonctions d'initialisation (setup)
 
 void setup()
 {
-  initialiserBob();
+  initialiserRobot();
   initialiserInterrupt();
   Serial.println("##Reboot##");
 }

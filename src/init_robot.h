@@ -25,7 +25,7 @@ extern char Bob;
 
 //Appelle BoardInit() et cie, et initialise nos fonctions et variables
 //Utilisée directement dans le main()
-void initialiserBob();
+void initialiserRobot();
 
 //Initialise les ports pour les DEL
 void initialiserPortsDEL();
