@@ -36,10 +36,5 @@ void initialiserPortsBoutons();
 //Initialise les ports du suiveur de ligne 
 void initialiserPortSuiveurLigne();
 
-//Initialise le port pour l'interrupt et l'attache
-//Utilisée directement dans le main()
-void initialiserInterrupt();
-
-
 
 #endif

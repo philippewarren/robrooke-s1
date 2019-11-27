@@ -33,17 +33,3 @@ void initialiserPortsDEL()
         pinMode(PORT_DEL[i], OUTPUT);
     }
 }
-
-void initialiserPortsBoutons()
-{
-    for (int i=0; i<=4; i++)
-    {
-        pinMode(PORT_BOUTON[i], INPUT);
-    }
-}
-
-void isrARRET()
-{
-    arretUrgence = true;
-    arreterDeuxMoteurs();
-}

@@ -81,7 +81,6 @@ uint16_t lireValeurIR(uint8_t capteur, uint8_t amplitude = 5)
 bool estLettrePince()
 {
     int valeur = lireValeurIR(INTERNE);
-    Serial.println(valeur);
     if (valeur<500 && valeur > 100) return true;
     else return false;
 }

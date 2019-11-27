@@ -237,6 +237,7 @@ void fctBouton()
     bouton = 3;
 }
 
+//Initialise le port pour l'interrupt et l'attache
 void initialiserInterrupt()
 {
   const byte PORT_INTERRUPT = 2;
