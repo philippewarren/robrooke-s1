@@ -73,12 +73,6 @@ int ramasserLettre()
   }
 }
 
-//Ouvre la pince, puis ramasse les lettres, retourne le resultat de ramasserLettre()
-int deposerEtReprendreLettre()
-{
-  return ramasserLettre();
-}
-
 void actionPoste()
 {
   if(deposerLettrePoste())
