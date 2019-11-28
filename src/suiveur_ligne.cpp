@@ -87,8 +87,12 @@ void afficherLigne(int ligne[8])
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 bool estSorti()
+=======
+bool estSorti(bool reset = false)
+>>>>>>> fb903c61bc1214fe73ea2aa1f441d488e036cb67
 {
   //lecture des données
     int lectureSuiveurDeLigne[8];
@@ -97,11 +101,19 @@ bool estSorti()
 
     //Arrête s'il sort des lignes
     const int SEUIL_AVOIR_LIGNE = 5;
-    const int SEUIL_PERTE_LIGNE = 200;
+    const int SEUIL_PERTE_LIGNE = 20;
 
     static int avaitUneLigne = 0;
     static int aPerduLigne = 0;
     bool pasLigne;
+
+    if (reset)
+    {
+      avaitUneLigne = 0;
+      aPerduLigne = 0;
+      return false;
+    }
+
     if (avaitUneLigne<SEUIL_AVOIR_LIGNE) 
     {
       for (int ligne: lectureSuiveurDeLigne)
@@ -141,10 +153,17 @@ bool estSorti()
 void traquerLigneBloque(float vitesse)
 {
   syncroroue(vitesse,1,true);
-  while (!lignePerpendiculaire() && !estSorti())
+  while (!lignePerpendiculaire())
   {
     suivreLigne(vitesse);
-    delay(5);
+    if (estSorti())
+    {
+      changerVitesseDeuxMoteurs(0);
+      bouton=3;
+      break;
+    }
+    delay(10);
   }
+  estSorti(true);
   syncroroue(0,1,true);
 }
