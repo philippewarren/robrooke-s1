@@ -6,6 +6,8 @@
 #include "mouvement.h"
 
 
+extern const int pin;
+
 //fait une lecture du suiveur de ligne et place le résultat dans output
 void lireSuiveurLigne(int output [8]);
 

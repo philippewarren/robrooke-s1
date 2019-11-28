@@ -1,10 +1,11 @@
 #include "suiveur_ligne.h"
 
+const int pin = 13;
+
 void lireSuiveurLigne(int output [8])
-{
-    const int pin = 13;
+{   
     pinMode(pin,OUTPUT);
-    digitalWrite(13,HIGH);
+    digitalWrite(pin,HIGH);
     //constante
     int const NOMBRE_DE_LECTURE = 3;
     //lecture des donnée
@@ -85,10 +86,62 @@ void afficherLigne(int ligne[8])
   Serial.print('\n');
 }
 
+<<<<<<< HEAD
+=======
+bool estSorti()
+{
+  //lecture des données
+    int lectureSuiveurDeLigne[8];
+    lireSuiveurLigne(lectureSuiveurDeLigne);
+    estLigneHuit(lectureSuiveurDeLigne);
+
+    //Arrête s'il sort des lignes
+    const int SEUIL_AVOIR_LIGNE = 5;
+    const int SEUIL_PERTE_LIGNE = 200;
+
+    static int avaitUneLigne = 0;
+    static int aPerduLigne = 0;
+    bool pasLigne;
+    if (avaitUneLigne<SEUIL_AVOIR_LIGNE) 
+    {
+      for (int ligne: lectureSuiveurDeLigne)
+      {
+        if (ligne==1)
+        {
+          avaitUneLigne++;
+        }
+      }
+      if (avaitUneLigne>SEUIL_AVOIR_LIGNE) avaitUneLigne=SEUIL_AVOIR_LIGNE;
+    }
+
+  if (avaitUneLigne==SEUIL_AVOIR_LIGNE)
+  {
+    pasLigne = true;
+    for (int ligne: lectureSuiveurDeLigne)
+    {
+      if (ligne==1)
+      {
+        pasLigne = false;
+      }
+    }
+    if (pasLigne) aPerduLigne++; 
+  }
+
+  if (aPerduLigne>SEUIL_PERTE_LIGNE)
+  {
+    avaitUneLigne=0;
+    aPerduLigne=0;
+    return true;
+  }
+  
+  return false;
+}
+
+>>>>>>> 1dc4c9b046dc3a5af2e7abe2d4d272f693dbef98
 void traquerLigneBloque(float vitesse)
 {
   syncroroue(vitesse,1,true);
-  while (!lignePerpendiculaire())
+  while (!lignePerpendiculaire() && !estSorti())
   {
     suivreLigne(vitesse);
     delay(5);
