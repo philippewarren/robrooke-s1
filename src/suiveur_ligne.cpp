@@ -86,84 +86,13 @@ void afficherLigne(int ligne[8])
   Serial.print('\n');
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-bool estSorti()
-=======
-bool estSorti(bool reset = false)
->>>>>>> fb903c61bc1214fe73ea2aa1f441d488e036cb67
-{
-  //lecture des données
-    int lectureSuiveurDeLigne[8];
-    lireSuiveurLigne(lectureSuiveurDeLigne);
-    estLigneHuit(lectureSuiveurDeLigne);
-
-    //Arrête s'il sort des lignes
-    const int SEUIL_AVOIR_LIGNE = 5;
-    const int SEUIL_PERTE_LIGNE = 20;
-
-    static int avaitUneLigne = 0;
-    static int aPerduLigne = 0;
-    bool pasLigne;
-
-    if (reset)
-    {
-      avaitUneLigne = 0;
-      aPerduLigne = 0;
-      return false;
-    }
-
-    if (avaitUneLigne<SEUIL_AVOIR_LIGNE) 
-    {
-      for (int ligne: lectureSuiveurDeLigne)
-      {
-        if (ligne==1)
-        {
-          avaitUneLigne++;
-        }
-      }
-      if (avaitUneLigne>SEUIL_AVOIR_LIGNE) avaitUneLigne=SEUIL_AVOIR_LIGNE;
-    }
-
-  if (avaitUneLigne==SEUIL_AVOIR_LIGNE)
-  {
-    pasLigne = true;
-    for (int ligne: lectureSuiveurDeLigne)
-    {
-      if (ligne==1)
-      {
-        pasLigne = false;
-      }
-    }
-    if (pasLigne) aPerduLigne++; 
-  }
-
-  if (aPerduLigne>SEUIL_PERTE_LIGNE)
-  {
-    avaitUneLigne=0;
-    aPerduLigne=0;
-    return true;
-  }
-  
-  return false;
-}
-
->>>>>>> 1dc4c9b046dc3a5af2e7abe2d4d272f693dbef98
 void traquerLigneBloque(float vitesse)
 {
   syncroroue(vitesse,1,true);
   while (!lignePerpendiculaire())
   {
     suivreLigne(vitesse);
-    if (estSorti())
-    {
-      changerVitesseDeuxMoteurs(0);
-      bouton=3;
-      break;
-    }
-    delay(10);
+    delay(5);
   }
-  estSorti(true);
   syncroroue(0,1,true);
 }

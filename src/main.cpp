@@ -348,5 +348,25 @@ void loop()
     afficherLigne(tableau10);
 
   }
-  
+
+//  if (ROBUS_IsBumper(0))
+//  {
+//    leverBras();
+//    Serial.println("Haut");
+
+//  }
+//   if (ROBUS_IsBumper(1))
+//  {
+//    baisserBras();
+//    Serial.println("Bas");
+//  }
+//   if (ROBUS_IsBumper(3))
+//  {
+//    leverBrasDeplacement();
+//     Serial.println("Deplacement");
+
+//  }
+
+// loopAjustementServo(BRAS);
+
 }
