@@ -73,12 +73,20 @@ void actionPoste()
 {
   if(deposerLettrePoste())
   {
+    int couleur = lettreEnMain;
     avancerDroitBloque(0.2,3);
     traquerLigneBloque(0.2);
     lettreEnMain = ramasserLettre();
     if(lettreEnMain == -2)lettreEnMain = ramasserLettre();
     tournerBloque(0.2,180);
     traquerLigneBloque(0.3);
+    if(lettreEnMain == couleur)
+    {
+      tournerBloque(0.2,180);
+      deposerLettrePoste();
+      tournerBloque(0.2,180);
+      lettreEnMain = -1;
+    }
     poserEtat(-1,obtenirOrientation()+180);
   }
   else

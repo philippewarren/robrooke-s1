@@ -20,26 +20,10 @@ extern const int pin;
 
 //fait une lecture du suiveur de ligne et place le résultat dans output
 void lireSuiveurLigne(int output [8]);
+
 //modifie la vitesse des moteur pour permettre au robot de suivre une ligne une vitesse inférieur à 0.5 est recommendée
 void suivreLigne(float vitesse);
-//détection d'une ligne
-bool detecterLigne();
-//trouve et suis une ligne
-bool traquerLigne(float vitesse);
-//comme avancerDroit mais avec une ligne
-bool avancerDroitLigne(float vitesse, float distance);
-//tourne un nombre de ligne
-bool tournerNoir(float vitesse,int nbrLigne);
 
-//comme avancerDroit mais avec une ligne
-bool avancerDroitLigneBloque(float vitesse, float distance);
-
-//bloquante centre sur une ligne
-bool centrerLigne(float angleVue = 30);
-
-//Trouve une ligne
-//Sens de rotation horaire = 0, anti-horaire=1
-void trouverLigne(int sensDeRotation);
 
 //affiche une ligne
 void afficherLigne(int ligne[8]);

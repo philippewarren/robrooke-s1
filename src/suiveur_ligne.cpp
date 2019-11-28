@@ -53,42 +53,6 @@ void suivreLigne(float vitesse)
   else syncroroue(vitesse,1-(facteurMin/3));
 }
 
-bool detecterLigne()
-{
-    bool ligneDetecte = false;
-    //lecture des données
-    int lectureSuiveurDeLigne[8] ;
-    lireSuiveurLigne(lectureSuiveurDeLigne);
-
-    //calcule du seuil
-    long seuil = (long)CONTRASTE * 0.70;
-
-    //compare les variances 
-    for (int i=1;i<8;i++)
-    {
-        long delta = ((long)lectureSuiveurDeLigne[0]-(long)lectureSuiveurDeLigne[i]);
-        if (delta > seuil)
-        {
-            ligneDetecte = true;
-        }
-    }
-
-    //si le capteur 1 est défectueux
-    for (int i=6;i>-1;i--)
-    {
-        long delta = ((long)lectureSuiveurDeLigne[7]-(long)lectureSuiveurDeLigne[i]);
-        if (delta > seuil)
-        {
-            ligneDetecte = true;
-        }
-    }
-
-    //test
-    return ligneDetecte;
-    
-    
-}
-
 bool lignePerpendiculaire()
 {
   int tableauLigne[8];
@@ -102,80 +66,6 @@ bool lignePerpendiculaire()
   return perp;
 }
 
-bool avancerDroitLigneBloque(float vitesse, float distance)
-{
-  float distanceParcourue = 0;
-  bool fin = false;
-
-  distance = cmEnClics(distance);
-  if(Bob == 'A') distance /= 1;
-  else distance /= 1;
-  resetDeuxEncodeurs();
-  syncroroue (vitesse,1,true);
-  if (vitesse * distance < 0)vitesse *= -1;
-
-  while (!fin)
-  {
-    delay(50);
-    distanceParcourue += ENCODER_Read(0);
-    suivreLigne(vitesse);
-    fin = (distanceParcourue >= distance && distance > 0)||(distanceParcourue <= distance && distance < 0);
-  }
-  syncroroue (0,1,true);
-  return true;
-}
-
-bool tournerBloqueSansArret(float vitesse, float angle)
-{
-  float distanceParcourue = 0;
-  bool fin = false;
-
-  if(Bob == 'A') angle -
-  3;
-  else angle /= 1;
-  float distance = cmEnClics((19 * 3.14160) / 360 * angle);
-  resetDeuxEncodeurs();
-  if (vitesse * angle < 0)vitesse *= -1;
-
-  while (!fin)
-  {
-    delay(30);
-    distanceParcourue += ENCODER_Read(1);
-    syncroroue(vitesse,-1);
-    fin = (distanceParcourue >= distance && distance > 0)||(distanceParcourue <= distance && distance < 0);
-  }
-  return true;
-}
-
-bool centrerLigne(float angleVue = 30)
-{
-  int nbrValeur =angleVue*2;
-  int valeur[nbrValeur];
-  int lecture[8];
-  int i = 0;
-  
-  syncroroue (0.2,-1,true);
-  tournerBloque(0.2,angleVue);
-  while (i< nbrValeur)
-  {
-    lireSuiveurLigne(lecture);
-    int donnee = lecture[3]+lecture[4]+lecture[2]*0.5+lecture[5]*0.5;
-    tournerBloqueSansArret(0.2,-1);
-    valeur[i]=donnee;
-    i++;
-  }
-  
-  syncroroue (0,-1,true);
-  int max = 0;
-  i = 1;
-  while (i<nbrValeur)
-  {
-    if(valeur[i]>valeur[max])max = i;
-    i++;
-  }
-  tournerBloque(0.3,5*(nbrValeur - max));
-  return true;
-}
 
 void estLigneHuit(int lectures[8])
 {
@@ -185,33 +75,6 @@ void estLigneHuit(int lectures[8])
   }
 }
 
-void trouverLigne(int sensDeRotation)
-{
-  int sens = (sensDeRotation==0) ? 1 : -1;
-  int indexSens = (sensDeRotation==0) ? CAPTEUR_GAUCHE : CAPTEUR_DROIT;
-  float vitesse = 0.2;
-  int lectures[8];
-  int CLICS_180_DEGRES = cmEnClics(largeurEss*PI);
-  bool capteurInverseVu = false;
-  bool aTrouveLigne = false;
-
-  changerVitesseMoteur(sensDeRotation, vitesse);
-  while (!aTrouveLigne && ENCODER_Read(sensDeRotation)<CLICS_180_DEGRES)
-  {
-    lireSuiveurLigne(lectures);
-    estLigneHuit(lectures);
-
-    if (lectures[indexSens+sens*2]>=1) capteurInverseVu = true;
-    if (lectures[indexSens]>=1 && capteurInverseVu) aTrouveLigne = true;
-
-    // for (int i=0; i<8; i++)
-    // {
-    //   if (lectures[i]>=1) aTrouveLigne = true;
-    // }
-  }
-  arreterDeuxMoteurs();
-  return;
-}
 
 void afficherLigne(int ligne[8])
 {
@@ -223,7 +86,13 @@ void afficherLigne(int ligne[8])
   Serial.print('\n');
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+bool estSorti()
+=======
 bool estSorti(bool reset = false)
+>>>>>>> fb903c61bc1214fe73ea2aa1f441d488e036cb67
 {
   //lecture des données
     int lectureSuiveurDeLigne[8];
@@ -280,6 +149,7 @@ bool estSorti(bool reset = false)
   return false;
 }
 
+>>>>>>> 1dc4c9b046dc3a5af2e7abe2d4d272f693dbef98
 void traquerLigneBloque(float vitesse)
 {
   syncroroue(vitesse,1,true);
