@@ -19,10 +19,10 @@ void initialiserConstantesServos()
     {
         POS_PINCE_OUVERTE = 60;
         POS_PINCE_FERMEE = 180;
-        POS_BRAS_HAUT = 0;
-        POS_BRAS_BAS = 0;
+        POS_BRAS_HAUT = 115;
+        POS_BRAS_BAS = 75;
         ANGLE_INITIAL[PINCE] = 60;
-        ANGLE_INITIAL[BRAS] = 0;
+        ANGLE_INITIAL[BRAS] = 115;
         POS_BRAS_DEPLACEMENT = 135;
     }
     else
