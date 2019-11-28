@@ -22,14 +22,7 @@ void changerVitesseDeuxMoteurs(float vitesseG, float vitesseD = 200.0);
 void arreterDeuxMoteurs();
 
 //PID retourne différence Gauche - Droite
-float partielIntegralDerive(float multiRoueDroite = 1,bool reset = 0);
 void syncroroue(float vitesse,float multiDroit = 1,bool reset = 0);
-
-//mouvement non bloquant, distance en cm
-bool avancerDroit(float vitesse, float distance);
-
-//rotation dans le sens anti-horaire
-bool tourner(float vitesse, float angle);
 
 //mouvement bloquant, distance en cm
 bool avancerDroitBloque(float vitesse, float distance);
