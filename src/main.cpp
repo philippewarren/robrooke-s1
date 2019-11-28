@@ -1,8 +1,8 @@
 /*
-Projet: Parcours du combattant
+Projet: PIRUS Robrooke
 Equipe: P-28
 Auteurs: Philippe Warren, Keven Gagnon, William Bruneau, Pénélope Montminy, Camille Durivage-Guertin, Gabriel Doré, Philippe Gadeyne, Antoine Duguay 
-Description: Lance le script pour l'épreuve du combattant
+Description: Lance le loop principal du robot facteur, et contient les fonctions les plus high-level utilisées pour PIRUS
 Date: 29-septembre-2019//
 */
 
@@ -30,10 +30,6 @@ int lettreEnMain = -1; //-1 si vide ou couleur
 int essaiDist = 0;
 volatile int bouton = 0;
 volatile int itBouton = 0;
-
-
-
-
 
 /* ****************************************************************************
 Vos propres fonctions sont creees ici
