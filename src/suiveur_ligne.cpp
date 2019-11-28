@@ -226,7 +226,7 @@ void afficherLigne(int ligne[8])
 bool estSorti()
 {
   //lecture des données
-    int lectureSuiveurDeLigne [8];
+    int lectureSuiveurDeLigne[8];
     lireSuiveurLigne(lectureSuiveurDeLigne);
     estLigneHuit(lectureSuiveurDeLigne);
 
@@ -236,12 +236,12 @@ bool estSorti()
 
     static int avaitUneLigne = 0;
     static int aPerduLigne = 0;
-    bool pasLigne = false;
+    bool pasLigne;
     if (avaitUneLigne<SEUIL_AVOIR_LIGNE) 
     {
       for (int ligne: lectureSuiveurDeLigne)
       {
-        if (ligne>=1)
+        if (ligne==1)
         {
           avaitUneLigne++;
         }
@@ -254,7 +254,7 @@ bool estSorti()
     pasLigne = true;
     for (int ligne: lectureSuiveurDeLigne)
     {
-      if (ligne>=0)
+      if (ligne==1)
       {
         pasLigne = false;
       }
@@ -266,15 +266,16 @@ bool estSorti()
   {
     avaitUneLigne=0;
     aPerduLigne=0;
-    return false;
+    return true;
   }
-
+  
+  return false;
 }
 
 void traquerLigneBloque(float vitesse)
 {
   syncroroue(vitesse,1,true);
-  while (!lignePerpendiculaire())
+  while (!lignePerpendiculaire() && !estSorti())
   {
     suivreLigne(vitesse);
     delay(5);
