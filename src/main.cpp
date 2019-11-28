@@ -343,6 +343,10 @@ void loop()
     eteindreDEL(0);
     allumerDEL(4);
     delay(1000);
+    int tableau10[8];
+    lireSuiveurLigne(tableau10);
+    afficherLigne(tableau10);
+
   }
 
 //  if (ROBUS_IsBumper(0))
