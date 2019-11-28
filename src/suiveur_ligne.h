@@ -15,6 +15,8 @@
 // 1000 = sol blanc et ligne noir
 const short CONTRASTE = 1000;
 
+extern const int pin;
+
 //fait une lecture du suiveur de ligne et place le résultat dans output
 void lireSuiveurLigne(int output [8]);
 //modifie la vitesse des moteur pour permettre au robot de suivre une ligne une vitesse inférieur à 0.5 est recommendée

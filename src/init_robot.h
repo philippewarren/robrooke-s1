@@ -29,7 +29,7 @@ void initialiserRobot();
 
 //Initialise les ports pour les DEL
 void initialiserPortsDEL();
-//Initialise les ports pour les DEL de couleur
+//Initialise les ports utilisés par les DEL de couleur
 void initialiserPortsDELCouleur();
 //Initialise les ports pour les boutons
 void initialiserPortsBoutons();

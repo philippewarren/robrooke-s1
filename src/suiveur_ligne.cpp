@@ -1,10 +1,11 @@
 #include "suiveur_ligne.h"
 
+const int pin = 13;
+
 void lireSuiveurLigne(int output [8])
-{
-    const int pin = 13;
+{   
     pinMode(pin,OUTPUT);
-    digitalWrite(13,HIGH);
+    digitalWrite(pin,HIGH);
     //constante
     int const NOMBRE_DE_LECTURE = 3;
     //lecture des donnée

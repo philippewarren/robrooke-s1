@@ -1,15 +1,5 @@
 #include "del_couleur.h"
 
-void initialiserPortsDELCouleur()
-{
-    pinMode(PORT_ROUGE, OUTPUT);
-    pinMode(PORT_VERT, OUTPUT);
-    pinMode(PORT_BLEU, OUTPUT);
-    pinMode(PORT_JAUNE, OUTPUT);
-
-    return;
-}
-
 int allumerDELCouleur(int couleur)
 {
     int portsCouleurs[] = {PORT_ROUGE, PORT_VERT, PORT_BLEU, PORT_JAUNE};

@@ -22,8 +22,10 @@ void initialiserRobot()
 
 void initialiserPortSuiveurLigne()
 {
-    pinMode(OUTPUT,12);
+    pinMode(12,OUTPUT);
     digitalWrite(12,HIGH);
+
+    pinMode(pin, OUTPUT);
 }
 
 void initialiserPortsDEL()
@@ -32,4 +34,12 @@ void initialiserPortsDEL()
     {
         pinMode(PORT_DEL[i], OUTPUT);
     }
+}
+
+void initialiserPortsDELCouleur()
+{
+    pinMode(PORT_ROUGE, OUTPUT);
+    pinMode(PORT_VERT, OUTPUT);
+    pinMode(PORT_BLEU, OUTPUT);
+    pinMode(PORT_JAUNE, OUTPUT);
 }
