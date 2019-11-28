@@ -267,82 +267,85 @@ Fonctions de boucle infini (loop())
 int tableau3[8];
 void loop()
 {
-  if(bouton == 1)
-  {
-    eteindreDEL(0);
-    allumerDEL(1);
-    traquerLigneBloque(0.2);
-    poserEtat(0,180);
-    bouton = 2;
-  }
-  else if (bouton == 3)
-  {
-    eteindreDEL(0);
-    allumerDEL(2);
-    arreterDeuxMoteurs();
-    bouton = 0;
-  }
-  else if (bouton == 2)
-  {
-    eteindreDEL(0);
-    allumerDEL(3);
-    if(lettreEnMain>=0)
-    {
-      essaiDist = 0;
-      if (lettreEnMain == ROUGE) posteRouge2 = true;
-      if (lettreEnMain == JAUNE) posteJaune2 = true;
-      if (lettreEnMain == VERT) posteVert2 = true;
-      if (lettreEnMain == BLEU) posteBleu2 = true;
-      allerVers(convertirCouleurNoeud(lettreEnMain));
-      actionPoste();
-    }
-    else if(essaiDist < 2)
-    {
-      essaiDist ++;
-      Serial.println("distribution");
-      routineDistribution();
-    }
-    else
-    {
-      if (!posteRouge2)
-      {
-        allerVers(convertirCouleurNoeud(ROUGE));
-        actionPoste();
-        posteRouge2 = true;
-      }
-      else if(!posteBleu2)
-      {
-        allerVers(convertirCouleurNoeud(BLEU));
-        actionPoste();
-        posteBleu2 = true;
-      }
-      else if(!posteJaune2)
-      {
-        allerVers(convertirCouleurNoeud(JAUNE));
-        actionPoste();        
-        posteJaune2 = true;
-      }
-      else if(!posteVert2)
-      {
-        allerVers(convertirCouleurNoeud(VERT));
-        actionPoste();
-        posteVert2 = true;
-      }
-      else
-      {
-        posteVert2 = false;
-        posteJaune2 = false;
-        posteRouge2 = false;
-        posteJaune2 = false;
-        essaiDist = 0;
-      }
-    }
-  }
-  else
-  {
-    eteindreDEL(0);
-    allumerDEL(4);
-    delay(1000);
-  }
-  
+  // if(bouton == 1)
+  // {
+  //   eteindreDEL(0);
+  //   allumerDEL(1);
+  //   traquerLigneBloque(0.2);
+  //   poserEtat(0,180);
+  //   bouton = 2;
+  // }
+  // else if (bouton == 3)
+  // {
+  //   eteindreDEL(0);
+  //   allumerDEL(2);
+  //   arreterDeuxMoteurs();
+  //   bouton = 0;
+  // }
+  // else if (bouton == 2)
+  // {
+  //   eteindreDEL(0);
+  //   allumerDEL(3);
+  //   if(lettreEnMain>=0)
+  //   {
+  //     essaiDist = 0;
+  //     if (lettreEnMain == ROUGE) posteRouge2 = true;
+  //     if (lettreEnMain == JAUNE) posteJaune2 = true;
+  //     if (lettreEnMain == VERT) posteVert2 = true;
+  //     if (lettreEnMain == BLEU) posteBleu2 = true;
+  //     allerVers(convertirCouleurNoeud(lettreEnMain));
+  //     actionPoste();
+  //   }
+  //   else if(essaiDist < 2)
+  //   {
+  //     essaiDist ++;
+  //     Serial.println("distribution");
+  //     routineDistribution();
+  //   }
+  //   else
+  //   {
+  //     if (!posteRouge2)
+  //     {
+  //       allerVers(convertirCouleurNoeud(ROUGE));
+  //       actionPoste();
+  //       posteRouge2 = true;
+  //     }
+  //     else if(!posteBleu2)
+  //     {
+  //       allerVers(convertirCouleurNoeud(BLEU));
+  //       actionPoste();
+  //       posteBleu2 = true;
+  //     }
+  //     else if(!posteJaune2)
+  //     {
+  //       allerVers(convertirCouleurNoeud(JAUNE));
+  //       actionPoste();        
+  //       posteJaune2 = true;
+  //     }
+  //     else if(!posteVert2)
+  //     {
+  //       allerVers(convertirCouleurNoeud(VERT));
+  //       actionPoste();
+  //       posteVert2 = true;
+  //     }
+  //     else
+  //     {
+  //       posteVert2 = false;
+  //       posteJaune2 = false;
+  //       posteRouge2 = false;
+  //       posteJaune2 = false;
+  //       essaiDist = 0;
+  //     }
+  //   }
+  // }
+  // else
+  // {
+  //   eteindreDEL(0);
+  //   allumerDEL(4);
+  //   delay(1000);
+  // }
+
+ debugCapteurIR(INTERNE);
+ debugEstLettre();
+
 }

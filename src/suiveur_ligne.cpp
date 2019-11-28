@@ -94,6 +94,5 @@ void traquerLigneBloque(float vitesse)
     suivreLigne(vitesse);
     delay(5);
   }
-  estSorti(true);
   syncroroue(0,1,true);
 }
