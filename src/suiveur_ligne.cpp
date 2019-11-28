@@ -41,8 +41,8 @@ void suivreLigne(float vitesse)
   float delta2 = lectureSuiveurDeLigne[5]-lectureSuiveurDeLigne[2];
   float delta3 = lectureSuiveurDeLigne[6]-lectureSuiveurDeLigne[1];
   float delta4 = lectureSuiveurDeLigne[7]-lectureSuiveurDeLigne[0];
-  delta1 *= 0.75;
-  delta2 *= 1.5;
+  delta1 *= 0.25;
+  delta2 *= 0.5;
   delta3 *= 3;
   delta4 *= 9;
 
