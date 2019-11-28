@@ -292,7 +292,7 @@ void traquerLigneBloque(float vitesse)
       bouton=3;
       break;
     }
-    delay(10);
+    delay(1);
   }
   estSorti(true);
   syncroroue(0,1,true);
