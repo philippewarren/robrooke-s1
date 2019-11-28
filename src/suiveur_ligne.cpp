@@ -71,7 +71,7 @@ void estLigneHuit(int lectures[8])
 {
   for (int i=0; i<8; i++)
   {
-    lectures[i] = (lectures[i] >= 650) ? 1 : /*(lectures[i] > 250) ? 2 :*/ 0;//(350 rouge ok; vert ok; problème vert?)
+    lectures[i] = (lectures[i] >= 700) ? 1 : /*(lectures[i] > 250) ? 2 :*/ 0;//(350 rouge ok; vert ok; problème vert?)
   }
 }
 
