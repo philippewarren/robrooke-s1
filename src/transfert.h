@@ -38,24 +38,25 @@ void ajouter_ligne(int tableau[TAILLE_MAX][TAILLE_MAX],int& taille,int ajout[TAI
 
 //position
 /*
-            0
-            |
-        3---1---4
+        0
+        | 
+    3---7---1---4
             |
         5---2---6
 */
-const int NBR_NOEUD = 7;
+const int NBR_NOEUD = 8;
 
 //nombre de relation pour chaque noeud
 const int NBR_RELATIONS[NBR_NOEUD] = 
 {
     1,
-    4,
+    3,
     3,
     1,
     1,
     1,
-    1
+    1,
+    3,
 };
 
 /*Description des relations:
@@ -66,12 +67,11 @@ const int RELATION [NBR_NOEUD][NBR_NOEUD-1][2] =
 {
     /*noeud 0*/
     {
-        {1,180}
+        {7,180}
     },
     /*noeud 1*/
     {
-        {0,0},
-        {3,90},
+        {7,90},
         {2,180},
         {4,270}
     },
@@ -83,7 +83,7 @@ const int RELATION [NBR_NOEUD][NBR_NOEUD-1][2] =
     },
     /*noeud 3*/
     {
-        {1,270}
+        {7,270}
         
     },
     /*noeud 4*/
@@ -97,7 +97,14 @@ const int RELATION [NBR_NOEUD][NBR_NOEUD-1][2] =
     /*noeud 6*/
     {
         {2,90}
+    },
+    /*noeud 7*/
+    {
+        {0,0},
+        {3,90},
+        {1,270}
     }
+
 };
 
 //calcule le trajet, la fonction retourne une suite de noeud débutant par le départ et finissant par -1, le départ doit exister et la fin ne doit pas être le départ
