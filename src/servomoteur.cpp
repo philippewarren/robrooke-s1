@@ -6,7 +6,7 @@ bool servoActif[] = {false, false};
 int ANGLE_INITIAL[] = {0, 0};
 const int ANGLE_MINIMAL[] = {0, 0};
 const int ANGLE_MAXIMAL[] = {180, 180};
-uint8_t angleCourant[] = {ANGLE_INITIAL[0], ANGLE_INITIAL[1]};
+uint8_t angleCourant[] = {ANGLE_INITIAL[PINCE], ANGLE_INITIAL[BRAS]};
 
 int POS_PINCE_OUVERTE;
 int POS_PINCE_FERMEE;
