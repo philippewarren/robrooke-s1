@@ -6,6 +6,7 @@ bool servoActif[] = {false, false};
 int ANGLE_INITIAL[] = {0, 0};
 const int ANGLE_MINIMAL[] = {0, 0};
 const int ANGLE_MAXIMAL[] = {180, 180};
+uint8_t angleCourant[] = {ANGLE_INITIAL[PINCE], ANGLE_INITIAL[BRAS]};
 
 int POS_PINCE_OUVERTE;
 int POS_PINCE_FERMEE;
@@ -54,14 +55,15 @@ void initialiserDeuxServos()
     initialiserServo(BRAS);
 }
 
-void activerServo(uint8_t indexDuServomoteur)
+bool activerServo(uint8_t indexDuServomoteur)
 {
     if (!servoActif[indexDuServomoteur])
     {
         SERVO_Enable(indexDuServomoteur);
         servoActif[indexDuServomoteur] = true;
+        return true;
     }
-    return;
+    return false;
 }
 
 void desactiverServo(uint8_t indexDuServomoteur)
@@ -76,12 +78,33 @@ void desactiverServo(uint8_t indexDuServomoteur)
 
 bool changerAngleServo(uint8_t indexDuServomoteur, uint8_t angle, bool estFixe = true)
 {
-    activerServo(indexDuServomoteur);
+    if(activerServo(indexDuServomoteur))
+    {
+        SERVO_SetAngle(indexDuServomoteur, angleCourant[indexDuServomoteur]);
+    }
+
     angle = angle<ANGLE_MINIMAL[indexDuServomoteur] ? ANGLE_MINIMAL[indexDuServomoteur] : angle;
     angle = angle>ANGLE_MAXIMAL[indexDuServomoteur] ? ANGLE_MAXIMAL[indexDuServomoteur] : angle;
 
-    SERVO_SetAngle(indexDuServomoteur, angle);
-    delay(MS_PAR_ANGLE*max(abs(ANGLE_MAXIMAL[indexDuServomoteur]-angle), abs(ANGLE_MINIMAL[indexDuServomoteur]-angle)));
+    if(angleCourant<angle)
+    {
+        while(angleCourant[indexDuServomoteur]<angle)
+        {
+            SERVO_SetAngle(indexDuServomoteur, ++angleCourant[indexDuServomoteur]);
+            delay(15);
+        }
+    }
+    else if(angleCourant>angle)
+    {
+        while(angleCourant[indexDuServomoteur]>angle)
+        {
+            SERVO_SetAngle(indexDuServomoteur, --angleCourant[indexDuServomoteur]);
+            delay(15);
+        }
+    }
+    else SERVO_SetAngle(indexDuServomoteur, angleCourant[indexDuServomoteur]);
+   
+    // delay(MS_PAR_ANGLE*max(abs(ANGLE_MAXIMAL[indexDuServomoteur]-angle), abs(ANGLE_MINIMAL[indexDuServomoteur]-angle)));
     // delay(2000);
     if (estFixe==false)
     {
@@ -111,27 +134,27 @@ bool leverBras(bool estFixe = true)
 
 bool leverBrasDeplacement(bool estFixe = true)
 {
-    changerAngleServo(BRAS,POS_BRAS_BAS, estFixe);
-    int angle = POS_BRAS_BAS;
-    while (angle < POS_BRAS_DEPLACEMENT)
-    {
-        angle ++;
-        SERVO_SetAngle(BRAS,angle);
-        delay(15);
-    }
+    // changerAngleServo(BRAS,POS_BRAS_BAS, estFixe);
+    // int angle = POS_BRAS_BAS;
+    // while (angle < POS_BRAS_DEPLACEMENT)
+    // {
+    //     angle ++;
+    //     SERVO_SetAngle(BRAS,angle);
+    //     delay(15);
+    // }
     changerAngleServo(BRAS,POS_BRAS_DEPLACEMENT, estFixe);
 }
 
 bool baisserBras(bool estFixe = true)
 {
-    changerAngleServo(BRAS,POS_BRAS_DEPLACEMENT, estFixe);
-    int angle = POS_BRAS_DEPLACEMENT;
-    while (angle > POS_BRAS_BAS)
-    {
-        angle --;
-        SERVO_SetAngle(BRAS,angle);
-        delay(15);
-    }
+    // changerAngleServo(BRAS,POS_BRAS_DEPLACEMENT, estFixe);
+    // int angle = POS_BRAS_DEPLACEMENT;
+    // while (angle > POS_BRAS_BAS)
+    // {
+    //     angle --;
+    //     SERVO_SetAngle(BRAS,angle);
+    //     delay(15);
+    // }
     changerAngleServo(BRAS,POS_BRAS_BAS, estFixe);
     
     return estFixe;
