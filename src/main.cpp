@@ -74,6 +74,7 @@ void actionPoste()
   if(deposerLettrePoste())
   {
     int couleur = lettreEnMain;
+    if(couleur < 0)couleur = -4;
     avancerDroitBloque(0.2,3);
     traquerLigneBloque(0.2);
     lettreEnMain = ramasserLettre();
@@ -257,7 +258,6 @@ void setup()
 {
   initialiserRobot();
   initialiserInterrupt();
-  Serial.println("##Reboot##");
 }
 
 /* ****************************************************************************
@@ -333,7 +333,7 @@ void loop()
         posteVert2 = false;
         posteJaune2 = false;
         posteRouge2 = false;
-        posteJaune2 = false;
+        posteBleu2 = false;
         essaiDist = 0;
       }
     }

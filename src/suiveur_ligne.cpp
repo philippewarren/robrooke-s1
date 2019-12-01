@@ -41,8 +41,8 @@ void suivreLigne(float vitesse)
   float delta2 = lectureSuiveurDeLigne[5]-lectureSuiveurDeLigne[2];
   float delta3 = lectureSuiveurDeLigne[6]-lectureSuiveurDeLigne[1];
   float delta4 = lectureSuiveurDeLigne[7]-lectureSuiveurDeLigne[0];
-  delta1 *= 0.25;
-  delta2 *= 0.5;
+  delta1 *= 0.75;
+  delta2 *= 1.5;
   delta3 *= 3;
   delta4 *= 9;
 
@@ -59,7 +59,7 @@ bool lignePerpendiculaire()
   lireSuiveurLigne(tableauLigne);
   estLigneHuit(tableauLigne);
   bool perp = true;
-  for (int i = 0; i<8;i++)
+  for (int i = 1; i<7;i++)
   {
     if(tableauLigne[i] <= 0)perp = false;
   }
@@ -71,7 +71,7 @@ void estLigneHuit(int lectures[8])
 {
   for (int i=0; i<8; i++)
   {
-    lectures[i] = (lectures[i] >= 700) ? 1 : /*(lectures[i] > 250) ? 2 :*/ 0;//(350 rouge ok; vert ok; problème vert?)
+    lectures[i] = (lectures[i] >= 300) ? 1 : /*(lectures[i] > 250) ? 2 :*/ 0;//(350 rouge ok; vert ok; problème vert?)
   }
 }
 

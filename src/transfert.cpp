@@ -164,8 +164,9 @@ bool transfer(int noeud)
         int rot = angle - _orientation;
         if (rot > 180)rot = rot - 360;
         if (rot < -180)rot = rot + 360;
-        tournerBloque(0.2,rot);
-        avancerDroitBloque(0.2,2);
+        avancerDroitBloque(0.22,1);
+        tournerBloque(0.22,rot);
+        avancerDroitBloque(0.22,2);
         traquerLigneBloque(0.3);
         poserEtat(noeud,angle);
         Serial.println("transfer reussit");
