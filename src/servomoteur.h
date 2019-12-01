@@ -16,7 +16,7 @@ bool initialiserServo(uint8_t indexDuServomoteur, bool estFixe = false);
 void initialiserDeuxServos();
 
 //Active un servomoteur s'il ne l'était pas déjà (BRAS: 0 ou PINCE: 1)
-void activerServo(uint8_t indexDuServomoteur);
+bool activerServo(uint8_t indexDuServomoteur);
 //Désactive un servomoteur s'il ne l'était pas déjà (BRAS: 0 ou PINCE: 1)
 void desactiverServo(uint8_t indexDuServomoteur);
 
