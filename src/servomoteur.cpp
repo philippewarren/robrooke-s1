@@ -86,11 +86,24 @@ bool changerAngleServo(uint8_t indexDuServomoteur, uint8_t angle, bool estFixe =
     angle = angle<ANGLE_MINIMAL[indexDuServomoteur] ? ANGLE_MINIMAL[indexDuServomoteur] : angle;
     angle = angle>ANGLE_MAXIMAL[indexDuServomoteur] ? ANGLE_MAXIMAL[indexDuServomoteur] : angle;
 
-    while(angleCourant[indexDuServomoteur]<angle)
+    if(angleCourant<angle)
     {
-        SERVO_SetAngle(indexDuServomoteur, ++angleCourant[indexDuServomoteur]);
-        delay(15);
+        while(angleCourant[indexDuServomoteur]<angle)
+        {
+            SERVO_SetAngle(indexDuServomoteur, ++angleCourant[indexDuServomoteur]);
+            delay(15);
+        }
     }
+    else if(angleCourant>angle)
+    {
+        while(angleCourant[indexDuServomoteur]>angle)
+        {
+            SERVO_SetAngle(indexDuServomoteur, --angleCourant[indexDuServomoteur]);
+            delay(15);
+        }
+    }
+    else SERVO_SetAngle(indexDuServomoteur, angleCourant[indexDuServomoteur]);
+   
     // delay(MS_PAR_ANGLE*max(abs(ANGLE_MAXIMAL[indexDuServomoteur]-angle), abs(ANGLE_MINIMAL[indexDuServomoteur]-angle)));
     // delay(2000);
     if (estFixe==false)
