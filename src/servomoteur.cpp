@@ -20,7 +20,7 @@ void initialiserConstantesServos()
         POS_PINCE_OUVERTE = 60;
         POS_PINCE_FERMEE = 180;
         POS_BRAS_HAUT = 115;
-        POS_BRAS_BAS = 75;
+        POS_BRAS_BAS = 85;
         ANGLE_INITIAL[PINCE] = 60;
         ANGLE_INITIAL[BRAS] = 115;
         POS_BRAS_DEPLACEMENT = 135;
@@ -30,7 +30,7 @@ void initialiserConstantesServos()
         POS_PINCE_OUVERTE = 60;
         POS_PINCE_FERMEE = 180;
         POS_BRAS_HAUT = 115;
-        POS_BRAS_BAS = 75;
+        POS_BRAS_BAS = 85;
         ANGLE_INITIAL[PINCE] = 60;
         ANGLE_INITIAL[BRAS] = 115;
         POS_BRAS_DEPLACEMENT = 135;
@@ -111,13 +111,29 @@ bool leverBras(bool estFixe = true)
 
 bool leverBrasDeplacement(bool estFixe = true)
 {
-    changerAngleServo(BRAS, POS_BRAS_DEPLACEMENT, estFixe);
-    return estFixe;
+    changerAngleServo(BRAS,POS_BRAS_BAS, estFixe);
+    int angle = POS_BRAS_BAS;
+    while (angle < POS_BRAS_DEPLACEMENT)
+    {
+        angle ++;
+        SERVO_SetAngle(BRAS,angle);
+        delay(15);
+    }
+    changerAngleServo(BRAS,POS_BRAS_DEPLACEMENT, estFixe);
 }
 
 bool baisserBras(bool estFixe = true)
 {
+    changerAngleServo(BRAS,POS_BRAS_DEPLACEMENT, estFixe);
+    int angle = POS_BRAS_DEPLACEMENT;
+    while (angle > POS_BRAS_BAS)
+    {
+        angle --;
+        SERVO_SetAngle(BRAS,angle);
+        delay(15);
+    }
     changerAngleServo(BRAS,POS_BRAS_BAS, estFixe);
+    
     return estFixe;
 }
 

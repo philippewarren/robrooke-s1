@@ -267,6 +267,7 @@ Fonctions de boucle infini (loop())
 int tableau3[8];
 void loop()
 {
+  
   if(bouton == 1)
   {
     eteindreDEL(0);
@@ -368,5 +369,4 @@ void loop()
 //  }
 
 // loopAjustementServo(BRAS);
-
 }
