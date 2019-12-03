@@ -19,9 +19,9 @@ Variables globales et defines
 **************************************************************************** */
 // -> defines...
 bool posteRouge = false;
-bool posteBleu = false;
+bool posteBleu = true;
 bool posteJaune = false;
-bool posteVert = false;
+bool posteVert = true;
 bool posteRouge2 = false;
 bool posteBleu2 = false;
 bool posteJaune2 = false;
@@ -107,9 +107,9 @@ void routineDistribution()
   
   if(posteJaune && posteRouge && posteVert && posteBleu)
   {
-    posteBleu = false;
+    posteBleu = true;
     posteJaune = false;
-    posteVert = false;
+    posteVert = true;
     posteRouge = false;
   }
 
@@ -290,8 +290,8 @@ void loop()
     bouton = 2;
     posteJaune = false;
     posteRouge = false;
-    posteVert = false;
-    posteBleu = false;
+    posteVert = true;
+    posteBleu = true;
     posteJaune2 = false;
     posteRouge2 = false;
     posteVert2 = false;
@@ -374,24 +374,4 @@ void loop()
     afficherLigne(tableau10);
 
   }
-
-//  if (ROBUS_IsBumper(0))
-//  {
-//    leverBras();
-//    Serial.println("Haut");
-
-//  }
-//   if (ROBUS_IsBumper(1))
-//  {
-//    baisserBras();
-//    Serial.println("Bas");
-//  }
-//   if (ROBUS_IsBumper(3))
-//  {
-//    leverBrasDeplacement();
-//     Serial.println("Deplacement");
-
-//  }
-
-// loopAjustementServo(BRAS);
 }
