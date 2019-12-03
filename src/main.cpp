@@ -83,7 +83,9 @@ void actionPoste()
     traquerLigneBloque(0.3);
     if(lettreEnMain == couleur)
     {
+      avancerDroitBloque(0.2,7);
       tournerBloque(0.2,180);
+      traquerLigneBloque(0.2);
       deposerLettrePoste();
       tournerBloque(0.2,180);
       lettreEnMain = -1;
@@ -100,7 +102,8 @@ void actionPoste()
 void routineDistribution()
 {
   allerVers(0);
-  if(obtenirOrientation() == 180)tournerBloque(0.2,180);
+  
+  
   
   if(posteJaune && posteRouge && posteVert && posteBleu)
   {
@@ -109,6 +112,16 @@ void routineDistribution()
     posteVert = false;
     posteRouge = false;
   }
+
+  if(obtenirOrientation() == 180)tournerBloque(0.2,180);
+  else if(!posteJaune)
+    {
+      avancerDroitBloque(0.2,7);
+      tournerBloque(0.3,180);
+      traquerLigneBloque(0.2);
+      tournerBloque(0.2,180);
+    }
+
   bool fin = false;
   if(!posteVert && posteBleu && posteRouge && posteJaune)
   {
@@ -307,24 +320,28 @@ void loop()
     {
       if (!posteRouge2)
       {
+        lettreEnMain = ROUGE;
         allerVers(convertirCouleurNoeud(ROUGE));
         actionPoste();
         posteRouge2 = true;
       }
       else if(!posteBleu2)
       {
+        lettreEnMain = BLEU;
         allerVers(convertirCouleurNoeud(BLEU));
         actionPoste();
         posteBleu2 = true;
       }
       else if(!posteJaune2)
       {
+        lettreEnMain = JAUNE;
         allerVers(convertirCouleurNoeud(JAUNE));
         actionPoste();        
         posteJaune2 = true;
       }
       else if(!posteVert2)
       {
+        lettreEnMain = VERT;
         allerVers(convertirCouleurNoeud(VERT));
         actionPoste();
         posteVert2 = true;
