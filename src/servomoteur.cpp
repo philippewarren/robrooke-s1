@@ -3,10 +3,10 @@
 float MS_PAR_ANGLE = 7.2;
 
 bool servoActif[] = {false, false};
-int ANGLE_INITIAL[] = {90, 90};
+int ANGLE_INITIAL[] = {0, 0};
 const int ANGLE_MINIMAL[] = {0, 0};
 const int ANGLE_MAXIMAL[] = {180, 180};
-uint8_t angleCourant[] = {ANGLE_INITIAL[PINCE], ANGLE_INITIAL[BRAS]};
+uint8_t angleCourant[2];
 
 int POS_PINCE_OUVERTE;
 int POS_PINCE_FERMEE;
@@ -20,11 +20,11 @@ void initialiserConstantesServos()
     {
         POS_PINCE_OUVERTE = 60;
         POS_PINCE_FERMEE = 180;
-        POS_BRAS_HAUT = 108;
+        POS_BRAS_HAUT = 115;
         POS_BRAS_BAS = 85;
-        ANGLE_INITIAL[PINCE] = 60;
-        ANGLE_INITIAL[BRAS] = 115;
-        POS_BRAS_DEPLACEMENT = 130;
+        POS_BRAS_DEPLACEMENT = 135;
+        ANGLE_INITIAL[PINCE] = POS_PINCE_OUVERTE;
+        ANGLE_INITIAL[BRAS] = POS_BRAS_DEPLACEMENT;
     }
     else
     {
@@ -32,10 +32,14 @@ void initialiserConstantesServos()
         POS_PINCE_FERMEE = 180;
         POS_BRAS_HAUT = 115;
         POS_BRAS_BAS = 85;
-        ANGLE_INITIAL[PINCE] = 60;
-        ANGLE_INITIAL[BRAS] = 115;
-        POS_BRAS_DEPLACEMENT = 130;
+        POS_BRAS_DEPLACEMENT = 135;
+        ANGLE_INITIAL[PINCE] = POS_PINCE_OUVERTE;
+        ANGLE_INITIAL[BRAS] = POS_BRAS_DEPLACEMENT;
     }
+
+    angleCourant[PINCE] = ANGLE_INITIAL[PINCE];
+    angleCourant[BRAS] = ANGLE_INITIAL[BRAS];
+
     return;
 }
 
