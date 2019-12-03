@@ -300,61 +300,15 @@ void loop()
   {
     eteindreDEL(0);
     allumerDEL(3);
-    if(lettreEnMain>=0)
+    while (ramasserLettre() < 0)
     {
-      essaiDist = 0;
-      if (lettreEnMain == ROUGE) posteRouge2 = true;
-      if (lettreEnMain == JAUNE) posteJaune2 = true;
-      if (lettreEnMain == VERT) posteVert2 = true;
-      if (lettreEnMain == BLEU) posteBleu2 = true;
-      allerVers(convertirCouleurNoeud(lettreEnMain));
-      actionPoste();
+      delay(1000);
     }
-    else if(essaiDist < 2)
-    {
-      essaiDist ++;
-      Serial.println("distribution");
-      routineDistribution();
-    }
-    else
-    {
-      if (!posteRouge2)
-      {
-        lettreEnMain = ROUGE;
-        allerVers(convertirCouleurNoeud(ROUGE));
-        actionPoste();
-        posteRouge2 = true;
-      }
-      else if(!posteBleu2)
-      {
-        lettreEnMain = BLEU;
-        allerVers(convertirCouleurNoeud(BLEU));
-        actionPoste();
-        posteBleu2 = true;
-      }
-      else if(!posteJaune2)
-      {
-        lettreEnMain = JAUNE;
-        allerVers(convertirCouleurNoeud(JAUNE));
-        actionPoste();        
-        posteJaune2 = true;
-      }
-      else if(!posteVert2)
-      {
-        lettreEnMain = VERT;
-        allerVers(convertirCouleurNoeud(VERT));
-        actionPoste();
-        posteVert2 = true;
-      }
-      else
-      {
-        posteVert2 = false;
-        posteJaune2 = false;
-        posteRouge2 = false;
-        posteBleu2 = false;
-        essaiDist = 0;
-      }
-    }
+    
+    delay(3000);
+    avancerDroitBloque(0.2,300);
+    bouton = 3;
+    
   }
   else
   {
