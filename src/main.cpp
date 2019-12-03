@@ -114,7 +114,7 @@ void routineDistribution()
   }
 
   if(obtenirOrientation() == 180)tournerBloque(0.2,180);
-  else if(!posteJaune)
+  else if(!posteJaune|| (posteBleu && posteRouge && posteJaune))
     {
       avancerDroitBloque(0.2,7);
       tournerBloque(0.3,180);
