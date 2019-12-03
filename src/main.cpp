@@ -114,11 +114,11 @@ void routineDistribution()
   }
 
   if(obtenirOrientation() == 180)tournerBloque(0.2,180);
-  else if(!posteJaune)
+  else if(!posteJaune|| (posteBleu && posteRouge && posteJaune))
     {
       avancerDroitBloque(0.2,7);
       tournerBloque(0.3,180);
-      traquerLigneBloque(0.2);
+      traquerLigneBloque(0.15);
       tournerBloque(0.2,180);
     }
 
@@ -145,7 +145,7 @@ void routineDistribution()
   if(!fin)
   {
     avancerDroitBloque(0.2,3);
-    traquerLigneBloque(0.3);
+    traquerLigneBloque(0.2);
     if(lettreEnMain < 0 && !posteRouge)
     {
       lettreEnMain = ramasserLettre();
@@ -160,7 +160,7 @@ void routineDistribution()
       posteBleu = true;
     }
     avancerDroitBloque(0.2,3);
-    traquerLigneBloque(0.3);
+    traquerLigneBloque(0.2);
     if(lettreEnMain < 0 && !posteVert)
     {
       lettreEnMain = ramasserLettre();
@@ -288,6 +288,14 @@ void loop()
     traquerLigneBloque(0.2);
     poserEtat(0,180);
     bouton = 2;
+    posteJaune = false;
+    posteRouge = false;
+    posteVert = false;
+    posteBleu = false;
+    posteJaune2 = false;
+    posteRouge2 = false;
+    posteVert2 = false;
+    posteBleu2 = false;
   }
   else if (bouton == 3)
   {

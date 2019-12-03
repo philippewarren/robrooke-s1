@@ -47,6 +47,11 @@ void changerVitesseDeuxMoteurs(float vitesseG, float vitesseD = 200.0)
     delay(50);
   }
 
+  if (vitesseD < 0 && vitesseD > -0.12)vitesseD = -0.12;
+  if (vitesseD > 0 && vitesseD < -0.12)vitesseD = 0.12;
+  if (vitesseG < 0 && vitesseG > -0.12)vitesseG = -0.12;
+  if (vitesseG > 0 && vitesseG < 0.12)vitesseG = 0.12;
+
   MOTOR_SetSpeed(0,vitesseG);
   MOTOR_SetSpeed(1,vitesseD);
   
