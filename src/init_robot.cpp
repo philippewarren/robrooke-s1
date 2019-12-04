@@ -22,9 +22,6 @@ void initialiserRobot()
 
 void initialiserPortSuiveurLigne()
 {
-    pinMode(12,OUTPUT);
-    digitalWrite(12,HIGH);
-
     pinMode(pin, OUTPUT);
 }
 

@@ -19,9 +19,8 @@ extern const int pin;
 //fait une lecture du suiveur de ligne et place le résultat dans output
 void lireSuiveurLigne(int output [8]);
 
-//modifie la vitesse des moteur pour permettre au robot de suivre une ligne une vitesse inférieur à 0.5 est recommendée
+//modifie la vitesse des moteur pour permettre au robot de suivre une ligne, une vitesse inférieur à 0.5 est recommendée
 void suivreLigne(float vitesse);
-
 
 //affiche une ligne
 void afficherLigne(int ligne[8]);
@@ -32,6 +31,7 @@ void traquerLigneBloque(float vitesse);
 //transforme un tableau contenant les valeurs d'un suiveur de ligne en 0 et en 1
 void estLigneHuit(int lectures[8]);
 
+//Vérifie la présence d'une ligne sur toute la largeur du capteur
 bool lignePerpendiculaire();
 
 

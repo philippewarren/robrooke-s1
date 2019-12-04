@@ -9,10 +9,10 @@
 #define PORT_BLEU 42
 #define PORT_JAUNE 44
 
-//Allume la DEL couleurée correspondante et retourne la couleur, -1 éteint toutes les DEL
+//Allume la DEL de couleur correspondante et retourne la couleur, une autre valeur éteint les 4 DEL
 int allumerDELCouleur(int couleur);
 
-//Eteint les DEL couleurées
+//Eteint les DEL de couleur
 void eteindreDELCouleur();
 
 

@@ -3,7 +3,7 @@ Projet: PIRUS Robrooke
 Equipe: P-28
 Auteurs: Philippe Warren, Keven Gagnon, William Bruneau, Pénélope Montminy, Camille Durivage-Guertin, Gabriel Doré, Philippe Gadeyne, Antoine Duguay 
 Description: Lance le loop principal du robot facteur, et contient les fonctions les plus high-level utilisées pour PIRUS
-Date: 29-septembre-2019//
+Date: 3-décembre-2019
 */
 
 /* ****************************************************************************
@@ -18,6 +18,7 @@ Inclure les librairies de functions que vous voulez utiliser
 Variables globales et defines
 **************************************************************************** */
 // -> defines...
+
 bool posteRouge = false;
 bool posteBleu = true;
 bool posteJaune = false;
@@ -69,6 +70,7 @@ int ramasserLettre()
   }
 }
 
+//Routine réalisée aux postes
 void actionPoste()
 {
   if(deposerLettrePoste())
@@ -99,6 +101,7 @@ void actionPoste()
   
 }
 
+//Routine réalisée aux postes de distribution
 void routineDistribution()
 {
   allerVers(0);
@@ -172,6 +175,7 @@ void routineDistribution()
   poserEtat(0,180);
 }
 
+//Teste les déplacements entre toutes les paires de noeuds, dans les deux sens
 void testDeplacement()
 {
   for(int i = 0; i<6;i++)
@@ -185,6 +189,8 @@ void testDeplacement()
   }
   allerVers(0);
 }
+
+//Teste un poste
 void testPoste()
 {
   for (int i = 3; i<7; i++)
@@ -197,6 +203,7 @@ void testPoste()
   }
 }
 
+//Teste la lecture d'une couleur et s'y diriger
 void testCouleur()
 {
   int noeud = -1;
@@ -210,6 +217,7 @@ void testCouleur()
   allerVers(0);
 }
 
+//Fonction de démonstration des fonctionnalités pour l'audit #2
 void demoAudit2()
 {
   traquerLigneBloque(0.2);
@@ -241,6 +249,7 @@ void demoAudit2()
   lettreEnMain = -1;
 }
 
+//Fonction attachée à l'interrupt servant à gérer les états du bouton et à enlever le bouncing
 void fctBouton()
 {
   if(bouton == 0)
@@ -265,8 +274,6 @@ Fonctions d'initialisation (setup)
 // -> Se fait appeler seulement un fois
 // -> Generalement on y initilise les variables globales
 
-
-
 void setup()
 {
   initialiserRobot();
@@ -277,7 +284,9 @@ void setup()
 Fonctions de boucle infini (loop())
 **************************************************************************** */
 // -> Se fait appeler perpetuellement suite au "setup"
+
 int tableau3[8];
+
 void loop()
 {
   

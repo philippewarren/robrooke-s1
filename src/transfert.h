@@ -6,7 +6,7 @@
 #include "suiveur_ligne.h"
 #include "capteur_couleur.h"
 
-//utilisation de  vector pour pauvre//////////////////////////////////////////////////////////////////////
+//utilisation de vector pour pauvre//////////////////////////////////////////////////////////////////////
 
 const int TAILLE_MAX = 10;
 
@@ -142,16 +142,16 @@ void afficher_trajet(int trajet[TAILLE_MAX]);
 //change l'état du robot (position et orientation)
 void poserEtat(int position = -1, int orientation = -1);
 
-//permet de se rendre à un noeud adjascent, retourne une réussite (true) ou un échec (false)
+//permet de se rendre à un noeud adjacent, retourne une réussite (true) ou un échec (false)
 bool transfer(int noeud);
 
-//permet de se rendre à un noeud éloignée et adjascent, retourne une réussite (true) ou un échec (false)
+//permet de se rendre à un noeud éloigné et adjacent, retourne une réussite (true) ou un échec (false)
 bool allerVers(int noeud);
 
 //permet d'obtenir l'orientation
 int obtenirOrientation();
 
-//convertie une couleur en noeud
+//converti une couleur en noeud
 int convertirCouleurNoeud(int);
 
 

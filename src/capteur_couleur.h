@@ -43,6 +43,7 @@ int evaluerCouleur(uint16_t tableauRGB[4]);
 //Lit la couleur de la lettre et retourne une valeur de couleur
 int obtenirCouleurLettre();
 
+//Permet de lire les valeurs HSL de couleur lues par le capteur à intervalle régulier
 void debugCapteurCouleur();
 
 

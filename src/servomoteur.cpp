@@ -3,10 +3,10 @@
 float MS_PAR_ANGLE = 7.2;
 
 bool servoActif[] = {false, false};
-int ANGLE_INITIAL[] = {0, 0};
 const int ANGLE_MINIMAL[] = {0, 0};
 const int ANGLE_MAXIMAL[] = {180, 180};
-uint8_t angleCourant[2];
+int ANGLE_INITIAL[2];
+int angleCourant[2];
 
 int POS_PINCE_OUVERTE;
 int POS_PINCE_FERMEE;
@@ -42,8 +42,6 @@ void initialiserConstantesServos()
 
     return;
 }
-
-const int DELAIS_OCTOGONE = 1500;
 
 bool initialiserServo(uint8_t indexDuServomoteur, bool estFixe = false)
 {
@@ -106,10 +104,11 @@ bool changerAngleServo(uint8_t indexDuServomoteur, uint8_t angle, bool estFixe =
             delay(10);
         }
     }
-    else SERVO_SetAngle(indexDuServomoteur, angleCourant[indexDuServomoteur]);
-   
-    // delay(MS_PAR_ANGLE*max(abs(ANGLE_MAXIMAL[indexDuServomoteur]-angle), abs(ANGLE_MINIMAL[indexDuServomoteur]-angle)));
-    // delay(2000);
+    else
+    {
+        SERVO_SetAngle(indexDuServomoteur, angleCourant[indexDuServomoteur]);
+    }
+    
     if (estFixe==false)
     {
         desactiverServo(indexDuServomoteur);

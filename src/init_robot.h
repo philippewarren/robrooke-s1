@@ -24,7 +24,7 @@ extern const int COULEURS_BOB[];
 extern char Bob;
 
 //Appelle BoardInit() et cie, et initialise nos fonctions et variables
-//Utilisée directement dans le main()
+//Utilisée dans le main()
 void initialiserRobot();
 
 //Initialise les ports pour les DEL
