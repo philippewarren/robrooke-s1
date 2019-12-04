@@ -305,6 +305,7 @@ void loop()
     posteRouge2 = false;
     posteVert2 = false;
     posteBleu2 = false;
+    essaiDist = 0;
   }
   else if (bouton == 3)
   {
