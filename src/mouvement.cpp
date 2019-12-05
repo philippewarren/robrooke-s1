@@ -47,10 +47,10 @@ void changerVitesseDeuxMoteurs(float vitesseG, float vitesseD = 200.0)
     delay(50);
   }
 
-  if (vitesseD < 0 && vitesseD > -0.14)vitesseD = -0.14;
-  if (vitesseD > 0 && vitesseD < -0.14)vitesseD = 0.14;
-  if (vitesseG < 0 && vitesseG > -0.14)vitesseG = -0.14;
-  if (vitesseG > 0 && vitesseG < 0.14)vitesseG = 0.14;
+  if (vitesseD < 0 && vitesseD > -0.15)vitesseD = -0.15;
+  if (vitesseD > 0 && vitesseD < -0.15)vitesseD = 0.15;
+  if (vitesseG < 0 && vitesseG > -0.15)vitesseG = -0.15;
+  if (vitesseG > 0 && vitesseG < 0.15)vitesseG = 0.15;
 
   MOTOR_SetSpeed(0,vitesseG);
   MOTOR_SetSpeed(1,vitesseD);
@@ -130,7 +130,7 @@ bool tournerBloque(float vitesse, float angle)
 
   delay(200);
   if(Bob == 'A') angle /= 1;
-  else angle /= 1.0425;
+  else angle /= 1.05;
   float distance = cmEnClics((19 * 3.14160) / 360 * angle);
   resetDeuxEncodeurs();
   syncroroue (vitesse,-1,true);
@@ -138,7 +138,7 @@ bool tournerBloque(float vitesse, float angle)
 
   while (!fin)
   {
-    delay(30);
+    delay(100);
     distanceParcourue += ENCODER_Read(1);
     syncroroue(vitesse,-1);
     fin = (distanceParcourue >= distance && distance >= 0)||(distanceParcourue <= distance && distance <= 0);

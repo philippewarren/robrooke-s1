@@ -20,9 +20,9 @@ Variables globales et defines
 // -> defines...
 
 bool posteRouge = false;
-bool posteBleu = true;
+bool posteBleu = false;
 bool posteJaune = false;
-bool posteVert = true;
+bool posteVert = false;
 bool posteRouge2 = false;
 bool posteBleu2 = false;
 bool posteJaune2 = false;
@@ -43,6 +43,7 @@ bool deposerLettrePoste()
   baisserBras();
   ouvrirPince();
   eteindreDELCouleur();
+  delay(500);
   suivant = estLettreSuivant();
   leverBrasDeplacement();
 
@@ -110,9 +111,9 @@ void routineDistribution()
   
   if(posteJaune && posteRouge && posteVert && posteBleu)
   {
-    posteBleu = true;
+    posteBleu = false;
     posteJaune = false;
-    posteVert = true;
+    posteVert = false;
     posteRouge = false;
   }
 
@@ -299,8 +300,8 @@ void loop()
     bouton = 2;
     posteJaune = false;
     posteRouge = false;
-    posteVert = true;
-    posteBleu = true;
+    posteVert = false;
+    posteBleu = false;
     posteJaune2 = false;
     posteRouge2 = false;
     posteVert2 = false;
@@ -336,6 +337,13 @@ void loop()
     }
     else
     {
+      if(posteJaune2 && posteRouge2 && posteVert2 && posteBleu2)
+      {
+        posteVert2 = false;
+        posteJaune2 = false;
+        posteRouge2 = false;
+        posteBleu2 = false;
+      }
       if (!posteRouge2)
       {
         lettreEnMain = ROUGE;
@@ -364,7 +372,7 @@ void loop()
         actionPoste();
         posteVert2 = true;
       }
-      else
+      if(posteJaune2 && posteRouge2 && posteVert2 && posteBleu2)
       {
         posteVert2 = false;
         posteJaune2 = false;

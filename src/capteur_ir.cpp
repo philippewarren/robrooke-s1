@@ -81,14 +81,14 @@ uint16_t lireValeurIR(uint8_t capteur, uint8_t amplitude = 5)
 bool estLettrePince()
 {
     int valeur = lireValeurIR(INTERNE);
-    if (valeur<500 && valeur > 100) return true;
+    if (valeur < 500 && valeur > 100) return true;
     else return false;
 }
 
 bool estLettreSuivant()
 {
     int valeur = lireValeurIR(EXTERNE);
-    if (valeur>100) return true;
+    if (valeur>70) return true;
     else return false;
 }
 
