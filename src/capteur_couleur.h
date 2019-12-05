@@ -3,7 +3,7 @@
 
 #include <Adafruit_TCS34725.h>
 
-#include "conversions.h"
+#include "del_couleur.h"
 
 //#define TCS34725_ADDRESS (0x29)
 
@@ -15,12 +15,12 @@
 #define MAUVE 300
 
 #define BLANC -100
-#define NOIR -1
+#define NOIR -10
 #define GRIS -50
 
-extern const uint16_t TOUTES_COULEURS[];
-extern const uint16_t COULEURS_OCTOGONE[];
-extern const uint16_t COULEURS_LETTRES[];
+#define AUCUNE -2
+
+extern Adafruit_TCS34725 CapteurCouleur;
 
 extern const uint16_t BORNES_COULEUR[];
 
@@ -31,13 +31,20 @@ extern const int SEUIL_GRIS;
 //Initialise le capteur couleurs
 void initialiserCapteurCouleur();
 
-//Lit les valeurs du capteur couleur et retourne les valeurs dans le tableau dans cet ordre: {rouge, vert, bleu, sansCouleur}
+//Convertit les 3 premiers nombres d'un tableau de 4 (r,g,b) en (h,s,l) dans le meme tableau, sans toucher la valeur 4 (sansCouleur)
+void rgbEnHsl(uint16_t tableauRGB[4]);
+
+//Lit les valeurs du capteur couleur et retourne les valeurs dans le tableau dans cet ordre: {hue, saturation, luminosité, sansCouleur}
 void lireCapteurCouleur(uint8_t numeroDeCapteur, uint16_t tableauVide[4]);
 
 //Transforme une couleur rgb dans un tableau en nom de couleur
-int evaluerCouleur(uint16_t tableauRGB[4], const uint16_t couleursPossibles[] = TOUTES_COULEURS);
+int evaluerCouleur(uint16_t tableauRGB[4]);
 
-//Lit la couleur du plancher et retourne une valeur de couleur
-int obtenirCouleurPlancher();
+//Lit la couleur de la lettre et retourne une valeur de couleur
+int obtenirCouleurLettre();
+
+//Permet de lire les valeurs HSL de couleur lues par le capteur à intervalle régulier
+void debugCapteurCouleur();
+
 
 #endif

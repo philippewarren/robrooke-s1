@@ -1,9 +1,9 @@
 /*
-Projet: Parcours du combattant
+Projet: PIRUS Robrooke
 Equipe: P-28
 Auteurs: Philippe Warren, Keven Gagnon, William Bruneau, Pénélope Montminy, Camille Durivage-Guertin, Gabriel Doré, Philippe Gadeyne, Antoine Duguay 
-Description: Lance le script pour l'épreuve du combattant
-Date: 29-septembre-2019//
+Description: Lance le loop principal du robot facteur, et contient les fonctions les plus high-level utilisées pour PIRUS
+Date: 3-décembre-2019
 */
 
 /* ****************************************************************************
@@ -11,23 +11,262 @@ Inclure les librairies de functions que vous voulez utiliser
 **************************************************************************** */
 
 #include "init_robot.h"
-#include "loop_normal.h"
-#include "loop_urgence.h"
+#include "servomoteur.h"
+#include "transfert.h"
 
 /* ****************************************************************************
 Variables globales et defines
 **************************************************************************** */
 // -> defines...
-// L'ensemble des fonctions y ont acces
 
-
+bool posteRouge = false;
+bool posteBleu = false;
+bool posteJaune = false;
+bool posteVert = false;
+bool posteRouge2 = false;
+bool posteBleu2 = false;
+bool posteJaune2 = false;
+bool posteVert2 = false;
+int lettreEnMain = -1; //-1 si vide ou couleur
+int essaiDist = 0;
+volatile int bouton = 0;
+volatile int itBouton = 0;
 
 /* ****************************************************************************
 Vos propres fonctions sont creees ici
 **************************************************************************** */
 
+//Dépose une lettre
+bool deposerLettrePoste()
+{
+  bool suivant = false;
+  baisserBras();
+  ouvrirPince();
+  eteindreDELCouleur();
+  delay(500);
+  suivant = estLettreSuivant();
+  leverBrasDeplacement();
 
+  return suivant;
+}
 
+//Ramasse une lettre. S'il n'y a pas de lettre, renvoie -1 et éteint les DEL. S'il échoue à ramasser la lettre,
+//renvoie -2 et éteint les DEL. Sinon, renvoie la couleur de la lettre et allume la DEL de la couleur correspondante.
+int ramasserLettre()
+{
+  // leverBras();
+  ouvrirPince();
+  baisserBras();
+  if(estLettrePince())
+  {
+    fermerPince();
+    leverBrasDeplacement();
+    if(estLettrePince())  return allumerDELCouleur(obtenirCouleurLettre());
+    else return allumerDELCouleur(-2);
+  }
+  else
+  {
+    leverBrasDeplacement();
+    return allumerDELCouleur(-1);
+  }
+}
+
+//Routine réalisée aux postes
+void actionPoste()
+{
+  if(deposerLettrePoste())
+  {
+    int couleur = lettreEnMain;
+    if(couleur < 0)couleur = -4;
+    avancerDroitBloque(0.2,3);
+    traquerLigneBloque(0.2);
+    lettreEnMain = ramasserLettre();
+    if(lettreEnMain == -2)lettreEnMain = ramasserLettre();
+    tournerBloque(0.2,180);
+    traquerLigneBloque(0.3);
+    if(lettreEnMain == couleur)
+    {
+      avancerDroitBloque(0.2,7);
+      tournerBloque(0.2,180);
+      traquerLigneBloque(0.2);
+      deposerLettrePoste();
+      tournerBloque(0.2,180);
+      lettreEnMain = -1;
+    }
+    poserEtat(-1,obtenirOrientation()+180);
+  }
+  else
+  {
+    lettreEnMain = -1;
+  }
+  
+}
+
+//Routine réalisée aux postes de distribution
+void routineDistribution()
+{
+  allerVers(0);
+  
+  
+  
+  if(posteJaune && posteRouge && posteVert && posteBleu)
+  {
+    posteBleu = false;
+    posteJaune = false;
+    posteVert = false;
+    posteRouge = false;
+  }
+
+  if(obtenirOrientation() == 180)tournerBloque(0.2,180);
+  else if(!posteJaune|| (posteBleu && posteRouge && posteJaune))
+    {
+      avancerDroitBloque(0.2,7);
+      tournerBloque(0.3,180);
+      traquerLigneBloque(0.15);
+      tournerBloque(0.2,180);
+    }
+
+  bool fin = false;
+  if(!posteVert && posteBleu && posteRouge && posteJaune)
+  {
+    tournerBloque(0.2,180);
+    lettreEnMain = ramasserLettre();
+    if (lettreEnMain == -2)lettreEnMain =ramasserLettre();
+    posteVert = true;
+    fin = true;
+  }
+  if(!posteJaune)
+  {
+    lettreEnMain = ramasserLettre();
+    if (lettreEnMain == -2)lettreEnMain =ramasserLettre();
+    if (lettreEnMain >= 0)
+    {
+      fin = true;
+      tournerBloque(0.2,180);
+    }
+    posteJaune = true;
+  }
+  if(!fin)
+  {
+    avancerDroitBloque(0.2,3);
+    traquerLigneBloque(0.2);
+    if(lettreEnMain < 0 && !posteRouge)
+    {
+      lettreEnMain = ramasserLettre();
+      if (lettreEnMain == -2)lettreEnMain =ramasserLettre();
+      posteRouge = true;
+    }
+    tournerBloque(0.2,180);
+    if(lettreEnMain < 0 && !posteBleu)
+    {
+      lettreEnMain = ramasserLettre();
+      if (lettreEnMain == -2)lettreEnMain =ramasserLettre();        
+      posteBleu = true;
+    }
+    avancerDroitBloque(0.2,3);
+    traquerLigneBloque(0.2);
+    if(lettreEnMain < 0 && !posteVert)
+    {
+      lettreEnMain = ramasserLettre();
+      if (lettreEnMain == -2)lettreEnMain =ramasserLettre();
+      posteVert = true;
+    }
+    
+  }
+  poserEtat(0,180);
+}
+
+//Teste les déplacements entre toutes les paires de noeuds, dans les deux sens
+void testDeplacement()
+{
+  for(int i = 0; i<6;i++)
+  {
+    allerVers(i);
+    for(int j = (i+1);j<7;j++)
+    {
+      allerVers(j);
+      allerVers(i);
+    }
+  }
+  allerVers(0);
+}
+
+//Teste un poste
+void testPoste()
+{
+  for (int i = 3; i<7; i++)
+  {
+    fermerPince();
+    allerVers(i);
+    actionPoste();
+    allerVers(0);
+    ouvrirPince();
+  }
+}
+
+//Teste la lecture d'une couleur et s'y diriger
+void testCouleur()
+{
+  int noeud = -1;
+  while (noeud == -1)
+  {
+    noeud = convertirCouleurNoeud(obtenirCouleurLettre());
+  }
+  fermerPince();
+  allerVers(noeud);
+  actionPoste();
+  allerVers(0);
+}
+
+//Fonction de démonstration des fonctionnalités pour l'audit #2
+void demoAudit2()
+{
+  traquerLigneBloque(0.2);
+  while (lettreEnMain < 0)
+  {
+    lettreEnMain = ramasserLettre();
+  }
+  if(bouton == 1)bouton = 2;
+  avancerDroitBloque(0.2,3);
+  traquerLigneBloque(0.3);
+  if (lettreEnMain == ROUGE)
+  {
+    deposerLettrePoste();
+    tournerBloque(0.2,180);
+  }
+  else
+  {
+    avancerDroitBloque(0.2,3);
+    traquerLigneBloque(0.2);
+    deposerLettrePoste();
+    tournerBloque(0.2,180);
+    avancerDroitBloque(0.2,3);
+    traquerLigneBloque(0.2);
+  }
+  avancerDroitBloque(0.2,3);
+  traquerLigneBloque(0.2);
+  avancerDroitBloque(0.2,10);
+  tournerBloque(0.2,180);
+  lettreEnMain = -1;
+}
+
+//Fonction attachée à l'interrupt servant à gérer les états du bouton et à enlever le bouncing
+void fctBouton()
+{
+  if(bouton == 0)
+    bouton = 1;
+  if(bouton == 2)
+    bouton = 3;
+}
+
+//Initialise le port pour l'interrupt et l'attache
+void initialiserInterrupt()
+{
+  const byte PORT_INTERRUPT = 2;
+
+  pinMode(PORT_INTERRUPT, INPUT);
+  attachInterrupt(digitalPinToInterrupt(PORT_INTERRUPT), fctBouton, HIGH);
+}
 
 /* ****************************************************************************
 Fonctions d'initialisation (setup)
@@ -36,13 +275,10 @@ Fonctions d'initialisation (setup)
 // -> Se fait appeler seulement un fois
 // -> Generalement on y initilise les variables globales
 
-
-
 void setup()
 {
-  initialiserBob();
-  pinMode(OUTPUT,12);
-  digitalWrite(12,HIGH);
+  initialiserRobot();
+  initialiserInterrupt();
 }
 
 /* ****************************************************************************
@@ -50,10 +286,110 @@ Fonctions de boucle infini (loop())
 **************************************************************************** */
 // -> Se fait appeler perpetuellement suite au "setup"
 
+int tableau3[8];
+
 void loop()
 {
-  if (arretUrgence) /*loopUrgence()*/;
-  else loopNormal();
-  //pour ajouter des fonction à la boucle, veuillez modifier la boucle normale (loop_normal.cpp)
+  
+  if(bouton == 1)
+  {
+    eteindreDEL(0);
+    allumerDEL(1);
+    traquerLigneBloque(0.2);
+    poserEtat(0,180);
+    bouton = 2;
+    posteJaune = false;
+    posteRouge = false;
+    posteVert = false;
+    posteBleu = false;
+    posteJaune2 = false;
+    posteRouge2 = false;
+    posteVert2 = false;
+    posteBleu2 = false;
+    essaiDist = 0;
+  }
+  else if (bouton == 3)
+  {
+    eteindreDEL(0);
+    allumerDEL(2);
+    arreterDeuxMoteurs();
+    bouton = 0;
+  }
+  else if (bouton == 2)
+  {
+    eteindreDEL(0);
+    allumerDEL(3);
+    if(lettreEnMain>=0)
+    {
+      essaiDist = 0;
+      if (lettreEnMain == ROUGE) posteRouge2 = true;
+      if (lettreEnMain == JAUNE) posteJaune2 = true;
+      if (lettreEnMain == VERT) posteVert2 = true;
+      if (lettreEnMain == BLEU) posteBleu2 = true;
+      allerVers(convertirCouleurNoeud(lettreEnMain));
+      actionPoste();
+    }
+    else if(essaiDist < 2)
+    {
+      essaiDist ++;
+      Serial.println("distribution");
+      routineDistribution();
+    }
+    else
+    {
+      if(posteJaune2 && posteRouge2 && posteVert2 && posteBleu2)
+      {
+        posteVert2 = false;
+        posteJaune2 = false;
+        posteRouge2 = false;
+        posteBleu2 = false;
+      }
+      if (!posteRouge2)
+      {
+        lettreEnMain = ROUGE;
+        allerVers(convertirCouleurNoeud(ROUGE));
+        actionPoste();
+        posteRouge2 = true;
+      }
+      else if(!posteBleu2)
+      {
+        lettreEnMain = BLEU;
+        allerVers(convertirCouleurNoeud(BLEU));
+        actionPoste();
+        posteBleu2 = true;
+      }
+      else if(!posteJaune2)
+      {
+        lettreEnMain = JAUNE;
+        allerVers(convertirCouleurNoeud(JAUNE));
+        actionPoste();        
+        posteJaune2 = true;
+      }
+      else if(!posteVert2)
+      {
+        lettreEnMain = VERT;
+        allerVers(convertirCouleurNoeud(VERT));
+        actionPoste();
+        posteVert2 = true;
+      }
+      if(posteJaune2 && posteRouge2 && posteVert2 && posteBleu2)
+      {
+        posteVert2 = false;
+        posteJaune2 = false;
+        posteRouge2 = false;
+        posteBleu2 = false;
+        essaiDist = 0;
+      }
+    }
+  }
+  else
+  {
+    eteindreDEL(0);
+    allumerDEL(4);
+    delay(1000);
+    int tableau10[8];
+    lireSuiveurLigne(tableau10);
+    afficherLigne(tableau10);
 
+  }
 }

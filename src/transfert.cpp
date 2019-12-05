@@ -1,4 +1,7 @@
 #include "transfert.h"
+//variables globales
+int _position = 0;
+int _orientation = 0;
 
 void afficher_tableau (int tableau[TAILLE_MAX][TAILLE_MAX],int& taille)
 {
@@ -119,4 +122,104 @@ void afficher_trajet(int trajet[TAILLE_MAX])
         i++;
     }
     Serial.print('\n');
+}
+
+void poserEtat(int position = -1, int orientation = -1)
+{
+    if (position >= 0) _position = position;
+    if (orientation >= 0) _orientation = orientation;
+    Serial.print("Etat poser à ");
+    Serial.print(_position);
+    Serial.print(", ");
+    Serial.print(_orientation);
+    Serial.print('\n');
+}
+
+bool transfer(int noeud)
+{
+    Serial.print("Debut du transfer vers ");
+    Serial.print(noeud);
+    Serial.print("\n");
+    int i = 0;
+    int taille = NBR_RELATIONS[_position];
+    bool fin = false;
+    int angle = 0;
+    int trouve = false;
+    while(!fin)
+    {
+        if (RELATION[_position][i][0]== noeud)
+        {
+            trouve = true;
+            fin = true;
+            angle = RELATION[_position][i][1];
+            Serial.print("angle de transit: ");
+            Serial.println(angle);
+        }
+        i++;
+        if(i >= taille) fin = true;
+    }
+
+    if (trouve)
+    {
+        int rot = angle - _orientation;
+        if (rot > 180)rot = rot - 360;
+        if (rot < -180)rot = rot + 360;
+        avancerDroitBloque(0.22,1);
+        tournerBloque(0.22,rot);
+        avancerDroitBloque(0.22,2);
+        traquerLigneBloque(0.3);
+        poserEtat(noeud,angle);
+        Serial.println("transfer reussit");
+        return true;
+    }
+    else
+    {
+    Serial.println("transfer echoue");
+    return false;
+    }
+}
+
+bool allerVers(int noeud)
+{
+
+    bool reussite = true;
+    int trajet[10];
+    if (noeud == _position)reussite = false;
+    else 
+    {
+        calculer_trajet(_position,noeud,trajet);
+        afficher_trajet(trajet);
+    }
+    int i = 0;
+    int fin = false;
+    while(!fin && reussite)
+    {
+        if (trajet[i]== _position)
+        {
+            if (trajet[i+1] >= 0)
+                reussite = transfer(trajet[i+1]);
+            i++;
+        }
+        else
+        {
+          fin = true;  
+        }
+    }
+
+    return reussite;
+    
+}
+
+int obtenirOrientation()
+{
+    return _orientation;
+}
+
+int convertirCouleurNoeud(int couleur)
+{
+    if (couleur == ROUGE)return 3;
+    else if (couleur  == JAUNE) return 5;
+    else if (couleur == VERT) return 6;
+    else if (couleur == BLEU) return 4;
+    else return -1;
 }

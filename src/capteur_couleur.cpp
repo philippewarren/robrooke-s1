@@ -2,46 +2,62 @@
 
 Adafruit_TCS34725 CapteurCouleur = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_1X);
 
-const uint16_t TOUTES_COULEURS[] = {ROUGE, JAUNE, VERT, TURQUOISE, BLEU, MAUVE};
-const uint16_t COULEURS_OCTOGONE[] = {ROUGE, JAUNE, VERT, BLEU};
-const uint16_t COULEURS_LETTRES[] = {ROUGE, VERT, BLEU};
-
 const uint16_t BORNES_COULEUR[] = {15, 165};
 
-    const int SEUIL_NOIR = 35;
-    const int SEUIL_BLANC = 85;
-    const int SEUIL_GRIS = 15;
+const int SEUIL_NOIR = 35;
+const int SEUIL_BLANC = 85;
+const int SEUIL_GRIS = 15;
 
 void initialiserCapteurCouleur()
 {
     if (CapteurCouleur.begin())
     {
-        Serial.println("Capteur couleur branché");
+        Serial.println("##Capteur couleur branché.##");
     }
     else
     {
-        Serial.println("Pas de capteur couleur ... verifiez la connection");
+        Serial.println("##Pas de capteur couleur... Verifiez la connection.##");
     }
-    
     return;
+}
+
+void rgbEnHsl(uint16_t tableauRGB[4])
+{
+  uint16_t etendue = BORNES_COULEUR[1]-BORNES_COULEUR[0];
+  
+  float rouge = ((float)tableauRGB[0]-BORNES_COULEUR[0])/(etendue);
+  float vert = ((float)tableauRGB[1]-BORNES_COULEUR[0])/(etendue);
+  float bleu = ((float)tableauRGB[2]-BORNES_COULEUR[0])/(etendue);
+
+  float Cmax = max(rouge, max(vert, bleu));
+  float Cmin = min(rouge, min(vert, bleu));
+  float delta = Cmax-Cmin;
+  float preS;
+
+  uint16_t H, S, L;
+
+  if (delta==0) H = 0;
+  else if (Cmax==rouge) H = (uint16_t)(60*(((vert-bleu)/delta) + (vert<bleu ? 6 : 0)));
+  else if (Cmax==vert) H = (uint16_t)(60*(((bleu-rouge)/delta) + 2));
+  else if (Cmax==bleu) H = (uint16_t)(60*(((rouge-vert)/delta) + 4));
+
+  preS = (delta==0) ? 0 : delta/(1-fabs(2*((Cmax+Cmin)/2)-1));
+  S = (uint16_t)(100*pow(preS, 0.5));
+
+  L = (uint16_t)(100*(Cmax+Cmin)/2); 
+
+  tableauRGB[0] = H;
+  tableauRGB[1] = S;
+  tableauRGB[2] = L;
+   
+  return;
 }
 
 void lireCapteurCouleur(uint8_t numeroDeCapteur, uint16_t tableauVide[4])
 {    
-    uint16_t rouge;
-    uint16_t vert;
-    uint16_t bleu;
-    uint16_t sansCouleur;
+    uint16_t rouge, vert, bleu, sansCouleur;
 
     CapteurCouleur.getRawData(&rouge, &vert, &bleu, &sansCouleur);
-
-    Serial.print(rouge);
-    Serial.print("\t");
-    Serial.print(vert);
-    Serial.print("\t");
-    Serial.print(bleu);
-    Serial.print("\t");
-    Serial.println(sansCouleur);
     
     tableauVide[0] = (uint16_t)(256*(float)rouge/sansCouleur);
     tableauVide[1] = (uint16_t)(256*(float)vert/sansCouleur);
@@ -49,88 +65,78 @@ void lireCapteurCouleur(uint8_t numeroDeCapteur, uint16_t tableauVide[4])
     tableauVide[3] = sansCouleur;
 
     rgbEnHsl(tableauVide);
-
+   
     return;
 }
 
-int evaluerCouleur(uint16_t tableauRGB[4], const uint16_t couleursPossibles[] = TOUTES_COULEURS)
+int evaluerCouleur(uint16_t tableauRGB[4])
 {
-    // rgbEnHsl(tableauRGB);
-
     int couleur = 0;
 
     //Blanc, noir, gris
     if (tableauRGB[1]<=SEUIL_GRIS || (tableauRGB[2]<=SEUIL_NOIR || tableauRGB[2]>=SEUIL_BLANC))
     {
         // Blanc?
-        if (tableauRGB[2]>=SEUIL_BLANC)
-            couleur = BLANC;
-
+        if (tableauRGB[2]>=SEUIL_BLANC) couleur = BLANC;
         //Noir?
-        else if (tableauRGB[2]<=SEUIL_NOIR)
-            couleur = NOIR;
-
+        else if (tableauRGB[2]<=SEUIL_NOIR) couleur = NOIR;
         //Gris?
-        else
-            couleur = GRIS;
+        else couleur = GRIS;
     }
     else
     {
-        // 6 couleurs
-        if (couleursPossibles == TOUTES_COULEURS)
-        {
-            //Rouge?
-            if (tableauRGB[0]>=330 || tableauRGB[0]<30)
-                couleur = ROUGE;
-
-            //Jaune?
-            else if (tableauRGB[0]>=30 && tableauRGB[0]<90)
-                couleur = JAUNE;
-
-            //Vert?
-            else if (tableauRGB[0]>=90 && tableauRGB[0]<150)
-                couleur = VERT;
-
-            //Turquoise?
-            else if (tableauRGB[0]>=150 && tableauRGB[0]<210)
-                couleur = TURQUOISE;
-
-            //Bleu?
-            else if (tableauRGB[0]>=210 && tableauRGB[0]<270)
-                couleur = BLEU;
-
-            //Mauve?
-            else if (tableauRGB[0]>=270 && tableauRGB[0]<330)
-                couleur = MAUVE;
-        }
-
-        // 4 couleurs
-        else if (couleursPossibles == COULEURS_OCTOGONE)
-        {
-            //Rouge?
-            if (tableauRGB[0]>=285 || tableauRGB[0]<45)
-                couleur = ROUGE;
-
-            //Jaune?
-            else if (tableauRGB[0]>=40 && tableauRGB[0]<90)
-                couleur = JAUNE;
-
-            //Vert?
-            else if (tableauRGB[0]>=90 && tableauRGB[0]<155)
-                couleur = VERT;
-
-            //Bleu?
-            else if (tableauRGB[0]>=155 && tableauRGB[0]<285)
-                couleur = BLEU;
-        }
+        //Rouge?
+        if (tableauRGB[0]>=345 || tableauRGB[0]<45) couleur = ROUGE;
+        //Jaune?
+        else if (tableauRGB[0]>=45 && tableauRGB[0]<90) couleur = JAUNE;
+        //Vert?
+        else if (tableauRGB[0]>=120 && tableauRGB[0]<150) couleur = VERT;
+        //Bleu?
+        else if (tableauRGB[0]>=150 && tableauRGB[0]<190) couleur = BLEU;
+        //Aucune couleur reconnue
+        else couleur = AUCUNE;
     }
-
     return couleur;
 }
 
-int obtenirCouleurPlancher()
+int obtenirCouleurLettre()
 {
     uint16_t tableau[4];
     lireCapteurCouleur(0,tableau);
-    return evaluerCouleur(tableau,COULEURS_OCTOGONE);
+    return evaluerCouleur(tableau);
+}
+
+void debugCapteurCouleur()
+{
+    static uint16_t tableau[4];
+    static String nomCouleur;
+    lireCapteurCouleur(0, tableau);
+    
+    Serial.print("H: ");
+    Serial.print(tableau[0]);
+    Serial.print("\tS: ");
+    Serial.print(tableau[1]);
+    Serial.print("\tL: ");
+    Serial.print(tableau[2]);
+    Serial.print("\tC: ");
+    Serial.print(tableau[3]);
+    Serial.print("\tCouleur: ");
+    allumerDELCouleur(evaluerCouleur(tableau));
+    switch (evaluerCouleur(tableau))
+    {
+        case ROUGE:
+            nomCouleur = "ROUGE";
+            break;
+        case BLEU:
+            nomCouleur = "BLEU";
+            break;
+        case VERT:
+            nomCouleur = "VERT";
+            break;
+        case JAUNE:
+            nomCouleur = "JAUNE";
+            break;
+    }
+    Serial.println(nomCouleur);
+    delay(1000);
 }

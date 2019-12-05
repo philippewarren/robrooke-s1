@@ -6,19 +6,23 @@ extern float largeurEss;
 
 const int COULEURS_BOB[] = {VERT, JAUNE};
 
-void initialiserBob()
+void initialiserRobot()
 {
     BoardInit();
     Bob = EEPROM.read(0);
     initialiserDeuxServos();
     initialiserPortsDEL();
-    //initialiserPortsBoutons();
-    //initialiserPortsInterrupt();
+    initialiserCapteurCouleur();
+    initialiserPortsDELCouleur();
+    initialiserPortSuiveurLigne();
     largeurEss = Bob=='A' ? 18.2 : 18.1;
-    // DIST_90 = (largeurParc-largeurEss)/2;    //la distance que Bob doit avancer pour un virage de 90 degres
-    // DIST_45 = DIST_90*TAN_22_5;              //la distance que Bob doit avancer pour un virage de 45 degres
+    leverBrasDeplacement();
     Serial.println("##Connection serie active et fonctionnelle.##");
-    //initialiserCapteurCouleur();
+}
+
+void initialiserPortSuiveurLigne()
+{
+    pinMode(pin, OUTPUT);
 }
 
 void initialiserPortsDEL()
@@ -29,22 +33,10 @@ void initialiserPortsDEL()
     }
 }
 
-void initialiserPortsBoutons()
+void initialiserPortsDELCouleur()
 {
-    for (int i=0; i<=4; i++)
-    {
-        pinMode(PORT_BOUTON[i], INPUT);
-    }
-}
-
-void initialiserPortsInterrupt()
-{
-    pinMode(PORT_INTERRUPT, INPUT);
-    attachInterrupt(digitalPinToInterrupt(PORT_INTERRUPT), isrARRET, FALLING);
-}
-
-void isrARRET()
-{
-    arretUrgence = true;
-    arreterDeuxMoteurs();
+    pinMode(PORT_ROUGE, OUTPUT);
+    pinMode(PORT_VERT, OUTPUT);
+    pinMode(PORT_BLEU, OUTPUT);
+    pinMode(PORT_JAUNE, OUTPUT);
 }

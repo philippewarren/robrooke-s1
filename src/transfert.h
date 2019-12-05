@@ -2,8 +2,11 @@
 #define TRANSFERT_H
 
 #include <Arduino.h>
+#include "mouvement.h"
+#include "suiveur_ligne.h"
+#include "capteur_couleur.h"
 
-//utilisation de  vector pour pauvre//////////////////////////////////////////////////////////////////////
+//utilisation de vector pour pauvre//////////////////////////////////////////////////////////////////////
 
 const int TAILLE_MAX = 10;
 
@@ -26,26 +29,34 @@ void ajouter_ligne(int tableau[TAILLE_MAX][TAILLE_MAX],int& taille,int ajout[TAI
 
 //le concepte de noeud est important pour ce code. Chaque noeud représente une intersection et sont numéroté à partir de 0.
 
-//schéma
+//orientation:
+//    0
+//    |
+//90-----270
+//    |
+//   180
+
+//position
 /*
-            0
-            |
-        3---1---4
+        0
+        | 
+    3---7---1---4
             |
         5---2---6
 */
-const int NBR_NOEUD = 7;
+const int NBR_NOEUD = 8;
 
 //nombre de relation pour chaque noeud
 const int NBR_RELATIONS[NBR_NOEUD] = 
 {
     1,
-    4,
+    3,
     3,
     1,
     1,
     1,
-    1
+    1,
+    3,
 };
 
 /*Description des relations:
@@ -56,12 +67,11 @@ const int RELATION [NBR_NOEUD][NBR_NOEUD-1][2] =
 {
     /*noeud 0*/
     {
-        {1,180}
+        {7,180}
     },
     /*noeud 1*/
     {
-        {0,0},
-        {3,90},
+        {7,90},
         {2,180},
         {4,270}
     },
@@ -69,11 +79,11 @@ const int RELATION [NBR_NOEUD][NBR_NOEUD-1][2] =
     {
         {1,0},
         {5,90},
-        {6,180}
+        {6,270}
     },
     /*noeud 3*/
     {
-        {1,270}
+        {7,270}
         
     },
     /*noeud 4*/
@@ -86,8 +96,15 @@ const int RELATION [NBR_NOEUD][NBR_NOEUD-1][2] =
     },
     /*noeud 6*/
     {
-        {6,90}
+        {2,90}
+    },
+    /*noeud 7*/
+    {
+        {0,0},
+        {3,90},
+        {1,270}
     }
+
 };
 
 //calcule le trajet, la fonction retourne une suite de noeud débutant par le départ et finissant par -1, le départ doit exister et la fin ne doit pas être le départ
@@ -96,8 +113,46 @@ void calculer_trajet(int depart, int fin, int output[TAILLE_MAX]);
 //pour debug
 void afficher_trajet(int trajet[TAILLE_MAX]);
 
+//Mouvement entre les noeuds/////////////////////////////////
 
+//fonction pour modification de la position
 
+//orientation:
+//    0
+//    |
+//90-----270
+//    |
+//   180
+
+//position
+/*
+            0
+            |
+        3---1---4
+            |
+        5---2---6
+
+        poste
+          |
+    rouge----bleu
+          |
+    jaune----vert
+*/
+
+//change l'état du robot (position et orientation)
+void poserEtat(int position = -1, int orientation = -1);
+
+//permet de se rendre à un noeud adjacent, retourne une réussite (true) ou un échec (false)
+bool transfer(int noeud);
+
+//permet de se rendre à un noeud éloigné et adjacent, retourne une réussite (true) ou un échec (false)
+bool allerVers(int noeud);
+
+//permet d'obtenir l'orientation
+int obtenirOrientation();
+
+//converti une couleur en noeud
+int convertirCouleurNoeud(int);
 
 
 
